@@ -1,0 +1,13 @@
+requires:
+- category: "development"
+  name: "toolchain-go"
+  version: ">=0"
+
+package_dir: /kubectl
+
+steps:
+- | 
+   PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
+   mkdir -p /kubectl/usr/bin && \
+   curl -L https://storage.googleapis.com/kubernetes-release/release/v${PACKAGE_VERSION}/bin/linux/{{.Values.arch}}/kubectl -o /kubectl/usr/bin/kubectl && \
+   chmod +x /kubectl/usr/bin/kubectl

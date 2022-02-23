@@ -1,0 +1,16 @@
+name: kubectl
+category: container
+version: "1.23.1+0"
+labels:
+  github.repo: "kubectl"
+  github.owner: "kubernetes"
+  autobump.strategy: "custom"
+  autobump.string_replace: '{ "prefix": "" }'
+  autobump.prefix: "prefix"
+  autobump.hook: "curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt | sed 's/v//'"
+  autobump.version_hook: "curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt | sed 's/v//'"
+  package.version: "1.23.1"
+uri:
+  - https://github.com/kubernetes/kubernetes
+  - https://kubernetes.io
+license: "Apache-2.0"

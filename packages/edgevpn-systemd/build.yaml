@@ -1,0 +1,11 @@
+requires:
+- category: "development"
+  name: "toolchain-go"
+  version: ">=0"
+
+package_dir: /integration
+steps:
+- mkdir -p /integration/lib/systemd/system/
+- mkdir -p /integration/etc/systemd/system.conf.d/
+- cp -rfv *.service /integration/lib/systemd/system
+- cp -rfv *.env /integration/etc/systemd/system.conf.d/

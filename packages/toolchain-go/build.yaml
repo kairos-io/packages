@@ -1,0 +1,4 @@
+image: "golang:alpine"
+prelude:
+- apk update
+- apk add curl make git bash
