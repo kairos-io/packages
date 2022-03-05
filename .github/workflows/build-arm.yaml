@@ -1,11 +1,11 @@
-name: Build
+name: Build ARM
 concurrency:
   group: "master-arm-build"
   #cancel-in-progress: true
 
 on:
   push:
-    branches: [ main, test ]
+    branches: [ main ]
 jobs:
 
   build:
