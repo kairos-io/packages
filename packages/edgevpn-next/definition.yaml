@@ -3,7 +3,7 @@ category: utils
 version: "0.9999"
 hash: "next"
 labels:
-  github.repo: "edgepvn"
+  github.repo: "edgevpn"
   github.owner: "mudler"
 uri:
   - https://github.com/mudler/edgevpn

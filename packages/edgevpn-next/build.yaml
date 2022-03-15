@@ -17,5 +17,5 @@ steps:
 - |
   PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
   cd go/src/github.com/${GITHUB_ORG}/${GITHUB_REPO}/  && \
-  git checkout {{.Values.hash}} -b build && go build -ldflags="-w -s -X github.com/mudler/edgevpn/internal.Version=v$PACKAGE_VERSION" && mv $GITHUB_REPO /usr/bin/
+  git checkout "{{.Values.hash}}" && go build -ldflags="-w -s -X github.com/mudler/edgevpn/internal.Version=v$PACKAGE_VERSION" && mv $GITHUB_REPO /usr/bin/
 - chmod +x /usr/bin/${GITHUB_REPO}
