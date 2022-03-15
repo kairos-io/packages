@@ -1,0 +1,11 @@
+name: edgevpn-next
+category: utils
+version: "0.9999"
+hash: "next"
+labels:
+  github.repo: "edgepvn"
+  github.owner: "mudler"
+uri:
+  - https://github.com/mudler/edgevpn
+license: "GPL-3"
+description: "The immutable, decentralized, statically built VPN"
