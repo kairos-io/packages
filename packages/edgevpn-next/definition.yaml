@@ -1,6 +1,6 @@
 name: edgevpn-next
 category: utils
-version: "0.9999"
+version: "0.9999.1"
 hash: "next"
 labels:
   github.repo: "edgevpn"
