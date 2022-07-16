@@ -1,0 +1,24 @@
+requires:
+- name: "toolchain-go"
+  category: "development"
+  version: ">=0"
+prelude:
+{{$arch:=(default .Values.arch "amd64")}}
+
+{{ if eq $arch "amd64" }}
+- wget https://github.com/k3s-io/k3s/releases/download/v{{.Values.version}}+k3s{{.Values.k3s_version}}/k3s
+{{ else }}
+{{ if eq $arch "arm" }}
+{{$arch:="arm64"}}
+{{end}}
+- wget https://github.com/k3s-io/k3s/releases/download/v{{.Values.version}}+k3s{{.Values.k3s_version}}/k3s-{{$arch}}
+{{ end }}
+- /bin/bash -c 'echo "{{ ( index .Values (print "checksum-" $arch) ) }}  k3s" | sha256sum -c'
+steps:
+- |
+  mv {{.Values.name}} /usr/local/bin/
+- chmod +x /usr/local/bin/{{.Values.name}}
+includes:
+- /usr/local/bin/{{.Values.name}}
+
+# TODO: service files for openrc/systemd
