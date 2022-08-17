@@ -8,9 +8,9 @@ jobs:
   bump:
     runs-on: ubuntu-latest
     env:
-      GIT_AUTHOR_NAME: "ci-robbot [bot]"
+      GIT_AUTHOR_NAME: "ci-robbot"
       GIT_AUTHOR_EMAIL: robot@c3os.io
-      GIT_COMMITTER_NAME: "ci-robbot [bot]"
+      GIT_COMMITTER_NAME: "ci-robbot"
       GIT_COMMITTER_EMAIL: robot@c3os.io
       WORK_BRANCH: bumps
       AUTO_GIT: true
