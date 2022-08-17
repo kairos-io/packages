@@ -1,0 +1,16 @@
+requires:
+- name: "toolchain-go"
+  category: "development"
+  version: ">=1.18"
+prelude:
+- mkdir go/src/github.com/${GITHUB_ORG}/ -p
+- cd go/src/github.com/${GITHUB_ORG}/ && git clone https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
+env:
+- GOPATH=/luetbuild/go/
+- GITHUB_ORG={{ ( index .Values.labels "github.owner" ) }}
+- CGO_ENABLED=0
+steps:
+- cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/  && git checkout v"${PACKAGE_VERSION}" -b build && go build -o {{.Values.name}}  && mv {{ .Values.name }} /usr/bin/{{ .Values.name }}
+- chmod +x /usr/bin/{{ .Values.name }}
+includes:
+- /usr/bin/{{.Values.name}}

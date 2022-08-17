@@ -1,0 +1,10 @@
+name: goreleaser
+category: utils
+version: "1.10.3"
+description: "Deliver Go binaries as fast and easily as possible"
+labels:
+  github.repo: "goreleaser"
+  github.owner: "goreleaser"
+uri:
+  - https://github.com/goreleaser/goreleaser
+license: "The MIT License"
