@@ -1,0 +1,26 @@
+requires:
+- name: "toolchain-ubuntu"
+  category: "development"
+  version: ">=0"
+prelude:
+{{$arch:=(default .Values.arch "amd64")}}
+{{ if eq $arch "arm" }}
+{{$arch:="arm64"}}
+{{end}}
+steps:
+- curl -o containerd.tar.gz -L  ${CONTAINERD_URL} && tar Cxzvf / containerd.tar.gz --absolute-names --transform 's@usr@opt@'  --transform 's@sbin@bin@' --transform 's@opt/local@opt@' && rm  containerd.tar.gz
+- cp files/etc/systemd/system/containerd.service /etc/systemd/system
+- mkdir /etc/systemd/system/containerd.service.d
+- cp files/etc/systemd/system/containerd.service.d/*.conf /etc/systemd/system/containerd.service.d
+- systemctl enable containerd
+- mkdir /etc/containerd
+- cp files/etc/containerd/config.toml /etc/containerd
+- cp files/etc/modules-load.d/*.conf /etc/modules-load.d/
+- cp files/etc/sysctl.d/*.conf /etc/sysctl.d
+env:
+- DEBIAN_FRONTEND=noninteractive
+- CONTAINERD_TGZ="cri-containerd-{{.Values.containerd_version }}-linux-{{$arch}}.tar.gz"
+- CONTAINERD_URL="https://github.com/containerd/containerd/releases/download/v{{.Values.containerd_version}}/${CONTAINERD_TGZ}"
+excludes:
+- /etc/crictl.yaml
+- /opt/bin/crictl

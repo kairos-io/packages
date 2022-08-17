@@ -1,0 +1,14 @@
+requires:
+- name: "toolchain-ubuntu"
+  category: "development"
+  version: ">=0"
+
+steps:
+- mkdir /opt/bin
+- curl -L https://github.com/kubernetes-sigs/cri-tools/releases/download/v{{.Values.crictl_version}}/crictl-v{{.Values.crictl_version}}-linux-{{.Values.arch}}.tar.gz --output crictl-v{{.Values.crictl_version}}-linux-{{.Values.arch}}.tar.gz
+- tar zxvf crictl-v{{.Values.crictl_version}}-linux-{{.Values.arch}}.tar.gz -C /opt/bin &&  rm -f crictl-v{{.Values.crictl_version}}-linux-{{.Values.arch}}.tar.gz
+- cp files/etc/crictl.yaml /etc/crictl.yaml
+- ./install-k8s.sh v{{ .Values.version }} {{ .Values.kubernetes_install_bin}} {{.Values.arch}}
+env:
+- DEBIAN_FRONTEND=noninteractive
+- CNI_URL="https://github.com/containernetworking/plugins/releases/download/v{{.Values.cni_version}}/cni-plugins-linux-{{.Values.arch}}-v{{.Values.cni_version}}.tgz"

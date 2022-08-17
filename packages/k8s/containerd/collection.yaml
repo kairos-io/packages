@@ -1,0 +1,12 @@
+packages:
+  - name: containerd
+    arch: amd64
+    category: container-runtime
+    version: 1.6.4
+    pause_image: "k8s.gcr.io/pause:3.6"
+    kubernetes_http_source: "https://dl.k8s.io/release"
+    crictl_version: "1.20.0"
+    containerd_version: "1.6.4"
+    runc_version: "1.1.2"
+    cni_version: "1.1.1"
+    containerd_cri_socket: "/var/run/containerd/containerd.sock"
