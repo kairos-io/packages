@@ -1,0 +1,19 @@
+requires:
+- name: "toolchain-ubuntu"
+  category: "development"
+  version: ">=0"
+
+env:
+- INSTALL_RKE2_VERSION=v{{.Values.version}}+{{.Values.rke2_release}}
+- INSTALL_RKE2_TAR_PREFIX={{.Values.rke2_install_dir}}
+- DEBIAN_FRONTEND=noninteractive
+prelude:
+- apt-get update && apt-get install -y curl systemd sudo
+
+steps:
+- curl -sfL  {{.Values.rke2_http_source}} > installer.sh 
+- sed -i 's/systemctl daemon-reload//g' installer.sh 
+- sh installer.sh
+- rm -rf installer.sh
+- systemctl disable rke2-server rke2-agent
+- curl -LO https://dl.k8s.io/release/v{{.Values.version}}/bin/linux/{{.Values.arch}}/kubectl && chmod +x kubectl && mv kubectl /usr/bin
