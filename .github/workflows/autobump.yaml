@@ -19,7 +19,7 @@ jobs:
       REVBUMP_CHAR: "-"
       LUET_YES: true
       TOKEN: ${{ secrets.PAT_TOKEN }}
-      GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
       GITHUB_PRIVATE_KEY: "${{ secrets.BOT_PRIVATE_KEY }}"
       GITHUB_PUBLIC_KEY: "${{ secrets.BOT_PUBLIC_KEY }}"
     strategy:
