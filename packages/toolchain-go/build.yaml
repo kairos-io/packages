@@ -1,4 +1,4 @@
-image: "golang:alpine"
+image: "golang:{{.Values.version}}-alpine"
 prelude:
 - apk update
 - apk add curl make git bash
