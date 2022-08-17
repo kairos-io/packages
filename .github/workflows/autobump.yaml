@@ -61,6 +61,6 @@ jobs:
           git checkout -b $WORK_BRANCH
           git reset --hard upstream/${RESET_BRANCH}
           git push -fv -u origin $WORK_BRANCH
-          export TREE_DIR=$(ROOT_DIR)/packages
+          export TREE_DIR=$PWD/packages
           
           luet autobump-github
