@@ -1,0 +1,8 @@
+name: "nerdctl"
+category: "utils"
+version: "0.22.2"
+platform: linux
+labels:
+  github.repo: "nerdctl"
+  github.owner: "containerd"
+  autobump.revdeps: "true"
