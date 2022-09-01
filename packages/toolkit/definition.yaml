@@ -1,0 +1,8 @@
+name: "elemental-toolkit"
+category: "system"
+version: "0.8.14-22"
+license: "Apache License 2.0"
+copyright: SUSE
+labels:
+  github.repo: "elemental-toolkit"
+  github.owner: "rancher"
