@@ -1,0 +1,18 @@
+requires:
+- name: "toolchain-go"
+  category: "development"
+  version: ">=0"
+env:
+- PATH=$PATH:/usr/local/go/bin
+- CGO_ENABLED=0
+prelude:
+- |
+   PACKAGE_VERSION=v${PACKAGE_VERSION%\-*} && \
+   git clone --depth=1 --branch ${PACKAGE_VERSION} https://github.com/helm/helm
+steps:
+- |
+   cd helm && \
+   make build && \
+   cp bin/helm /usr/bin
+includes:
+- /usr/bin/helm
