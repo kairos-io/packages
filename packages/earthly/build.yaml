@@ -1,0 +1,19 @@
+
+{{ if eq .Values.arch "arm" }}
+{{ else }}
+requires:
+- name: "toolchain-go"
+  category: "development"
+  version: ">=0"
+prelude:
+- wget https://github.com/$GITHUB_OWNER/$GITHUB_REPO/releases/download/v{{.Values.version}}/{{.Values.name}}-linux-{{.Values.arch}} -O earthly
+env:
+- GITHUB_OWNER={{ ( index .Values.labels "github.owner" ) }}
+- GITHUB_REPO={{ ( index .Values.labels "github.repo" ) }}
+steps:
+- | 
+   mv {{ .Values.name }} /usr/bin/{{ .Values.name }}
+- chmod +x /usr/bin/{{ .Values.name }}
+includes:
+- /usr/bin/{{.Values.name}}
+{{ end }}
