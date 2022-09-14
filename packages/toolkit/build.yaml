@@ -8,7 +8,7 @@ copy:
 prelude:
 - |
    mkdir -p /etc/luet/repos.conf.d && \
-   luet repo add --type docker --reference "v{{.Values.version}}-repository.yaml" --yes --url quay.io/costoolkit/releases-teal elemental
+   luet repo add --type docker --reference "v{{.Values.version}}-repository.yaml" --yes --url {{.Values.repo}} elemental
 package_dir: /framework
 steps:
 - |

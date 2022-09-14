@@ -1,0 +1,28 @@
+packages:
+- name: "elemental-toolkit"
+  category: "system"
+  repo: "quay.io/costoolkit/releases-teal"
+  version: "0.8.14-22"
+  license: "Apache License 2.0"
+  copyright: SUSE
+  labels:
+    github.repo: "elemental-toolkit"
+    github.owner: "rancher"
+- name: "elemental-toolkit-ubuntu"
+  repo: "quay.io/costoolkit/releases-orange"
+  category: "system"
+  version: "0.8.14-22"
+  license: "Apache License 2.0"
+  copyright: SUSE
+  labels:
+    github.repo: "elemental-toolkit"
+    github.owner: "rancher"
+- name: "elemental-toolkit-fedora"
+  repo: "quay.io/costoolkit/releases-blue"
+  category: "system"
+  version: "0.8.14-22"
+  license: "Apache License 2.0"
+  copyright: SUSE
+  labels:
+    github.repo: "elemental-toolkit"
+    github.owner: "rancher"
