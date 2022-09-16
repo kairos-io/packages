@@ -8,12 +8,12 @@ image: golang:1.18-alpine
 prelude:
 - apk add git curl openrc
 {{ end }}
-- git clone https://github.com/c3os-io/provider-c3os
-- cd provider-c3os && git checkout {{.Values.tag}}
+- git clone https://github.com/kairos-io/provider-kairos
+- cd provider-kairos && git checkout {{.Values.tag}}
 - curl -sfL https://get.k3s.io > installer.sh 
 steps:
-- cd provider-c3os && go build -o agent-provider-c3os ./
-- mv provider-c3os/agent-provider-c3os /usr/local/bin
+- cd provider-kairos && go build -o agent-provider-kairos ./
+- mv provider-kairos/agent-provider-kairos /usr/local/bin
 - bash installer.sh
 - bash installer.sh agent
 {{ if ne .Values.init "systemd" }}

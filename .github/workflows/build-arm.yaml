@@ -27,7 +27,7 @@ jobs:
     - name: Download meta 🔧
       uses: luet-lab/luet-github-action@master
       with:
-        FINAL_REPO: quay.io/c3os/packages-arm
+        FINAL_REPO: quay.io/kairos/packages-arm
         REPOSITORY_TYPE: docker
         downloadAllMeta: true
         downloadFromList: true
@@ -41,7 +41,7 @@ jobs:
         onlyMissing: true
         buildx: true
         platform: linux/arm/v7
-        FINAL_REPO: quay.io/c3os/packages-arm
+        FINAL_REPO: quay.io/kairos/packages-arm
         DOCKER_USERNAME: ${{ secrets.QUAY_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
         DOCKER_ENDPOINT: quay.io
@@ -53,7 +53,7 @@ jobs:
       uses: luet-lab/luet-github-action@master
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
       with:
-        FINAL_REPO: quay.io/c3os/packages-arm
+        FINAL_REPO: quay.io/kairos/packages-arm
         DOCKER_USERNAME: ${{ secrets.QUAY_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
         DOCKER_ENDPOINT: quay.io
