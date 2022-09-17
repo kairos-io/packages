@@ -20,7 +20,7 @@ jobs:
     - name: Download meta 🔧
       uses: luet-lab/luet-github-action@master
       with:
-        FINAL_REPO: quay.io/c3os/packages
+        FINAL_REPO: quay.io/kairos/packages
         REPOSITORY_TYPE: docker
         downloadAllMeta: true
         downloadFromList: true
@@ -31,7 +31,7 @@ jobs:
         build: true
         fromIndex: true
         onlyMissing: true
-        FINAL_REPO: quay.io/c3os/packages
+        FINAL_REPO: quay.io/kairos/packages
         DOCKER_USERNAME: ${{ secrets.QUAY_USERNAME }}
         REPOSITORY_TYPE: docker
         pushFinalImages: false

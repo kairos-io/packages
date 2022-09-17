@@ -27,7 +27,7 @@ jobs:
         include:
           - upstream_branch: "main"
             fork: "git@github.com:ci-forks/packages.git"
-            upstream_repo: "https://github.com/c3os-io/packages"
+            upstream_repo: "https://github.com/kairos-io/packages"
             name: "packages"
     steps:
       - env:

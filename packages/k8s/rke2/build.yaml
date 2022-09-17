@@ -11,8 +11,7 @@ env:
 
 steps:
 - curl -sfL  {{.Values.rke2_http_source}} > installer.sh 
-- sed -i 's/systemctl daemon-reload//g' installer.sh 
-- sh installer.sh
+- INSTALL_RKE2_SKIP_RELOAD=1 sh installer.sh
 - rm -rf installer.sh
 - systemctl disable rke2-server rke2-agent
 - curl -LO https://dl.k8s.io/release/v{{.Values.version}}/bin/linux/{{.Values.arch}}/kubectl && chmod +x kubectl && mv kubectl /usr/bin
