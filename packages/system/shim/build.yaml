@@ -1,3 +1,5 @@
+# This is only for amd64
+{{ if eq .Values.arch "" }}
 image: registry.opensuse.org/opensuse/leap:15.3
 
 prelude:
@@ -10,3 +12,4 @@ includes:
 excludes:
 # This is shipped by system/grub2-efi
 - usr/share/efi/.*/grub.efi
+{{end}}
