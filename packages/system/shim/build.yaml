@@ -7,3 +7,6 @@ steps:
 
 includes:
 - usr/share/efi/.*/*.efi
+excludes:
+# This is shipped by system/grub2-efi
+- usr/share/efi/.*/grub.efi
