@@ -1,4 +1,4 @@
-{{ if neq .Values.arch "arm" }}
+{{ if ne .Values.arch "arm" }}
 image: registry.opensuse.org/opensuse/leap:15.3
 prelude:
 - zypper in -y wget cpio
