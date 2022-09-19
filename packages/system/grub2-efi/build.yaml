@@ -1,0 +1,11 @@
+{{ if neq .Values.arch "arm" }}
+image: registry.opensuse.org/opensuse/leap:15.3
+prelude:
+- zypper in -y wget cpio
+
+steps:
+- mkdir -p /data
+- wget  https://download.opensuse.org/repositories/isv:/Rancher:/Elemental/15.4/noarch/grub2-{{.Values.arch}}-efi-{{.Values.version}}.12.1.noarch.rpm -O /package.rpm
+- cd /data && rpm2cpio /package.rpm | cpio -idmv
+package_dir: "/data"
+{{end}}
