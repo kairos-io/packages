@@ -1,0 +1,22 @@
+requires:
+- name: "toolchain-go"
+  category: "development"
+  version: ">=0"
+env:
+- PATH=$PATH:/usr/local/go/bin
+- CGO_ENABLED=0
+- PACKAGE_VERSION={{( index .Values.labels "git.hash" )}}
+- ORG={{( index .Values.labels "github.owner" )}}
+- REPO={{( index .Values.labels "github.repo" )}}
+
+prelude:
+- |
+   git clone https://github.com/$ORG/$REPO && cd $REPO && git checkout ${PACKAGE_VERSION} 
+
+steps:
+  - |
+    cd $REPO && make build && \
+    mv bin/{{.Values.bin_name}} /usr/bin/{{.Values.bin_name}}
+
+includes:
+  - /usr/bin/{{.Values.bin_name}}

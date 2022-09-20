@@ -1,0 +1,12 @@
+name: "elemental-cli"
+category: "system"
+version: "0.20220808"
+bin_name: "elemental"
+fips: false
+labels:
+  github.repo: "elemental-cli"
+  github.owner: "rancher"
+  autobump.revdeps: "true"
+  autobump.strategy: "git_hash"
+  autobump.git.branch: "main"
+  git.hash: "8a7e7a1098ca9e527a4a075240092b4a4d56b390"
