@@ -1,3 +1,4 @@
+{{ if eq .Values.arch "x86_64" }} # This makes the package available only on amd64 for now
 image: "opensuse/leap:15.3"
 
 prelude:
@@ -48,3 +49,4 @@ steps:
   {{end}}
 - cp config/grub_live_efi.cfg /EFI/BOOT/grub.cfg
 {{end}}
+{{ end }}
