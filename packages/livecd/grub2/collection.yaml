@@ -1,0 +1,11 @@
+packages:
+  - name: "grub2"
+    category: "livecd"
+    version: 0.0.3-2
+    arch: x86_64
+    description: "Grub2 booloader for live systems"
+  - name: "grub2-efi-image"
+    category: "livecd"
+    version: 0.0.2-3
+    arch: x86_64
+    description: "Grub2 booloader EFI image for live systems"
