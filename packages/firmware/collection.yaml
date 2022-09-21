@@ -1,7 +1,7 @@
 packages:
   - name: "odroid-c2"
     category: "firmware"
-    version: "20170419-5.197"
+    version: "20170419-5.204"
     arch: "noarch"
   - name: "u-boot-rpi64"
     category: "firmware"
