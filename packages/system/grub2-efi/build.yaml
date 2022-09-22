@@ -8,4 +8,6 @@ steps:
 - wget  https://download.opensuse.org/repositories/isv:/Rancher:/Elemental/15.4/noarch/grub2-{{.Values.arch}}-efi-{{.Values.version}}.12.1.noarch.rpm -O /package.rpm
 - cd /data && rpm2cpio /package.rpm | cpio -idmv
 package_dir: "/data"
+excludes:
+- usr/lib64
 {{end}}
