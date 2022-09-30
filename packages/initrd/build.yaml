@@ -1,0 +1,28 @@
+requires:
+- name: "{{.Values.name}}"
+  category: "distro-kernels"
+  version: ">=0"
+
+copy:
+# The toolkit is required in module-setup and embedded in the initramfs. 
+- package: 
+    category: "system"
+    {{ if eq .Values.name "opensuse" }}
+    name: "elemental-toolkit"
+    {{ else }}
+    name: "elemental-toolkit-{{.Values.name}}"
+    {{ end }}
+    version: ">=0"
+  source: "/framework/."
+  destination: "/"
+
+prelude:
+# remove if any
+- rm -rf /boot/initrd || true
+
+steps:
+# Create initrd
+- |
+    kernel=$(ls /lib/modules | head -n1) && \
+    dracut -f "/boot/initrd-${kernel}" "${kernel}" && \
+    ln -sf "initrd-${kernel}" /boot/initrd
