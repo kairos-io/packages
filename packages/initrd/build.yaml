@@ -13,7 +13,7 @@ copy:
   destination: "/"
 - package: 
     category: "system"
-    name: "elemental"
+    name: "elemental-cli"
     version: ">=0"
   source: "/usr/bin/elemental"
   destination: "/usr/bin/elemental"
