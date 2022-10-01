@@ -11,6 +11,12 @@ copy:
     version: ">=0"
   source: "/framework/."
   destination: "/"
+- package: 
+    category: "system"
+    name: "elemental"
+    version: ">=0"
+  source: "/usr/bin/elemental"
+  destination: "/usr/bin/elemental"
 
 prelude:
 # remove if any
