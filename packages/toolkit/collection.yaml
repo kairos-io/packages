@@ -1,5 +1,5 @@
 packages:
-- name: "elemental-toolkit"
+- name: "elemental-toolkit-opensuse"
   category: "system"
   repo: "quay.io/costoolkit/releases-teal"
   version: "0.8.14-22"
