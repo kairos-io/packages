@@ -21,7 +21,11 @@ steps:
             cloud-config/rootfs \
             system-openrc/cos-setup
 #- mkdir -p /output/etc/dracut.conf.d/
-- cp -rf dracut.conf /output/etc/dracut.conf.d/20-kairos.conf
+{{ if eq .Values.name "elemental-toolkit-opensuse" }}
+{{ if ne .Values.arch "arm64" }}
+- cp -rf sysext.conf /output/etc/dracut.conf.d/20-sysext.conf
+{{ end }}
+{{ end }}
 excludes:
 - var/cache|var/cache/.*
 - usr/bin/elemental
