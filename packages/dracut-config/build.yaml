@@ -1,0 +1,6 @@
+image: "alpine"
+
+steps:
+- mkdir -p /output/etc/dracut.conf.d/
+- cp -rf dracut.conf /output/etc/dracut.conf.d/20-kairos.conf
+package_dir: "/output"

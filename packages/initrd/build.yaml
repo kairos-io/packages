@@ -12,6 +12,12 @@ copy:
   source: "/framework/."
   destination: "/"
 - package: 
+    category: "config"
+    name: "dracut"
+    version: ">=0"
+  source: "/output/."
+  destination: "/"
+- package: 
     category: "system"
     name: "elemental-cli"
     version: ">=0"
