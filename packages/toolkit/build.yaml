@@ -8,7 +8,7 @@ copy:
 prelude:
 - |
    mkdir -p /etc/luet/repos.conf.d && \
-   luet repo add --type docker --reference "v{{.Values.version}}-repository.yaml" --yes --url {{.Values.repo}} elemental
+   luet repo add --type docker --reference "v{{.Values.tag}}-repository.yaml" --yes --url {{.Values.repo}} elemental
 package_dir: /framework
 steps:
 - |
@@ -20,6 +20,8 @@ steps:
             cloud-config/boot-assessment \
             cloud-config/rootfs \
             system-openrc/cos-setup
+#- mkdir -p /output/etc/dracut.conf.d/
+- cp -rf dracut.conf /output/etc/dracut.conf.d/20-kairos.conf
 excludes:
 - var/cache|var/cache/.*
 - usr/bin/elemental
