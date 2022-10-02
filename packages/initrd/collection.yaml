@@ -1,10 +1,10 @@
 packages:
 - name: "opensuse"
   category: "distro-initrd"
-  version: "0.2"
+  version: "0.3"
 - name: "fedora"
   category: "distro-initrd"
-  version: "0.2"
+  version: "0.3"
 - name: "ubuntu"
   category: "distro-initrd"
-  version: "0.2"
+  version: "0.3"
