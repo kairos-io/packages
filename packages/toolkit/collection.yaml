@@ -4,6 +4,7 @@ packages:
   repo: "quay.io/costoolkit/releases-teal"
   version: "0.8.14-23"
   tag: "0.8.14-22"
+  arch: "amd64"
   license: "Apache License 2.0"
   copyright: SUSE
   labels:
@@ -13,6 +14,7 @@ packages:
   repo: "quay.io/costoolkit/releases-orange"
   category: "system"
   version: "0.8.14-23"
+  arch: "amd64"
   tag: "0.8.14-22"
   license: "Apache License 2.0"
   copyright: SUSE
@@ -22,6 +24,7 @@ packages:
 - name: "elemental-toolkit-fedora"
   repo: "quay.io/costoolkit/releases-blue"
   category: "system"
+  arch: "amd64"
   version: "0.8.14-23"
   tag: "0.8.14-22"
   license: "Apache License 2.0"
