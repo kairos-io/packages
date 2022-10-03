@@ -23,7 +23,9 @@ steps:
 #- mkdir -p /output/etc/dracut.conf.d/
 {{ if eq .Values.name "elemental-toolkit-opensuse" }}
 {{ if ne .Values.arch "arm64" }}
+{{ if ne .Values.arch "arm" }}
 - cp -rf sysext.conf /framework/etc/dracut.conf.d/20-sysext.conf
+{{ end }}
 {{ end }}
 {{ end }}
 excludes:
