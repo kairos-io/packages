@@ -1,0 +1,10 @@
+name: kcrypt
+category: system
+version: "0.1"
+labels:
+  github.repo: "kcrypt"
+  github.owner: "kairos-io"
+uri:
+  - https://github.com/kairos-io/kcrypt
+license: "Apache License v2"
+description: "Cloud native guardian for persistent data in the edge"

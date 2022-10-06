@@ -17,7 +17,18 @@ copy:
     version: ">=0"
   source: "/usr/bin/elemental"
   destination: "/usr/bin/elemental"
-
+- package: 
+    category: "dracut"
+    name: "kcrypt"
+    version: ">=0"
+  source: "/package/."
+  destination: "/"
+- package: 
+    category: "system"
+    name: "kcrypt"
+    version: ">=0"
+  source: "/usr/bin/kcrypt"
+  destination: "/usr/bin/kcrypt"
 prelude:
 # remove if any
 - rm -rf /boot/initrd || true
