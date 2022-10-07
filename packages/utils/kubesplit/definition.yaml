@@ -1,0 +1,10 @@
+name: kubesplit
+category: utils
+version: "0.2.0"
+description: "A opinionated simple tool to split big YAML Kubernetes files into chunks to help building helm charts"
+labels:
+  github.repo: "kubesplit"
+  github.owner: "spectrocloud"
+uri:
+  - https://github.com/spectrocloud/kubesplit
+license: "Apache 2.0 License"
