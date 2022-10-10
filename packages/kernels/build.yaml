@@ -12,6 +12,9 @@ steps:
 {{ if .Values.distribution }}
 {{if eq .Values.distribution "opensuse" }}
 - zypper in -y --no-recommends {{.Values.packages}}
+{{ if eq .Values.arch "arm64" }}
+- zypper in -y raspberrypi-firmware-config
+{{ end }}
 - zypper cc
 {{ if .Values.arch }}
   {{ if eq .Values.arch "arm64" }}
