@@ -1,4 +1,4 @@
-image: "{{.Values.image}}:{{.Values.version}}"
+image: "{{.Values.image}}:{{.Values.image_tag}}"
 excludes:
 - ^/boot/grub2
 - ^/boot/initrd
@@ -14,7 +14,7 @@ steps:
 - zypper in -y --no-recommends {{.Values.packages}}
 - zypper cc
 {{ if .Values.arch }}
-  {{ if eq .Values.arch "aarch64" }}
+  {{ if eq .Values.arch "arm64" }}
 # aarch64 has an uncompressed kernel so we need to link it to vmlinuz
 - |
     kernel=$(ls /boot/Image-* | head -n1) && \
