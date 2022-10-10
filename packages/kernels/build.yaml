@@ -20,7 +20,7 @@ steps:
   {{ if eq .Values.arch "arm64" }}
 # aarch64 has an uncompressed kernel so we need to link it to vmlinuz
 - |
-    kernel=$(ls /boot/Image-* | head -n1) && \
+    kernel=$(ls /boot/zImage-* | head -n1) && \
     ln -sf "${kernel#/boot/}" /boot/vmlinuz
   {{ end }}
 {{ end }}
