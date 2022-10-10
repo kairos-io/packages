@@ -13,7 +13,7 @@ steps:
 {{if eq .Values.distribution "opensuse" }}
 - zypper in -y --no-recommends {{.Values.packages}}
 {{ if eq .Values.arch "arm64" }}
-- zypper in -y raspberrypi-firmware-config
+- zypper in -y raspberrypi-firmware-config raspberrypi-firmware-dt
 {{ end }}
 - zypper cc
 {{ if .Values.arch }}
