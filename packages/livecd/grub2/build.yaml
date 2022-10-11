@@ -2,6 +2,7 @@
 image: "opensuse/leap:15.3"
 
 prelude:
+- zypper in -y git
 {{ if .Values.arch }}
   {{if eq .Values.arch "x86_64"}}
 - zypper in -y --no-recommends syslinux grub2-i386-pc grub2-x86_64-efi shim
