@@ -1,13 +1,13 @@
 packages:
   - name: "grub2"
     category: "livecd"
-    version: 0.0.3-2
+    version: "0.0.4"
     arch: x86_64
     description: "Grub2 booloader for live systems"
     kairos_tag: "1.1.1"
   - name: "grub2-efi-image"
     category: "livecd"
-    version: 0.0.2-3
+    version: "0.0.4"
     arch: x86_64
     kairos_tag: "1.1.1"
     description: "Grub2 booloader EFI image for live systems"
