@@ -18,7 +18,7 @@ steps:
 - |
   PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
   mkdir -p /system/discovery && \
-  cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/  && go build -o {{.Values.name}} ./cmd/discovery/main.go && mv {{.Values.name}} /system/discovery
-- chmod +x /system/discovery/{{.Values.name}}
+  cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/  && go build -o kcrypt-discovery-challenger ./cmd/discovery/main.go && mv kcrypt-discovery-challenger /system/discovery
+- chmod +x /system/discovery/kcrypt-discovery-challenger
 includes:
-- /system/discovery/{{.Values.name}}
+- /system/discovery/kcrypt-discovery-challenger
