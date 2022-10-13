@@ -1,4 +1,11 @@
-image: "golang:{{.Values.version}}-alpine"
+{{ if .Values.variant }}
+image: "golang:{{.Values.version}}-{{.Values.variant}}"
+{{ else }}
+image: "golang:{{.Values.version}}"
+{{ end }}
+
+{{ if eq .Values.variant "alpine" }}
 prelude:
 - apk update
 - apk add curl make git bash
+{{ end }}

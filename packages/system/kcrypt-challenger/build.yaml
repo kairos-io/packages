@@ -1,0 +1,24 @@
+requires:
+- name: "toolchain-go-ubuntu"
+  category: "development"
+  version: ">=0"
+prelude:
+- mkdir go/src/github.com/${GITHUB_ORG}/ -p
+- apt-get update && apt-get install -y gcc libssl-dev
+- cd go/src/github.com/${GITHUB_ORG}/ && git clone https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
+{{ if ne .Values.live "yes" }}
+- cd go/src/github.com/${GITHUB_ORG}/ && git checkout v"${PACKAGE_VERSION}" -b build
+{{ end }}
+env:
+- GOPATH=/luetbuild/go/
+- DEBIAN_FRONTEND=noninteractive
+- GITHUB_ORG={{ ( index .Values.labels "github.owner" ) }}
+- CGO_ENABLED=0
+steps:
+- |
+  PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
+  mkdir -p /system/discovery && \
+  cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/  && go build -o {{.Values.name}} ./cmd/discovery/main.go && mv {{.Values.name}} /system/discovery
+- chmod +x /system/discovery/{{.Values.name}}
+includes:
+- /system/discovery/{{.Values.name}}

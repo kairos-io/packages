@@ -1,5 +1,11 @@
 packages:
 - name: toolchain-go
   category: development
+  variant: "alpine"
+  version: "1.18"
+  hidden: true
+- name: toolchain-go-ubuntu
+  variant: ""
+  category: development
   version: "1.18"
   hidden: true
