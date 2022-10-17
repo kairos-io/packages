@@ -6,4 +6,4 @@ fips: false
 labels:
   github.repo: "elemental-cli"
   github.owner: "kairos-io"
-  git.hash: "1e4904564db9feb517b4875d14d0a22dc9fc24f7"
+  git.hash: "96e98e5ddad5399be769b874be0970734269605a"
