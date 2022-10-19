@@ -1,0 +1,34 @@
+
+
+image: {{.Values.image}}
+
+package_dir: "/output"
+steps:
+- mkdir -p /output/EFI/BOOT
+- cp config/grub_live_efi.cfg /output/EFI/BOOT/grub.cfg
+  {{if .Values.distribution}}
+    {{if eq .Values.distribution "opensuse"}}
+      {{if .Values.arch }}
+        {{if eq .Values.arch "x86_64"}}
+- cp /usr/share/grub2/x86_64-efi/grub.efi /output/EFI/BOOT/bootx64.efi
+        {{end}}
+       {{if eq .Values.arch "arm64"}}
+- cp /usr/share/grub2/arm64-efi/grub.efi /output/EFI/BOOT/bootaa64.efi
+       {{end}}
+     {{end}}
+    {{else if eq .Values.distribution "fedora"}}
+      {{if eq .Values.arch "x86_64"}}
+- grub2-mkimage -O x86_64-efi -o /output/EFI/BOOT/bootx64.efi -c /output/EFI/BOOT/grub.cfg -p /grub2 -d /usr/lib/grub/x86_64-efi {{.Values.efi_modules}}
+    {{else if eq .Values.arch "arm64"}}
+- mkdir -p /output/EFI/fedora
+- cp -r /boot/efi/EFI/fedora/* /output/EFI/fedora/
+- cp -r /boot/efi/EFI/BOOT/* /output/EFI/BOOT/
+  {{end}}
+  {{else if eq .Values.distribution "ubuntu"}}
+    {{if eq .Values.arch "x86_64"}}
+- grub-mkimage -O x86_64-efi -o /output/EFI/BOOT/bootx64.efi -c /output/EFI/BOOT/grub.cfg -p /grub2 -d /usr/lib/grub/x86_64-efi {{.Values.efi_modules}} linuxefi
+      {{else if eq .Values.arch "arm64"}}
+- grub-mkimage -O arm64-efi -o /output/EFI/BOOT/bootaa64.efi -c /output/EFI/BOOT/grub.cfg -p /grub2 -d /usr/lib/grub/arm64-efi {{.Values.efi_modules_arm64}}
+      {{end}}
+    {{end}}
+  {{end}}

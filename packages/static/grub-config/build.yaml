@@ -1,0 +1,11 @@
+requires:
+- name: "elemental-toolkit-opensuse"
+  category: "system"
+  version: ">=0"
+
+steps:
+- | 
+   mkdir -p /{{.Values.name}}/etc && \
+   cp -rfv /framework/etc/cos /{{.Values.name}}/etc
+
+package_dir: "/{{.Values.name}}"
