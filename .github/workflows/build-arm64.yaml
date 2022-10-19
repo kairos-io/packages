@@ -40,7 +40,7 @@ jobs:
         fromIndex: true
         onlyMissing: true
         buildx: true
-        platform: linux/arm/v8
+        platform: linux/arm64
         FINAL_REPO: quay.io/kairos/packages-arm64
         DOCKER_USERNAME: ${{ secrets.QUAY_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.QUAY_PASSWORD }}

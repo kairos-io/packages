@@ -7,6 +7,35 @@ on:
   pull_request:
 
 jobs:
+  build-arm64:
+    runs-on: ubuntu-latest
+    env:
+      ARCH: amd64
+    steps:
+    - uses: actions/checkout@v2
+    - run: |
+        git fetch --prune --unshallow
+        mkdir build
+    - name: Download meta 🔧
+      uses: luet-lab/luet-github-action@master
+      with:
+        FINAL_REPO: quay.io/kairos/packages
+        REPOSITORY_TYPE: docker
+        downloadAllMeta: true
+        downloadFromList: true
+        downloadMeta: true
+    - name: Build packages 🔧
+      uses: luet-lab/luet-github-action@master
+      with:
+        build: true
+        fromIndex: true
+        platform: linux/arm64
+        onlyMissing: true
+        FINAL_REPO: quay.io/kairos/packages
+        DOCKER_USERNAME: ${{ secrets.QUAY_USERNAME }}
+        REPOSITORY_TYPE: docker
+        pushFinalImages: false
+        pushCache: false
 
   build:
     runs-on: ubuntu-latest
