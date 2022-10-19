@@ -1,7 +1,7 @@
 
 image: {{.Values.image}}
 
-{{if eq .Values.image "opensuse"}}
+{{if eq .Values.distribution "opensuse"}}
 {{ if eq .Values.arch "arm64" }}
 prelude:
 - zypper in -y grub2-arm64-efi grub2
@@ -15,12 +15,10 @@ prelude:
 
 steps:
 - mkdir /grub-artifacts
-  {{if .Values.distribution}}
-    {{if eq .Values.distribution "opensuse"}}
+{{if eq .Values.distribution "opensuse"}}
 - cp -rf /usr/share/grub2/* /grub-artifacts
-    {{else}}
+{{else}}
 - cp -rfL /usr/lib/grub/* /grub-artifacts
-    {{end}}
-  {{end}}
+{{end}}
 
 package_dir: /grub-artifacts
