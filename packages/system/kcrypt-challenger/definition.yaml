@@ -1,7 +1,7 @@
 name: kcrypt-challenger
 category: system
 live: "yes"
-version: "0.0.1+1"
+version: "0.0.1+2"
 labels:
   github.repo: "kcrypt-challenger"
   github.owner: "kairos-io"

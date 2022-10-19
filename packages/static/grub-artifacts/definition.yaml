@@ -1,0 +1,5 @@
+name: "grub-artifacts"
+category: "static"
+version: "0.1"
+distribution: opensuse
+image: opensuse/leap:15.3
