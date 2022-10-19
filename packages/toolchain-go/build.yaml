@@ -1,7 +1,7 @@
 {{ if .Values.variant }}
-image: "golang:{{.Values.version}}-{{.Values.variant}}"
+image: "golang:{{.Values.tag}}-{{.Values.variant}}"
 {{ else }}
-image: "golang:{{.Values.version}}"
+image: "golang:{{.Values.tag}}"
 {{ end }}
 
 {{ if eq .Values.variant "alpine" }}
