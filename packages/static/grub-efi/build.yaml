@@ -2,6 +2,18 @@
 
 image: {{.Values.image}}
 
+{{if eq .Values.distribution "opensuse"}}
+{{ if eq .Values.arch "arm64" }}
+prelude:
+- zypper in -y grub2-arm64-efi grub2
+{{ else if eq .Values.arch "arm" }}
+
+{{ else }}
+prelude:
+- zypper in -y grub2-i386-pc grub2-x86_64-efi grub2
+{{ end }}
+{{end}}
+
 package_dir: "/output"
 steps:
 - mkdir -p /output/EFI/BOOT
