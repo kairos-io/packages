@@ -1,7 +1,7 @@
 packages:
 - category: "distro-kernels"
   name: "opensuse"
-  version: "15.4+2"
+  version: "15.4+1"
   image_tag: "15.4"
   image: "opensuse/leap"
   distribution: "opensuse"
@@ -15,7 +15,7 @@ packages:
 #   packages: "kernel grub2 kernel-core dracut dracut-live"
 - category: "distro-kernels"
   name: "ubuntu"
-  image_tag: "20.04"
+  image_tag: "20.04+1"
   version: "20.04"
   image: "ubuntu"
   distribution: "ubuntu"
