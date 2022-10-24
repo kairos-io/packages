@@ -35,8 +35,10 @@ steps:
 {{if eq .Values.distribution "ubuntu" }}
 - mkdir -p /package/boot
 - mkdir -p /package/lib/modules
+- mkdir -p /package/lib/firmware
 - cp -rfv /boot/* /package/boot
 - cp -rfv /lib/modules/* /package/lib/modules
+- cp -rfv /lib/firmware/* /package/lib/firmware
 - rm -rf /package/boot/grub2 || true
 - rm -rf /package/boot/grub || true
 - rm -rf /package/boot/initrd  || true
@@ -46,7 +48,10 @@ package_dir: "/package"
 
 includes:
 - ^/boot|^/boot/.*
+# TODO: Shall we have separate packages for modules/firwmare?
 - ^/lib/modules|^/lib/modules.*
+- ^/lib/firmware|^/lib/firmware.*
+
 excludes:
 - ^/boot/grub2
 - ^/boot/initrd
