@@ -5,7 +5,7 @@ steps:
 {{if eq .Values.distribution "opensuse" }}
 - zypper in -y --no-recommends {{.Values.packages}}
 {{ if eq .Values.arch "arm64" }}
-- zypper in -y raspberrypi-firmware-config raspberrypi-firmware-dt
+- zypper in -y {{.Values.packages_arm}}
 {{ end }}
 - zypper cc
 {{ if .Values.arch }}
@@ -24,7 +24,12 @@ steps:
     ln -sf "${kernel#/boot/}" /boot/vmlinuz
 {{else if eq .Values.distribution "ubuntu" }}
 # Note for future issues with grub: https://bugs.launchpad.net/ubuntu/+source/grub2/+bug/1879558 https://github.com/rancher-sandbox/cOS-toolkit/pull/101#discussion_r621929109
-- apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y {{.Values.packages}}
+- apt-get update
+{{ if eq .Values.arch "arm64" }}
+- DEBIAN_FRONTEND=noninteractive apt-get install -y {{.Values.packages_arm}}
+{{ else }}
+- DEBIAN_FRONTEND=noninteractive apt-get install -y {{.Values.packages}}
+{{ end }}
 - apt-get clean
 - |
     kernel=$(ls /boot/vmlinuz-* | head -n1) && \
