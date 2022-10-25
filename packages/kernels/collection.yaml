@@ -1,7 +1,7 @@
 packages:
 - category: "distro-kernels"
   name: "opensuse"
-  version: "15.4+4"
+  version: "15.4+5"
   image_tag: "15.4"
   image: "opensuse/leap"
   distribution: "opensuse"
@@ -17,7 +17,7 @@ packages:
 - category: "distro-kernels"
   name: "ubuntu"
   image_tag: "20.04"
-  version: "20.04+4"
+  version: "20.04+5"
   image: "ubuntu"
   distribution: "ubuntu"
   packages: "linux-image-generic-hwe-20.04 dracut dracut-network"

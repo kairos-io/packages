@@ -32,7 +32,8 @@ copy:
 prelude:
 # remove if any
 - rm -rf /boot/initrd || true
-
+includes:
+- ^/boot|^/boot/.*
 steps:
 # Create initrd
 - |
