@@ -13,7 +13,7 @@ jobs:
     env:
       ARCH: amd64
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - run: |
         git fetch --prune --unshallow
         mkdir build
