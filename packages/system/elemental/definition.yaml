@@ -1,9 +1,9 @@
 name: "elemental-cli"
 category: "system"
-version: "0.20221102"
+version: "0.20221107"
 bin_name: "elemental"
 fips: false
 labels:
   github.repo: "elemental-cli"
   github.owner: "kairos-io"
-  git.hash: "f920f4ad7475acff5add8b1a9175ef69b5729641"
+  git.hash: "9823d5271add6ee4ccd511a473bb4237db852786"
