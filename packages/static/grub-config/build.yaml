@@ -1,11 +1,13 @@
-requires:
-- name: "elemental-toolkit-opensuse"
-  category: "system"
-  version: ">=0"
+image: alpine
 
+# Note, we don't generate grubenv_firstboot to allow builds from any container image, however, to build it:
+# grub2-editenv /etc/cos/grubenv_firstboot set next_entry=recovery
+# This is used only when booting from squashfs/EFI in raw disks - as otherwise the boot default is active.
+# In the context of raw disk images, grub-efi config chainloads to this grub.cfg file
+# TODO: grubenv shouldn't be here, but rather in osbuilder when building raw disk images
 steps:
 - | 
-   mkdir -p /{{.Values.name}}/etc && \
-   cp -rfv /framework/etc/cos /{{.Values.name}}/etc
+   mkdir -p /{{.Values.name}}/etc/cos && \
+   cp -rfv files/* /{{.Values.name}}/etc/cos
 
 package_dir: "/{{.Values.name}}"

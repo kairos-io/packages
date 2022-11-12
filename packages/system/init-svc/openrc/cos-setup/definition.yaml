@@ -1,0 +1,4 @@
+name: openrc
+category: init-svc
+version: 0.2-8
+description: "Experimental package for openrc support"

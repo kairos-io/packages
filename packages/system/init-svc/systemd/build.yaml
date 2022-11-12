@@ -1,0 +1,5 @@
+image: "alpine"
+steps:
+- mkdir -p /etc/systemd/system
+- cp -rfv *.service /etc/systemd/system
+- cp -rfv *.timer /etc/systemd/system
