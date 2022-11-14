@@ -1,11 +1,12 @@
 image: alpine
+package_dir: "/package"
 steps:
-- mkdir -p /etc/systemd/system
-- mkdir -p /etc/dracut.conf.d
-- cp -rf tmp.mount /etc/systemd/system
-- mkdir -p /usr/lib/dracut/modules.d
-- cp -r 30cos-immutable-rootfs /usr/lib/dracut/modules.d
-- cp 02-cos-immutable-rootfs.conf /etc/dracut.conf.d
-- cp 02-cos-setup-initramfs.conf /etc/dracut.conf.d
-- cp 50-cos-initrd.conf /etc/dracut.conf.d
-- cp -rfv 30cos-immutable-rootfs/cos-setup-*.service /etc/systemd/system
+- mkdir -p /package/etc/systemd/system
+- mkdir -p /package/etc/dracut.conf.d
+- cp -rf tmp.mount /package/etc/systemd/system
+- mkdir -p /package/usr/lib/dracut/modules.d
+- cp -r 30cos-immutable-rootfs /package/usr/lib/dracut/modules.d
+- cp 02-cos-immutable-rootfs.conf /package/etc/dracut.conf.d
+- cp 02-cos-setup-initramfs.conf /package/etc/dracut.conf.d
+- cp 50-cos-initrd.conf /package/etc/dracut.conf.d
+- cp -rfv 30cos-immutable-rootfs/cos-setup-*.service /package/etc/systemd/system

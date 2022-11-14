@@ -7,16 +7,16 @@ copy:
 # The toolkit is required in module-setup and embedded in the initramfs. 
 - package: 
     category: "system"
-    name: "elemental-toolkit-{{.Values.name}}"
-    version: ">=0"
-  source: "/framework/."
-  destination: "/"
-- package: 
-    category: "system"
     name: "elemental-cli"
     version: ">=0"
   source: "/usr/bin/elemental"
   destination: "/usr/bin/elemental"
+- package: 
+    category: "dracut"
+    name: "immutable-rootfs"
+    version: ">=0"
+  source: "/package/."
+  destination: "/"
 - package: 
     category: "dracut"
     name: "kcrypt"
