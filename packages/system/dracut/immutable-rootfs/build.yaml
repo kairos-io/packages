@@ -1,6 +1,7 @@
 image: alpine
 steps:
 - mkdir -p /etc/systemd/system
+- mkdir -p /etc/dracut.conf.d
 - cp -rf tmp.mount /etc/systemd/system
 - mkdir -p /usr/lib/dracut/modules.d
 - cp -r 30cos-immutable-rootfs /usr/lib/dracut/modules.d
