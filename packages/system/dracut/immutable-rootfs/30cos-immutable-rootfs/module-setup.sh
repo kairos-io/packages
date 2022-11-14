@@ -39,9 +39,9 @@ install() {
     inst_simple "${moddir}/cos-immutable-rootfs.service" \
         "${systemdsystemunitdir}/cos-immutable-rootfs.service"
     inst_simple "${moddir}/cos-setup-initramfs.service" \
-        "${systemdsystemunitdir}/cos-setup-initramfs.service.service"
+        "${systemdsystemunitdir}/cos-setup-initramfs.service"
     inst_simple "${moddir}/cos-setup-rootfs.service" \
-        "${systemdsystemunitdir}/cos-setup-rootfs.service.service"
+        "${systemdsystemunitdir}/cos-setup-rootfs.service"
     mkdir -p "${initdir}/${systemdsystemunitdir}/initrd-fs.target.requires"
     ln_r "../cos-immutable-rootfs.service" \
         "${systemdsystemunitdir}/initrd-fs.target.requires/cos-immutable-rootfs.service"
