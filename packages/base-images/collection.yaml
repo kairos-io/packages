@@ -8,10 +8,6 @@ packages:
   version: "22.10"
   packages: >-
         systemd
-        grub-pc-bin
-        grub-efi-amd64-bin
-        grub2
-        grub2-common
         sudo
         iproute2
         squashfs-tools
@@ -43,10 +39,6 @@ packages:
   image: "ubuntu:20.04"
   packages: >-
         systemd
-        grub-pc-bin
-        grub-efi-amd64-bin
-        grub2
-        grub2-common
         sudo
         iproute2
         squashfs-tools
@@ -92,9 +84,7 @@ packages:
         findutils
         gawk
         gptfdisk
-        grub2-i386-pc
         logrotate
-        grub2-x86_64-efi
         fail2ban
         haveged
         htop
