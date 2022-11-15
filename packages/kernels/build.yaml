@@ -1,4 +1,7 @@
-image: "{{.Values.image}}:{{.Values.image_tag}}"
+requires:
+- category: "base-image"
+  version: ">=0"
+  name: "{{.Values.name}}"
 
 steps:
 {{ if .Values.distribution }}
