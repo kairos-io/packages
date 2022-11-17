@@ -1,0 +1,7 @@
+packages:
+- name: "kairos"
+  category: "dracut"
+  version: "0.9"
+- name: "kairos-compat"
+  category: "dracut"
+  version: "0.9"

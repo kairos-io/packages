@@ -19,6 +19,16 @@ copy:
   destination: "/"
 - package: 
     category: "dracut"
+    {{ if or ( eq .Values.name "ubuntu-20-lts" ) ( eq .Values.name "ubuntu" ) ( eq .Values.name "ubuntu-22-lts" ) }}
+    name: "kairos-compat"
+    {{ else }}
+    name: "kairos"
+    {{ end }}
+    version: ">=0"
+  source: "/package/."
+  destination: "/"
+- package: 
+    category: "dracut"
     name: "kcrypt"
     version: ">=0"
   source: "/package/."
