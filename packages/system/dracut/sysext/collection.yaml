@@ -1,0 +1,4 @@
+packages:
+- name: "sysext"
+  category: "dracut"
+  version: "0.9"
