@@ -17,12 +17,20 @@ copy:
     version: ">=0"
   source: "/package/."
   destination: "/"
+{{ if or ( eq .Values.name "opensuse" ) }}
+- package: 
+    category: "dracut"
+    name: "sysext"
+    version: ">=0"
+  source: "/package/."
+  destination: "/"
+{{ end }}
 - package: 
     category: "dracut"
     {{ if or ( eq .Values.name "ubuntu-20-lts" ) ( eq .Values.name "ubuntu" ) ( eq .Values.name "ubuntu-22-lts" ) }}
-    name: "kairos-compat"
+    name: "network-compat"
     {{ else }}
-    name: "kairos"
+    name: "network"
     {{ end }}
     version: ">=0"
   source: "/package/."
