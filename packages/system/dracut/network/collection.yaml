@@ -1,7 +1,7 @@
 packages:
-- name: "kairos"
+- name: "network"
   category: "dracut"
   version: "0.9"
-- name: "kairos-compat"
+- name: "network-compat"
   category: "dracut"
   version: "0.9"
