@@ -25,13 +25,17 @@ copy:
   source: "/package/."
   destination: "/"
 {{ end }}
+{{ if and ( ne .Values.name "ubuntu-20-lts" ) ( ne .Values.name "ubuntu" ) ( ne .Values.name "ubuntu-22-lts" ) }}
 - package: 
     category: "dracut"
-    {{ if or ( eq .Values.name "ubuntu-20-lts" ) ( eq .Values.name "ubuntu" ) ( eq .Values.name "ubuntu-22-lts" ) }}
-    name: "network-compat"
-    {{ else }}
+    name: "systemd-resolved"
+    version: ">=0"
+  source: "/package/."
+  destination: "/"
+{{ end }}
+- package: 
+    category: "dracut"
     name: "network"
-    {{ end }}
     version: ">=0"
   source: "/package/."
   destination: "/"

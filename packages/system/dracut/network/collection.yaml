@@ -1,7 +1,0 @@
-packages:
-- name: "network"
-  category: "dracut"
-  version: "0.9"
-- name: "network-compat"
-  category: "dracut"
-  version: "0.9"

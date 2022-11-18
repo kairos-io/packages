@@ -1,0 +1,3 @@
+name: "systemd-resolved"
+category: "dracut"
+version: "0.10"
