@@ -3,9 +3,5 @@ package_dir: "/package"
 steps:
 - mkdir -p /package/etc/systemd/network
 - mkdir -p /package/etc/dracut.conf.d
-{{ if eq .Values.name "network-compat" }}
-- cp -rfv conf-compat/* /package/etc/dracut.conf.d
-{{ else }}
 - cp -rfv conf/* /package/etc/dracut.conf.d
-{{ end }}
 - cp -rfv network/* /package/etc/systemd/network
