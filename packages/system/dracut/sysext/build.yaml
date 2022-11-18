@@ -1,0 +1,6 @@
+image: alpine
+package_dir: "/package"
+steps:
+- mkdir -p /package/etc/systemd/network
+- mkdir -p /package/etc/dracut.conf.d
+- cp -rfv conf/* /package/etc/dracut.conf.d
