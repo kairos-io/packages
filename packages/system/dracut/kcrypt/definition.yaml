@@ -1,6 +1,6 @@
 name: kcrypt
 category: dracut
-version: "0.3"
+version: "0.4.4"
 labels:
   github.repo: "kcrypt"
   github.owner: "kairos-io"
