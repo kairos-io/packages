@@ -1,0 +1,4 @@
+packages:
+- name: "network-legacy"
+  category: "dracut"
+  version: "0.9"

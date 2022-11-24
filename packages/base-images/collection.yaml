@@ -69,13 +69,14 @@ packages:
 - name: "opensuse-leap"
   category: "base-image"
   pm: "zypper"
-  version: "15.4"
+  version: "15.4+1"
   image: "opensuse/leap:15.4"
   packages: >-
         bash-completion
         conntrack-tools
         coreutils
         curl
+        dhcp
         device-mapper
         dosfstools
         dracut

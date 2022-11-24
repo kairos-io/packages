@@ -25,20 +25,31 @@ copy:
   source: "/package/."
   destination: "/"
 {{ end }}
+#{{ if and ( ne .Values.name "ubuntu-20-lts" ) ( ne .Values.name "ubuntu" ) ( ne .Values.name "ubuntu-22-lts" ) }}
+#- package: 
+#    category: "dracut"
+#    name: "systemd-resolved"
+#    version: ">=0"
+#  source: "/package/."
+#  destination: "/"
+#{{ end }}
+
+# Use network-legacy until https://github.com/dracutdevs/dracut/issues/1822 is fixed
 {{ if and ( ne .Values.name "ubuntu-20-lts" ) ( ne .Values.name "ubuntu" ) ( ne .Values.name "ubuntu-22-lts" ) }}
 - package: 
     category: "dracut"
-    name: "systemd-resolved"
+    name: "network-legacy"
+    version: ">=0"
+  source: "/package/."
+  destination: "/"
+{{ else }}
+- package: 
+    category: "dracut"
+    name: "network-legacy-compat"
     version: ">=0"
   source: "/package/."
   destination: "/"
 {{ end }}
-- package: 
-    category: "dracut"
-    name: "network"
-    version: ">=0"
-  source: "/package/."
-  destination: "/"
 - package: 
     category: "dracut"
     name: "kcrypt"

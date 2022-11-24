@@ -15,7 +15,7 @@ prelude:
 
 steps:
   - |
-    cd $REPO && make build && \
+    cd $REPO && make GIT_TAG={{.Values.version}}+kairos build && \
     mv bin/{{.Values.bin_name}} /usr/bin/{{.Values.bin_name}}
 
 includes:
