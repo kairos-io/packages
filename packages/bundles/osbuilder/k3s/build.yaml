@@ -6,7 +6,7 @@ prelude:
 {{ else }}
 image: golang:1.18-alpine
 prelude:
-- apk add git curl openrc
+- apk add git curl openrc bash
 {{ end }}
 - curl -sfL https://get.k3s.io > installer.sh 
 steps:
