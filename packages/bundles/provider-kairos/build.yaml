@@ -9,8 +9,9 @@ prelude:
 - apk add git
 {{ end }}
 - git clone https://github.com/kairos-io/provider-kairos
-- PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
-  cd provider-kairos && git checkout $PACKAGE_VERSION
+- |
+    PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
+    cd provider-kairos && git checkout $PACKAGE_VERSION
 steps:
 - cd provider-kairos && go build -o agent-provider-kairos ./
 - mv provider-kairos/agent-provider-kairos /system/providers/agent-provider-kairos
