@@ -1,0 +1,4 @@
+packages:
+- name: "provider-kairos"
+  category: "bundles"
+  tag: "v1.2.0"

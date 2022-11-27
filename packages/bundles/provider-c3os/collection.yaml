@@ -1,7 +1,0 @@
-packages:
-- name: "provider-kairos"
-  category: "bundles"
-  k3s_version: "v1.21.14+k3s1"
-  version: "0.0.1-alpha2+k3s1.21.14"
-  tag: "v0.0.1-alpha2"
-  init: systemd

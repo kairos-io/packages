@@ -1,0 +1,9 @@
+packages:
+- name: "k3s-systemd"
+  category: "osbuilder-bundles"
+  version: "v1.21.14+k3s1"
+  init: systemd
+- name: "k3s-openrc"
+  category: "osbuilder-bundles"
+  version: "v1.21.14+k3s1"
+  init: openrc
