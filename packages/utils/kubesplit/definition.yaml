@@ -1,6 +1,6 @@
 name: kubesplit
 category: utils
-version: "0.2.1+1"
+version: "0.2.1"
 description: "A opinionated simple tool to split big YAML Kubernetes files into chunks to help building helm charts"
 labels:
   github.repo: "kubesplit"
