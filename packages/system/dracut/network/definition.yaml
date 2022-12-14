@@ -1,6 +1,6 @@
 name: "network"
 category: "dracut"
-version: "0.12"
+version: "0.13"
 # System files shipped separately as consumed by both dracut and user-space
 requires:
 - name: "network"
