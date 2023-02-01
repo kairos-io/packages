@@ -1,0 +1,11 @@
+packages:
+- name: k3d
+  category: utils
+  version: "5.4.6"
+  labels:
+    github.repo: "k3d-io"
+    github.owner: "k3d"
+  uri:
+    - https://github.com/k3d-io/k3d
+  license: "MIT"
+  description: "K3s in docker"

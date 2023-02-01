@@ -1,0 +1,18 @@
+requires:
+- name: "toolchain-go"
+  category: "development"
+  version: ">=0"
+prelude:
+{{$arch:=(default .Values.arch "amd64")}}
+
+
+{{ if eq $arch "arm" }}
+{{$arch:="arm64"}}
+{{end}}
+- wget https://github.com/k3d-io/k3d/releases/download/v{{.Values.version}}/k3d-linux-{{$arch}}
+steps:
+- |
+  mv {{.Values.name}}-linux-{{$arch}} /usr/bin/{{.Values.name}}
+- chmod +x /usr/bin/{{.Values.name}}
+includes:
+- /usr/bin/{{.Values.name}}
