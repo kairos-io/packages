@@ -1,6 +1,6 @@
 name: PR build
 concurrency:
-  group: "master-build"
+  group: "pr-build"
   #cancel-in-progress: true
 
 on:
