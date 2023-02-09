@@ -1,7 +1,7 @@
 name: PR build
 concurrency:
-  group: "pr-build"
-  #cancel-in-progress: true
+  group: pr-${{ github.head_ref || github.ref }}-${{ github.repository }}
+  cancel-in-progress: true
 
 on:
   pull_request:
