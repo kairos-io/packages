@@ -1,0 +1,10 @@
+packages:
+- name: "opensuse-leap-immucore"
+  category: "distro-initrd"
+  version: "0.0.1"
+- name: "ubuntu-20-lts-immucore"
+  category: "distro-initrd"
+  version: "0.0.1"
+- name: "ubuntu-immucore"
+  category: "distro-initrd"
+  version: "0.0.1"
