@@ -10,7 +10,8 @@ steps:
   - mkdir -p /package/usr/lib/dracut/modules.d
   - mkdir -p /package/etc/dracut.conf.d/
   - cp -r {{.Values.name}}/dracut/28immucore /package/usr/lib/dracut/modules.d/28immucore
-  - cp {{.Values.name}}/dracut/dracut.conf /package/etc/dracut.conf.d/10-immucore.conf
+  - cp {{.Values.name}}/dracut/*.conf /package/etc/dracut.conf.d/
+  - ls -ltra /package/etc/dracut.conf.d/
 
 env:
   - GITHUB_ORG={{ ( index .Values.labels "github.owner" ) }}
