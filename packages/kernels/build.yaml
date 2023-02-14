@@ -7,8 +7,10 @@ steps:
 {{ if .Values.distribution }}
 {{if eq .Values.distribution "opensuse" }}
 - zypper in -y --no-recommends {{.Values.packages}}
-{{ if eq .Values.arch "arm64" }}
+{{ if .Values.arch }}
+  {{ if eq .Values.arch "arm64" }}
 - zypper in -y {{.Values.packages_arm}}
+  {{ end }}
 {{ end }}
 - zypper cc
 {{ if .Values.arch }}
@@ -28,10 +30,12 @@ steps:
 {{else if eq .Values.distribution "ubuntu" }}
 # Note for future issues with grub: https://bugs.launchpad.net/ubuntu/+source/grub2/+bug/1879558 https://github.com/rancher-sandbox/cOS-toolkit/pull/101#discussion_r621929109
 - apt-get update
-{{ if eq .Values.arch "arm64" }}
+{{ if .Values.arch }}
+  {{ if eq .Values.arch "arm64" }}
 - DEBIAN_FRONTEND=noninteractive apt-get install -y {{.Values.packages_arm}}
-{{ else }}
+  {{ else }}
 - DEBIAN_FRONTEND=noninteractive apt-get install -y {{.Values.packages}}
+  {{ end }}
 {{ end }}
 - apt-get clean
 - |

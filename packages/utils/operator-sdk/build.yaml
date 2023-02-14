@@ -1,5 +1,6 @@
 # This is only for amd64
-{{ if eq .Values.arch "" }}
+{{ if .Values.arch }}
+  {{ if eq .Values.arch "" }}
 requires:
 - name: "toolchain-go"
   category: "development"
@@ -15,4 +16,5 @@ steps:
 - cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/  && git checkout v"${PACKAGE_VERSION}" -b build && make build && mv build/* /usr/bin/
 includes:
 - usr/bin/.*|usr/bin
+  {{ end }}
 {{ end }}
