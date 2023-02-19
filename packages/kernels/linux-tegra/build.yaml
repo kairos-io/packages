@@ -21,4 +21,9 @@ steps:
    echo "CONFIG_EFI=y" >> ./kernel/kernel-4.9/arch/arm64/configs/tegra_defconfig && \
    sed -i '86s/.*/ O_OPT=(O="${KERNEL_OUT_DIR}")/' nvbuild.sh && \
    CROSS_COMPILE_AARCH64_PATH=/luetbuild/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu/ ./nvbuild.sh -o $PWD/kernel_out
+- mkdir -p /out/boot
+- cp Linux_for_Tegra/source/public/kernel_out/arch/arm64/boot/Image /out/boot
+- cd Linux_for_Tegra/source/public/kernel/kernel-4.9/ && make CROSS_COMPILE=/luetbuild/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu/ LOCALVERSION="-tegra" ARCH=arm64 O=/luetbuild/Linux_for_Tegra/source/public/kernel_out modules_install INSTALL_MOD_PATH=/out
+# https://blog.kevmo314.com/compiling-custom-kernel-modules-on-the-jetson-nano.html
+package_dir: /out
 {{ end }}
