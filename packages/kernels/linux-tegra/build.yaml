@@ -1,0 +1,17 @@
+image: "ubuntu:20.04"
+
+prelude:
+- apt update && apt install -y git-core build-essential bc wget xxd
+- wget https://developer.nvidia.com/downloads/remetpack-463r32releasev73t210jetson-210linur3273aarch64tbz2 -O Jetson-210_Linux_R32.7.3_aarch64.tbz2
+- tar xvf Jetson-210_Linux_R32.7.3_aarch64.tbz2
+- wget https://developer.nvidia.com/downloads/remack-sdksjetpack-463r32releasev73sourcest210publicsourcestbz2 -O public_sources.tbz2
+- tar xvf public_sources.tbz2
+- wget https://developer.nvidia.com/embedded/dlc/l4t-gcc-7-3-1-toolchain-64-bit
+- tar xvf l4t-gcc-7-3-1-toolchain-64-bit
+steps:
+- |
+   cd Linux_for_Tegra/source/public && tar xvf kernel_src.tbz2 && \
+   mkdir kernel_out && \
+   echo "CONFIG_EFI_STUB=y" >> ./kernel/kernel-4.9/arch/arm64/configs/tegra_defconfig && \
+   echo "CONFIG_EFI=y" >> ./kernel/kernel-4.9/arch/arm64/configs/tegra_defconfig && \
+   CROSS_COMPILE_AARCH64_PATH=/luetbuild/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu/ ./nvbuild.sh -o $PWD/kernel_out
