@@ -45,6 +45,7 @@ jobs:
         REPOSITORY_TYPE: docker
         pushFinalImages: false
         pushCache: false
+        values: values/arm64.yaml
 
   build:
     runs-on: ubuntu-latest
