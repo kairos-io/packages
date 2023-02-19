@@ -1,3 +1,4 @@
+  {{ if ne .Values.arch "arm64" }}
 image: "ubuntu:20.04"
 
 prelude:
@@ -8,10 +9,14 @@ prelude:
 - tar xvf public_sources.tbz2
 - wget https://developer.nvidia.com/embedded/dlc/l4t-gcc-7-3-1-toolchain-64-bit
 - tar xvf l4t-gcc-7-3-1-toolchain-64-bit
+
+# https://forums.developer.nvidia.com/t/kernel-build-script-nvbuild-sh-with-output-dir-option-not-working/173087
 steps:
 - |
    cd Linux_for_Tegra/source/public && tar xvf kernel_src.tbz2 && \
    mkdir kernel_out && \
    echo "CONFIG_EFI_STUB=y" >> ./kernel/kernel-4.9/arch/arm64/configs/tegra_defconfig && \
    echo "CONFIG_EFI=y" >> ./kernel/kernel-4.9/arch/arm64/configs/tegra_defconfig && \
+   sed -i '86s/.*/ O_OPT=(O="${KERNEL_OUT_DIR}")/' nvbuild.sh && \
    CROSS_COMPILE_AARCH64_PATH=/luetbuild/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu/ ./nvbuild.sh -o $PWD/kernel_out
+  {{ end }}
