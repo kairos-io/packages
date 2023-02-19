@@ -1,4 +1,6 @@
-  {{ if ne .Values.arch "arm64" }}
+{{ if eq .Values.arch "arm64" }}
+# There is no arm64 package. There is only a linux-tegra, generic, for ARM64, built from x86.
+{{ else }}
 image: "ubuntu:20.04"
 
 prelude:
@@ -19,4 +21,4 @@ steps:
    echo "CONFIG_EFI=y" >> ./kernel/kernel-4.9/arch/arm64/configs/tegra_defconfig && \
    sed -i '86s/.*/ O_OPT=(O="${KERNEL_OUT_DIR}")/' nvbuild.sh && \
    CROSS_COMPILE_AARCH64_PATH=/luetbuild/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu/ ./nvbuild.sh -o $PWD/kernel_out
-  {{ end }}
+{{ end }}
