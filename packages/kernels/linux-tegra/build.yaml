@@ -4,26 +4,27 @@
 image: "ubuntu:20.04"
 
 prelude:
-- apt update && apt install -y git-core build-essential bc wget xxd kmod
+- apt update && apt install -y git-core build-essential bc wget xxd kmod flex libelf-dev bison libssl-dev
 - wget https://developer.nvidia.com/downloads/remetpack-463r32releasev73t210jetson-210linur3273aarch64tbz2 -O Jetson-210_Linux_R32.7.3_aarch64.tbz2
 - tar xvf Jetson-210_Linux_R32.7.3_aarch64.tbz2
+- git clone --branch v5.15 --depth 1 https://github.com/torvalds/linux.git kernel-4.9
 - wget https://developer.nvidia.com/downloads/remack-sdksjetpack-463r32releasev73sourcest210publicsourcestbz2 -O public_sources.tbz2
 - tar xvf public_sources.tbz2
 - wget https://developer.nvidia.com/embedded/dlc/l4t-gcc-7-3-1-toolchain-64-bit
 - tar xvf l4t-gcc-7-3-1-toolchain-64-bit
-
-# https://forums.developer.nvidia.com/t/kernel-build-script-nvbuild-sh-with-output-dir-option-not-working/173087
+- |
+   cd Linux_for_Tegra/source/public && tar xvf kernel_src.tbz2 && rm -rf kernel/kernel-4.9 && mv /luetbuild/kernel-4.9 ./kernel/ && \
+   mkdir kernel_out && \
+   cp -rfv /luetbuild/config ./kernel/kernel-4.9/arch/arm64/configs/defconfig && \
+   cp -rfv /luetbuild/nvbuild.sh nvbuild.sh && chmod +x nvbuild.sh
+# gcc 12
+- cd Linux_for_Tegra/source/public/kernel/kernel-4.9 && patch -p1 < /luetbuild/patch.patch
 steps:
 - |
-   cd Linux_for_Tegra/source/public && tar xvf kernel_src.tbz2 && \
-   mkdir kernel_out && \
-   echo "CONFIG_EFI_STUB=y" >> ./kernel/kernel-4.9/arch/arm64/configs/tegra_defconfig && \
-   echo "CONFIG_EFI=y" >> ./kernel/kernel-4.9/arch/arm64/configs/tegra_defconfig && \
-   sed -i '86s/.*/ O_OPT=(O="${KERNEL_OUT_DIR}")/' nvbuild.sh && \
+   cd Linux_for_Tegra/source/public && \
    CROSS_COMPILE_AARCH64_PATH=/luetbuild/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu/ ./nvbuild.sh -o $PWD/kernel_out
 - mkdir -p /out/boot
-- cp -rfv Linux_for_Tegra/source/public/kernel_out/arch/arm64/boot/dts/*.dtb /out/boot
-- cp -rfv Linux_for_Tegra/source/public/kernel_out/arch/arm64/boot/dts/*.dtbo /out/boot
+- cp -rfv Linux_for_Tegra/source/public/kernel_out/arch/arm64/boot/dts/nvidia/*.dtb /out/boot
 - cp Linux_for_Tegra/source/public/kernel_out/arch/arm64/boot/Image /out/boot
 - cd Linux_for_Tegra/source/public/kernel/kernel-4.9/ && make CROSS_COMPILE=/luetbuild/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu/ LOCALVERSION="-tegra" ARCH=arm64 O=/luetbuild/Linux_for_Tegra/source/public/kernel_out modules_install INSTALL_MOD_PATH=/out
 # https://blog.kevmo314.com/compiling-custom-kernel-modules-on-the-jetson-nano.html
