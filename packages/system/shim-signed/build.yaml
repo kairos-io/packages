@@ -1,0 +1,11 @@
+image: registry.opensuse.org/opensuse/leap:15.4
+
+prelude:
+- zypper ref
+steps:
+- zypper in -y shim-signed
+
+# Include the grub.efi as this one is signed
+includes:
+- usr/share/efi/.*/*.efi
+- usr/share/efi/.*/*.der
