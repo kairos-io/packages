@@ -1,13 +1,22 @@
-{{ if ne .Values.arch "arm" }}
-image: registry.opensuse.org/opensuse/leap:15.3
-prelude:
-- zypper in -y wget cpio
+image: registry.opensuse.org/opensuse/leap:15.4
 
+prelude:
+- zypper ref
+
+{{ if .Values.arch }}
+  {{ if eq .Values.arch "arm64" }}
 steps:
-- mkdir -p /data
-- wget  https://download.opensuse.org/repositories/isv:/Rancher:/Elemental/15.4/noarch/grub2-{{.Values.arch}}-efi-{{.Values.pversion}}.noarch.rpm -O /package.rpm
-- cd /data && rpm2cpio /package.rpm | cpio -idmv
-package_dir: "/data"
-excludes:
-- usr/lib64
+- zypper in grub2-arm64-efi shim-susesigned
+includes:
+- usr/share/grub2/arm64-efi/
+- usr/share/efi/.*/*.efi
+- usr/share/efi/.*/*.der
+  {{else}}
+steps:
+- zypper in grub2-x86_64-efi shim-susesigned
+includes:
+- usr/share/grub2/x86_64-efi/
+- usr/share/efi/.*/*.efi
+- usr/share/efi/.*/*.der
+  {{end}}
 {{end}}
