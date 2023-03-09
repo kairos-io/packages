@@ -5,3 +5,4 @@ packages:
   labels:
     github.repo: "kairos"
     github.owner: "kairos-io"
+    autobump.strategy: "release"
