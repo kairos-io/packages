@@ -5,6 +5,7 @@ version: "0.6.19"
 labels:
   github.repo: "earthly"
   github.owner: "earthly"
+  autobump.strategy: "release"
 uri:
   - https://github.com/earthly/earthly
 license: "MPL License"
