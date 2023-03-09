@@ -6,3 +6,4 @@ license: "Apache-2.0"
 labels:
   github.repo: "helm"
   github.owner: "helm"
+  autobump.strategy: "release"
