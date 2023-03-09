@@ -1,8 +1,8 @@
 packages:
-- name: "kairos-configs"
-  category: "bundles"
-  version: "1.3.0"
-  labels:
-    github.repo: "kairos"
-    github.owner: "kairos-io"
-    autobump.strategy: "release"
+  - name: "kairos-configs"
+    category: "bundles"
+    version: "1.6.0"
+    labels:
+      github.repo: "kairos"
+      github.owner: "kairos-io"
+      autobump.strategy: "release"
