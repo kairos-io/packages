@@ -6,14 +6,14 @@ prelude:
 {{ if .Values.arch }}
   {{ if eq .Values.arch "arm64" }}
 steps:
-- zypper in -y grub2-arm64-efi shim-susesigned
+- zypper in -y grub2-arm64-efi shim
 includes:
 - usr/share/grub2/arm64-efi/
 - usr/share/efi/.*/*.efi
 - usr/share/efi/.*/*.der
   {{else}}
 steps:
-- zypper in -y grub2-x86_64-efi shim-susesigned
+- zypper in -y grub2-x86_64-efi shim
 includes:
 - usr/share/grub2/x86_64-efi/
 - usr/share/efi/.*/*.efi
