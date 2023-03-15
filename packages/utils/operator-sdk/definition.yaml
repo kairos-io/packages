@@ -1,6 +1,6 @@
 name: operator-sdk
 category: utils
-version: "1.27.0"
+version: "1.28.0"
 description: " SDK for building Kubernetes applications. Provides high level APIs, useful abstractions, and project scaffolding. "
 labels:
   github.repo: "operator-sdk"
