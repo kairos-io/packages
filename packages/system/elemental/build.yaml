@@ -5,17 +5,15 @@ requires:
 env:
 - PATH=$PATH:/usr/local/go/bin
 - CGO_ENABLED=0
-- PACKAGE_VERSION={{( index .Values.labels "git.hash" )}}
-- ORG={{( index .Values.labels "github.owner" )}}
 - REPO={{( index .Values.labels "github.repo" )}}
 
 prelude:
-- |
-   git clone https://github.com/$ORG/$REPO && cd $REPO && git checkout ${PACKAGE_VERSION} 
+- git clone https://github.com/{{( index .Values.labels "github.owner" )}}/$REPO && cd $REPO && git checkout {{( index .Values.labels "git.hash" )}}
 
 steps:
   - |
-    cd $REPO && make GIT_TAG={{.Values.version}}+kairos build && \
+    cd $REPO && GIT_COMMIT=$(git rev-parse HEAD) && GIT_TAG=$(git describe --abbrev=0 --tags 2>/dev/null) && \
+    go build -o bin/{{.Values.bin_name}} -ldflags "-s -w -X 'github.com/rancher/elemental-cli/internal/version.version=${GIT_TAG}' -X 'github.com/rancher/elemental-cli/internal/version.gitCommit=${GIT_COMMIT}'" && \
     mv bin/{{.Values.bin_name}} /usr/bin/{{.Values.bin_name}}
 
 includes:
