@@ -1,6 +1,6 @@
 name: edgevpn
 category: utils
-version: "0.22.0"
+version: "0.22.1"
 labels:
   github.repo: "edgevpn"
   github.owner: "mudler"
