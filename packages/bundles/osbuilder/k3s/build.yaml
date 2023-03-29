@@ -1,10 +1,10 @@
 {{ if eq .Values.init "systemd" }}
-image: golang:1.18
+image: golang:1.20
 prelude:
 - apt-get update
 - apt-get install -y git curl systemd
 {{ else }}
-image: golang:1.18-alpine
+image: golang:1.20-alpine
 prelude:
 - apk add git curl openrc bash
 {{ end }}
