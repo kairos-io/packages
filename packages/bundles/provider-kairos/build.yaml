@@ -11,7 +11,7 @@ prelude:
   {{ end }}
 - git clone https://github.com/kairos-io/provider-kairos
 - |
-    PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
+    PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && \
     cd provider-kairos && git checkout v$PACKAGE_VERSION
 steps:
 - mkdir -p /system/providers
