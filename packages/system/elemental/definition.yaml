@@ -1,6 +1,6 @@
 name: "elemental-cli"
 category: "system"
-version: "0.2.0-1"
+version: "0.2.0-2"
 bin_name: "elemental"
 fips: false
 labels:

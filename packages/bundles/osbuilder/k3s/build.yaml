@@ -1,23 +1,22 @@
 {{ if eq .Values.init "systemd" }}
-image: golang:1.18
+image: golang:1.20
 prelude:
 - apt-get update
 - apt-get install -y git curl systemd
 {{ else }}
-image: golang:1.18-alpine
+image: golang:1.20-alpine
 prelude:
 - apk add git curl openrc bash
 {{ end }}
 - curl -sfL https://get.k3s.io > installer.sh 
 steps:
-- bash installer.sh
-- bash installer.sh agent
+- PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && export INSTALL_K3S_VERSION=$PACKAGE_VERSION && bash installer.sh
+- PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && export INSTALL_K3S_VERSION=$PACKAGE_VERSION && bash installer.sh agent
 - mkdir -p  /etc/rancher/k3s/ && touch /etc/rancher/k3s/.keep
 
 exclude:
 - etc/rancher/k3s/k3s.env
 - etc/rancher/k3s/k3s-agent.env
 env:
-- INSTALL_K3S_VERSION={{.Values.version}}
 - INSTALL_K3S_SKIP_START="true"
 - INSTALL_K3S_SKIP_ENABLE="true"

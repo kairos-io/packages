@@ -2,14 +2,14 @@ packages:
 - name: toolchain-go
   category: development
   variant: "alpine"
-  version: "1.18+1"
-  tag: "1.18"
+  version: "1.20.2"
+  tag: "1.20.2"
   hidden: true
 - name: toolchain-go-ubuntu
   variant: ""
   category: development
-  version: "1.18+1"
-  tag: "1.18"
+  version: "1.20.2"
+  tag: "1.20.2"
   hidden: true
 - name: toolchain-go
   category: development

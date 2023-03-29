@@ -1,17 +1,17 @@
 {{ if .Values.init  }}
   {{ if eq .Values.init "systemd" }}
-image: golang:1.18
+image: golang:1.20
 prelude:
 - apt-get update
 - apt-get install -y git
   {{ else }}
-image: golang:1.18-alpine
+image: golang:1.20-alpine
 prelude:
 - apk add git
   {{ end }}
 - git clone https://github.com/kairos-io/provider-kairos
 - |
-    PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
+    PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && \
     cd provider-kairos && git checkout v$PACKAGE_VERSION
 steps:
 - mkdir -p /system/providers
