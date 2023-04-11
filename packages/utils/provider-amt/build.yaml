@@ -1,0 +1,18 @@
+image: busybox
+unpack: true
+copy:
+  - image: "{{ .Values.labels.repository }}:v{{ .Values.version }}"
+    source: /usr/local/lib/librpc.so
+    destination: /usr/local/lib/librpc.so
+  - image: "{{ .Values.labels.repository }}:v{{ .Values.version }}"
+    source: /usr/local/include/librpc.h
+    destination: /usr/local/include/librpc.h
+  - image: "{{ .Values.labels.repository }}:v{{ .Values.version }}"
+    source: /system/providers/agent-provider-amt
+    destination: /usr/local/system/providers/agent-provider-amt
+steps:
+  - chmod +x /usr/local/system/providers/agent-provider-amt
+includes:
+  - /usr/local/lib/librpc.so
+  - /usr/local/include/librpc.h
+  - /usr/local/system/providers/agent-provider-amt

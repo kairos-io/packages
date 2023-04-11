@@ -1,0 +1,12 @@
+name: provider-amt
+category: utils
+version: "0.1.0-alpha0"
+labels:
+  github.repo: "provider-amt"
+  github.owner: "kairos-io"
+  autobump.strategy: "release"
+  repository: ghcr.io/kairos-io/provider-amt
+uri:
+  - https://github.com/kairos-io/provider-amt
+license: "GPL-3"
+description: "Configuration provider for intel active management technology"
