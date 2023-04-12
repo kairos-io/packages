@@ -1,7 +1,7 @@
 packages:
   - name: "provider-kairos"
     category: "bundles"
-    version: "1.6.1-1"
+    version: "2.0.0-rc6"
     labels:
       github.repo: "provider-kairos"
       github.owner: "kairos-io"
