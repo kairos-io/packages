@@ -15,18 +15,21 @@ prelude:
 
 steps:
 {{if eq .Values.name "grub2"}}
+- mkdir -p /boot/x86_64/loader
   {{if .Values.arch }}
     {{if eq .Values.arch "x86_64"}}
 - mkdir -p /boot/x86_64/loader/grub2/fonts && cp -p /usr/share/grub2/unicode.pf2 /boot/x86_64/loader/grub2/fonts
 - mkdir -p /boot/grub2/x86_64-efi/ && cp -p /usr/share/grub2/x86_64-efi/* /boot/grub2/x86_64-efi/
 - mkdir -p /boot/arm64/loader/grub2/fonts && cp -p /usr/share/grub2/unicode.pf2 /boot/arm64/loader/grub2/fonts
 - mkdir -p /boot/grub2/i386-pc && cp -p /usr/share/grub2/i386-pc/* /boot/grub2/i386-pc/
-- mkdir -p /boot/x86_64/loader
 - cp -p /usr/share/grub2/i386-pc/eltorito.img /usr/share/grub2/i386-pc/boot_hybrid.img /usr/share/syslinux/isolinux.bin /usr/share/syslinux/menu.c32 /usr/share/syslinux/chain.c32 /usr/share/syslinux/mboot.c32 /boot/x86_64/loader
+    {{end}}
+    {{if eq .Values.arch "arm64"}}
+# arm64 doesn't have bios boot, but the installer(elemental-cli) still builds hybrid isos for all arches, so we need to provide these files in the arm64 package
+- cp -p /usr/share/grub2/i386-pc/eltorito.img /usr/share/grub2/i386-pc/boot_hybrid.img /boot/x86_64/loader
     {{end}}
   {{end}}
 - cp -p kairos/overlay/files-iso/boot/grub2/grub.cfg /boot/grub2/grub.cfg
-#- cp -p config/grub_live.cfg /boot/grub2/grub.cfg
 {{end}}
 {{if eq .Values.name "grub2-efi-image"}}
   {{if .Values.arch }}
