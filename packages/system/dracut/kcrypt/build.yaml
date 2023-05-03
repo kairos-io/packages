@@ -8,9 +8,9 @@ prelude:
 
 steps:
 - mkdir -p /package/usr/lib/dracut/modules.d
-- mkdir -p /package//etc/dracut.conf.d/
-- cp -r {{.Values.name}}/dracut/* /package/usr/lib/dracut/modules.d
-- cp {{.Values.name}}/dracut.conf /package/etc/dracut.conf.d/10-kcrypt.conf
+- mkdir -p /package/etc/dracut.conf.d/
+- cp -r {{.Values.name}}/dracut/29kcrypt /package/usr/lib/dracut/modules.d/29kcrypt
+- cp {{.Values.name}}/dracut/*.conf /package/etc/dracut.conf.d/
 
 env:
 - GITHUB_ORG={{ ( index .Values.labels "github.owner" ) }}
