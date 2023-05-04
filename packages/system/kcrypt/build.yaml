@@ -11,7 +11,7 @@ env:
 - CGO_ENABLED=0
 steps:
 - |
-  PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && \
+  PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
   cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/  && git checkout v"${PACKAGE_VERSION}" -b build && go build -ldflags="-w -s" && mv {{.Values.name}} /usr/bin/
 - chmod +x /usr/bin/{{.Values.name}}
 includes:
