@@ -1,6 +1,6 @@
 name: kcrypt
 category: system
-version: "0.6.0-rc1"
+version: "0.6.0-rc2"
 labels:
   github.repo: "kcrypt"
   autobump.revdeps: "true"
