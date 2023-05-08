@@ -1,6 +1,6 @@
 name: "immucore"
 category: "dracut"
-version: "0.0.21"
+version: "0.0.23"
 labels:
   github.repo: "immucore"
   autobump.revdeps: "true"
