@@ -1,19 +1,38 @@
-requires:
-  - name: "toolchain-go"
-    category: "development"
-    version: ">=0"
-prelude:
-  - mkdir go/src/github.com/${GITHUB_ORG}/ -p
-  - cd go/src/github.com/${GITHUB_ORG}/ && git clone https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
+image: opensuse/tumbleweed
 env:
-  - GOPATH=/luetbuild/go/
   - GITHUB_ORG={{ ( index .Values.labels "github.owner" ) }}
   - CGO_ENABLED=0
   - LDFLAGS="-s -w -X github.com/kairos-io/kairos/v2/internal/common.VERSION=v${PACKAGE_VERSION}"
+  - HUGO_VERSION=0.110.0
+prelude:
+  - zypper ref && zypper in -y git wget tar nodejs-default gzip npm go
+  - mkdir /go/src/github.com/${GITHUB_ORG}/ -p
+  - cd /go/src/github.com/${GITHUB_ORG}/ && git clone --branch v${PACKAGE_VERSION} https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
+  - cd /go/src/github.com/${GITHUB_ORG}/ && git clone https://github.com/${GITHUB_ORG}/kairos-docs.git
 steps:
+  # Docs for webui
+  # TODO: build this as a package and use requires
+  - mkdir -p /go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/internal/webui/public/local
+  - |
+    wget "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-{{ .Values.arch }}.tar.gz" && \
+    tar xzf hugo_extended_${HUGO_VERSION}_linux-{{ .Values.arch }}.tar.gz && \
+    rm -r hugo_extended_${HUGO_VERSION}_linux-{{ .Values.arch }}.tar.gz && \
+    chmod +x hugo && \
+    mv hugo /usr/bin && \
+    cd /go/src/github.com/${GITHUB_ORG}/kairos-docs && \
+    npm install postcss-cli && \
+    npm run prepare && \
+    HUGO_ENV="production" /usr/bin/hugo --gc -b "/local/" -d "public/"
+
+  - cp -r /go/src/github.com/${GITHUB_ORG}/kairos-docs/public/* /go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/internal/webui/public/local
+  # Deps for webui
+  # TODO: If we use requires we cannot run this unless we package nodejs...
+  - cd /go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/internal/webui/public && npm install
+  # Now for the real binary with everything bundled!
   - |
     PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
-    cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/  && git checkout v"${PACKAGE_VERSION}" -b build && go build -o {{ .Values.name }} -ldflags="${LDFLAGS}" && mv {{.Values.name}} /usr/bin/
+    cd /go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && \
+    go build -o /usr/bin/{{ .Values.name }} -ldflags="${LDFLAGS}"
   - chmod +x /usr/bin/{{.Values.name}}
 includes:
   - /usr/bin/{{.Values.name}}
