@@ -1,0 +1,12 @@
+name: "kairos-docs"
+category: "static"
+version: "2.0.3"
+arch: "amd64"
+labels:
+  github.repo: "kairos-docs"
+  autobump.revdeps: "true"
+  github.owner: "kairos-io"
+uri:
+  - https://github.com/kairos-io/kairos-docs
+license: "Apache License v2"
+description: "Kairos documentation"

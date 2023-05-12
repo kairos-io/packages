@@ -1,0 +1,21 @@
+image: opensuse/tumbleweed
+env:
+  - GITHUB_ORG={{ ( index .Values.labels "github.owner" ) }}
+  - HUGO_VERSION=0.110.0
+prelude:
+  - zypper ref && zypper in -y git wget tar nodejs-default gzip npm
+  - mkdir /go/src/github.com/${GITHUB_ORG}/ -p
+  - cd /go/src/github.com/${GITHUB_ORG}/ && git clone https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
+steps:
+  - mkdir -p "/usr/share/doc/kairos"
+  - |
+    wget --quiet "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-{{ .Values.arch }}.tar.gz" && \
+    tar xzf hugo_extended_${HUGO_VERSION}_linux-{{ .Values.arch }}.tar.gz && \
+    rm -r hugo_extended_${HUGO_VERSION}_linux-{{ .Values.arch }}.tar.gz && \
+    chmod +x hugo && \
+    mv hugo /usr/bin && \
+    cd /go/src/github.com/${GITHUB_ORG}/kairos-docs && \
+    npm install postcss-cli && \
+    npm run prepare && \
+    HUGO_ENV="production" /usr/bin/hugo --gc -b "/local/" -d "/usr/share/doc/kairos"
+package_dir: "/usr/share/doc/kairos"
