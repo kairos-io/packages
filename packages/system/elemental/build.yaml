@@ -8,12 +8,12 @@ env:
 - REPO={{( index .Values.labels "github.repo" )}}
 
 prelude:
-- git clone https://github.com/{{( index .Values.labels "github.owner" )}}/$REPO && cd $REPO && git checkout {{( index .Values.labels "git.hash" )}}
+- PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && git clone --branch v"${PACKAGE_VERSION}" https://github.com/{{( index .Values.labels "github.owner" )}}/$REPO
 
 steps:
   - |
-    cd $REPO && GIT_COMMIT=$(git rev-parse HEAD) && GIT_TAG=$(git describe --abbrev=0 --tags 2>/dev/null) && \
-    go build -o bin/{{.Values.bin_name}} -ldflags "-s -w -X 'github.com/rancher/elemental-cli/internal/version.version=${GIT_TAG}' -X 'github.com/rancher/elemental-cli/internal/version.gitCommit=${GIT_COMMIT}'" && \
+    cd $REPO && GIT_COMMIT=$(git rev-parse HEAD) && \
+    go build -o bin/{{.Values.bin_name}} -ldflags "-s -w -X 'github.com/rancher/elemental-cli/internal/version.version=v${PACKAGE_VERSION}' -X 'github.com/rancher/elemental-cli/internal/version.gitCommit=${GIT_COMMIT}'" && \
     mv bin/{{.Values.bin_name}} /usr/bin/{{.Values.bin_name}}
 
 includes:
