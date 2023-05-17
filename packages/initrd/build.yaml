@@ -7,10 +7,10 @@ copy:
 # The toolkit is required in module-setup and embedded in the initramfs. 
 - package: 
     category: "system"
-    name: "elemental-cli"
+    name: "kairos-agent"
     version: ">=0"
-  source: "/usr/bin/elemental"
-  destination: "/usr/bin/elemental"
+  source: "/usr/bin/kairos-agent"
+  destination: "/usr/bin/kairos-agent"
 - package: 
     category: "dracut"
     name: "immutable-rootfs"
