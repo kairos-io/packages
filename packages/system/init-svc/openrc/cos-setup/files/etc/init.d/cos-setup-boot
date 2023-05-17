@@ -5,6 +5,6 @@ depend() {
 }
 
 start() {
-  elemental run-stage boot
+  kairos-agent run-stage boot
   eend 0
 }

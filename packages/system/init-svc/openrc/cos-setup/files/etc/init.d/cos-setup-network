@@ -6,6 +6,6 @@ depend() {
 }
 
 start() {
-  elemental run-stage network
+  kairos-agent run-stage network
   eend 0
 }
