@@ -4,6 +4,6 @@ SLEEP_TIME=${SLEEP_TIME:-360}
 
 while :
 do
-    elemental run-stage "reconcile"
+    kairos-agent run-stage "reconcile"
     sleep "$SLEEP_TIME"
 done
