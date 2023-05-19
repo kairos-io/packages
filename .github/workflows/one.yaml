@@ -22,7 +22,7 @@ jobs:
       - name: Set final repo
         run: |
           FINAL_REPO=quay.io/kairos/packages
-          if [[ "${{ github.event.inputs.arch }}" == "arm64"; then
+          if [[ "${{ github.event.inputs.arch }}" == "arm64" ]]; then
             FINAL_REPO=quay.io/kairos/packages-arm64
           fi
           
