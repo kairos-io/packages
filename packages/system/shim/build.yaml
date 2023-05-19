@@ -1,6 +1,6 @@
 # This is only for amd64
 {{ if .Values.arch }}
-  {{ if eq .Values.arch "" }}
+  {{ if eq .Values.arch "amd64" }}
 image: registry.opensuse.org/opensuse/leap:15.3
 
 prelude:

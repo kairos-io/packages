@@ -1,4 +1,3 @@
 category: "kernels"
 name: "linux-tegra"
 version: "5.15"
-arch: "x86_64"

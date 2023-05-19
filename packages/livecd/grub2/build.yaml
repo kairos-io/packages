@@ -3,7 +3,7 @@ image: "opensuse/leap:15.3"
 prelude:
 - zypper in -y git
 {{if .Values.arch }}
-  {{if eq .Values.arch "x86_64"}}
+  {{if eq .Values.arch "amd64"}}
 - zypper in -y --no-recommends syslinux
   {{end}}
 {{end}}
@@ -17,7 +17,7 @@ steps:
 {{if eq .Values.name "grub2"}}
 - mkdir -p /boot/x86_64/loader
   {{if .Values.arch }}
-    {{if eq .Values.arch "x86_64"}}
+    {{if eq .Values.arch "amd64"}}
 - mkdir -p /boot/x86_64/loader/grub2/fonts && cp -p /usr/share/grub2/unicode.pf2 /boot/x86_64/loader/grub2/fonts
 - mkdir -p /boot/grub2/x86_64-efi/ && cp -p /usr/share/grub2/x86_64-efi/* /boot/grub2/x86_64-efi/
 - mkdir -p /boot/arm64/loader/grub2/fonts && cp -p /usr/share/grub2/unicode.pf2 /boot/arm64/loader/grub2/fonts
@@ -33,7 +33,7 @@ steps:
 {{end}}
 {{if eq .Values.name "grub2-efi-image"}}
   {{if .Values.arch }}
-    {{if eq .Values.arch "x86_64"}}
+    {{if eq .Values.arch "amd64"}}
 - mkdir -p /EFI/BOOT
 # For removable drives the name of the efi needs to be bootx64.efi
 - cp /usr/share/efi/x86_64/shim.efi /EFI/BOOT/bootx64.efi
