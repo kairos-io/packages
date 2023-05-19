@@ -27,7 +27,7 @@ jobs:
           fi
           
           echo "FINAL_REPO=$FINAL_REPO" >> "$GITHUB_ENV"
-          echo "$GITHUB_ENV"
+          echo "Setting final repo to $FINAL_REPO"
       - uses: actions/checkout@v3
       - run: |
           git fetch --prune --unshallow
@@ -46,10 +46,9 @@ jobs:
           sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
       - name: Build packages 🔧
         uses: luet-lab/luet-github-action@master
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         with:
           build: true
-          fromIndex: true
+          fromIndex: false
           onlyMissing: false
           CURRENT_PACKAGE: ${{ github.event.inputs.package }}
           FINAL_REPO: ${{ env.action_state }}
@@ -62,7 +61,6 @@ jobs:
           values: values/${{ github.event.inputs.arch }}.yaml
       - name: Create repo 🔧
         uses: luet-lab/luet-github-action@master
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         with:
           FINAL_REPO: ${{ env.action_state }}
           DOCKER_USERNAME: ${{ secrets.QUAY_USERNAME }}
