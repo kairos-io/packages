@@ -22,7 +22,7 @@ jobs:
       with:
         FINAL_REPO: quay.io/kairos/packages
         REPOSITORY_TYPE: docker
-        downloadAllMeta: false
+        downloadAllMeta: true
         downloadFromList: true
         downloadMeta: true
     - name: Release space from worker
