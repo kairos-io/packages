@@ -33,7 +33,7 @@ jobs:
       with:
         FINAL_REPO: quay.io/kairos/packages-arm64
         REPOSITORY_TYPE: docker
-        downloadAllMeta: true
+        downloadAllMeta: false
         downloadFromList: true
         downloadMeta: true
     - name: Build packages 🔧
