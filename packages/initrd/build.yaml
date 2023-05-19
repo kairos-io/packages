@@ -5,15 +5,21 @@ requires:
 
 copy:
 # The toolkit is required in module-setup and embedded in the initramfs. 
-- package: 
+- package:
     category: "system"
     name: "kairos-agent"
     version: ">=0"
   source: "/usr/bin/kairos-agent"
   destination: "/usr/bin/kairos-agent"
+- package:
+    category: "system"
+    name: "immucore"
+    version: ">=0"
+  source: "/usr/bin/immucore"
+  destination: "/usr/bin/immucore"
 - package: 
     category: "dracut"
-    name: "immutable-rootfs"
+    name: "immucore"
     version: ">=0"
   source: "/package/."
   destination: "/"
@@ -50,13 +56,7 @@ copy:
   source: "/package/."
   destination: "/"
 {{ end }}
-- package: 
-    category: "dracut"
-    name: "kcrypt"
-    version: ">=0"
-  source: "/package/."
-  destination: "/"
-- package: 
+- package:
     category: "system"
     name: "kcrypt"
     version: ">=0"

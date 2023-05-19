@@ -5,7 +5,7 @@ packages:
   name: "ubuntu"
   category: "base-image"
   pm: "apt-get"
-  version: "22.10"
+  version: "22.10-1"
   packages: >-
         systemd
         sudo
@@ -35,7 +35,7 @@ packages:
 - <<: *ubuntu
   name: "ubuntu-20-lts"
   category: "base-image"
-  version: "20.04"
+  version: "20.04-1"
   image: "ubuntu:20.04"
   packages: >-
         systemd
@@ -64,12 +64,12 @@ packages:
 - <<: *ubuntu
   name: "ubuntu-22-lts"
   category: "base-image"
-  version: "22.04"
+  version: "22.04-1"
   image: "ubuntu:22.04"
 - name: "opensuse-leap"
   category: "base-image"
   pm: "zypper"
-  version: "15.4+1"
+  version: "15.4+2"
   image: "opensuse/leap:15.4"
   packages: >-
         bash-completion
