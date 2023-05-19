@@ -39,6 +39,7 @@ jobs:
         REPOSITORY_TYPE: docker
         pushFinalImages: true
         pushCache: true
+        values: values/amd64.yaml
     - name: Create repo 🔧
       uses: luet-lab/luet-github-action@master
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
