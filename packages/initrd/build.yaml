@@ -56,6 +56,12 @@ copy:
   source: "/package/."
   destination: "/"
 {{ end }}
+- package:
+    category: "system"
+    name: "kcrypt"
+    version: ">=0"
+  source: "/usr/bin/kcrypt"
+  destination: "/usr/bin/kcrypt"
 prelude:
 # remove if any
 - rm -rf /boot/initrd || true
