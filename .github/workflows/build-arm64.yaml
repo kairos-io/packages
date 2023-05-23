@@ -9,9 +9,9 @@ on:
 jobs:
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, ARM64]
     env:
-      ARCH: amd64
+      ARCH: arm64
     steps:
     - uses: actions/checkout@v3
     - run: |
@@ -29,7 +29,7 @@ jobs:
       with:
         FINAL_REPO: quay.io/kairos/packages-arm64
         REPOSITORY_TYPE: docker
-        downloadAllMeta: false
+        downloadAllMeta: true
         downloadFromList: true
         downloadMeta: true
     - name: Build packages 🔧
@@ -39,8 +39,6 @@ jobs:
         build: true
         fromIndex: true
         onlyMissing: true
-        buildx: true
-        platform: linux/arm64
         FINAL_REPO: quay.io/kairos/packages-arm64
         DOCKER_USERNAME: ${{ secrets.QUAY_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
