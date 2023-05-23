@@ -5,6 +5,7 @@ env:
   - LDFLAGS="-s -w -X github.com/kairos-io/kairos/v2/internal/common.VERSION=v${PACKAGE_VERSION}"
   - HUGO_VERSION=0.110.0
 prelude:
+  - zypper removerepo repo-openh264 || true 
   - zypper ref && zypper in -y git wget tar nodejs-default gzip npm go
   - mkdir /go/src/github.com/${GITHUB_ORG}/ -p
   - cd /go/src/github.com/${GITHUB_ORG}/ && git clone --branch v${PACKAGE_VERSION} https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
