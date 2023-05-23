@@ -9,9 +9,9 @@ on:
 jobs:
 
   build:
-    runs-on: [self-hosted, linux, ARM64]
+    runs-on: ubuntu-latest
     env:
-      ARCH: arm64
+      ARCH: amd64
     steps:
     - uses: actions/checkout@v3
     - run: |
@@ -47,6 +47,8 @@ jobs:
         pushFinalImages: true
         pushCache: true
         values: values/arm64.yaml
+        buildx: true
+        platform: linux/arm64
     - name: Create repo 🔧
       uses: luet-lab/luet-github-action@master
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
