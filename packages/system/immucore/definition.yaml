@@ -1,6 +1,6 @@
 name: "immucore"
 category: "system"
-version: "0.0.26"
+version: "0.0.27"
 labels:
   github.repo: "immucore"
   autobump.revdeps: "true"
