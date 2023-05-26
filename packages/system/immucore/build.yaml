@@ -9,7 +9,7 @@ env:
   - GOPATH=/luetbuild/go/
   - GITHUB_ORG={{ ( index .Values.labels "github.owner" ) }}
   - CGO_ENABLED=0
-  - LDFLAGS="-s -w -X github.com/kairos-io/immucore/internal/version.Version=v${PACKAGE_VERSION}"
+  - LDFLAGS="-s -w -X github.com/kairos-io/immucore/internal/version.version=v${PACKAGE_VERSION}"
 steps:
   - |
     PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && \
