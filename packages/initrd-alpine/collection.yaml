@@ -1,0 +1,4 @@
+packages:
+- name: "alpine"
+  category: "distro-initrd"
+  version: "0.1.0"
