@@ -1,0 +1,12 @@
+/usr/bin/immucore
+/usr/bin/kairos-agent
+/sbin/lvm
+/bin/findmnt
+/bin/udevadm
+/sbin/udevadm
+/sbin/udevd
+/etc/udev/*
+/lib/udev/*
+/usr/lib/libudev*
+/usr/bin/rsync
+/usr/sbin/parted

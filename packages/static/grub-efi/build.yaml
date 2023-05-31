@@ -3,6 +3,7 @@
 image: {{.Values.image}}
 
 {{if eq .Values.distribution "opensuse"}}
+{{ if .Values.arch }}
 {{ if eq .Values.arch "arm64" }}
 prelude:
 - zypper in -y grub2-arm64-efi grub2
@@ -12,6 +13,7 @@ prelude:
 prelude:
 - zypper in -y grub2-i386-pc grub2-x86_64-efi grub2
 {{ end }}
+{{end}}
 {{end}}
 
 package_dir: "/output"

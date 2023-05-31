@@ -1,3 +1,4 @@
+{{ if .Values.arch }}
 {{ if eq .Values.arch "arm64" }}
 # There is no arm64 package. There is only a linux-tegra, generic, for ARM64, built from x86.
 {{ else }}
@@ -30,3 +31,4 @@ steps:
 # https://blog.kevmo314.com/compiling-custom-kernel-modules-on-the-jetson-nano.html
 package_dir: /out
 {{ end }}
+{{end}}
