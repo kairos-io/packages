@@ -17,7 +17,6 @@ prelude:
 
 steps:
 - mkdir /grub-artifacts
-- zypper in -y grub2-branding-openSUSE grub2-branding-upstream
 {{if eq .Values.distribution "opensuse"}}
 - cp -rf /usr/share/grub2/* /grub-artifacts
 {{else}}
