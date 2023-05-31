@@ -1,9 +1,9 @@
 packages:
   - name: "alpine"
     category: "distro-kernel"
-    version: "0.1.2"
+    version: "0.1.3"
     description: "Provides kernel and custom initrd for alpine"
   - name: "alpine-rpi"
     category: "distro-kernel"
-    version: "0.1.2"
+    version: "0.1.3"
     description: "Provides kernel and custom initrd for alpine"

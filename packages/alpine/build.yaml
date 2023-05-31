@@ -3,6 +3,19 @@
   {{ if eq .Values.arch "arm64" }}
 image: alpine
 # Arm + rpi
+copy:
+  - package:
+      category: "system"
+      name: "immucore"
+      version: ">=0"
+    source: "/usr/bin/immucore"
+    destination: "/usr/bin/immucore"
+  - package:
+      category: "system"
+      name: "kairos-agent"
+      version: ">=0"
+    source: "/usr/bin/kairos-agent"
+    destination: "/usr/bin/kairos-agent"
 package_dir: "/package"
 prelude:
   - apk update
@@ -21,6 +34,19 @@ steps:
   {{else}}
 image: alpine
 # x86 + arm + no rpi path
+copy:
+  - package:
+      category: "system"
+      name: "immucore"
+      version: ">=0"
+    source: "/usr/bin/immucore"
+    destination: "/usr/bin/immucore"
+  - package:
+      category: "system"
+      name: "kairos-agent"
+      version: ">=0"
+    source: "/usr/bin/kairos-agent"
+    destination: "/usr/bin/kairos-agent"
 package_dir: "/package"
 prelude:
   - apk update
