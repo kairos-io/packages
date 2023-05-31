@@ -1,4 +1,7 @@
 packages:
-- name: "alpine"
-  category: "distro-initrd"
-  version: "0.1.0"
+  - name: "alpine"
+    category: "distro-initrd"
+    version: "0.1.0"
+  - name: "alpine-rpi"
+    category: "distro-initrd"
+    version: "0.1.0"

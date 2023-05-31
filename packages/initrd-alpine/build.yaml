@@ -1,3 +1,6 @@
+{{ if eq .Values.name "alpine-rpi" }}
+  {{ if .Values.arch }}
+  {{ if eq .Values.arch "arm64" }}
 image: alpine
 
 copy:
@@ -14,14 +17,46 @@ copy:
     source: "/usr/bin/kairos-agent"
     destination: "/usr/bin/kairos-agent"
 
+# Arm + rpi
 prelude:
-- apk add linux-lts mkinitfs linux-firmware-none udev lvm2 findmnt rsync parted
-- rm /boot/initramfs-lts
-
+  - apk update
+  - apk add linux-rpi4 mkinitfs linux-firmware-none udev lvm2 findmnt rsync parted
+  - rm /boot/initramfs-rpi4 || true
 steps:
-- /usr/bin/immucore version
-- cp files/immucore.files /etc/mkinitfs/features.d/immucore.files
-- kernel=$(ls /lib/modules | head -n1) && mkinitfs -o /boot/initrd -i files/initramfs-init -c files/mkinitfs.conf $kernel
-
+  - /usr/bin/immucore version
+  - cp files/immucore.files /etc/mkinitfs/features.d/immucore.files
+  - kernel=$(ls /lib/modules | head -n1) && mkinitfs -o /boot/initrd -i files/initramfs-init -c files/mkinitfs.conf $kernel
 include:
   - ^/boot/initrd$
+    {{end}}
+  {{end}}
+{{else}}
+image: alpine
+
+copy:
+  - package:
+      category: "system"
+      name: "immucore"
+      version: ">=0"
+    source: "/usr/bin/immucore"
+    destination: "/usr/bin/immucore"
+  - package:
+      category: "system"
+      name: "kairos-agent"
+      version: ">=0"
+    source: "/usr/bin/kairos-agent"
+    destination: "/usr/bin/kairos-agent"
+# x86 + arm + no rpi path
+prelude:
+  - apk update
+  - apk add linux-lts mkinitfs linux-firmware-none udev lvm2 findmnt rsync parted
+  - rm /boot/initramfs-lts || true
+steps:
+  - /usr/bin/immucore version
+  - cp files/immucore.files /etc/mkinitfs/features.d/immucore.files
+  - kernel=$(ls /lib/modules | head -n1) && mkinitfs -o /boot/initrd -i files/initramfs-init -c files/mkinitfs.conf $kernel
+include:
+  - ^/boot/initrd$
+{{end}}
+
+
