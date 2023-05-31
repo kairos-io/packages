@@ -1,7 +1,7 @@
 name: "grub-efi"
 category: "static"
-version: "0.1"
+version: "0.2"
 distribution: opensuse
-image: opensuse/leap:15.3
+image: opensuse/tumbleweed
 efi_modules: ext2 iso9660 linux echo configfile search_label search_fs_file search search_fs_uuid ls normal gzio png fat gettext font minicmd gfxterm gfxmenu all_video xfs gcry_rijndael gcry_sha256 gcry_sha512 test true loadenv part_gpt part_msdos efi_gop efi_uga
 efi_modules_arm64: ext2 iso9660 linux echo configfile search_label search_fs_file search search_fs_uuid ls normal gzio png fat gettext font minicmd gfxterm gfxmenu all_video xfs gcry_rijndael gcry_sha256 gcry_sha512 test true loadenv part_gpt part_msdos efi_gop
