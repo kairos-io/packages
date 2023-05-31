@@ -237,7 +237,7 @@ dmesg -n 1
 # load available drivers to get access to modloop media
 ebegin "Loading boot drivers"
 $MOCK modprobe -a ahci virtio_blk virtio_net virtio_console virtio_pci nvme overlay usb_storage libata cdrom sr_mod iso9660 loop squashfs simpledrm unix 2> /dev/null
-eend $?
+eend
 
 # persistent device names from eudev in order for immucore to mount stuff
 [ -x "/sbin/udevadm" ] && eudev_start
