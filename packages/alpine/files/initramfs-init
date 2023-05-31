@@ -144,11 +144,11 @@ is_url() {
 # support for eudev. see /etc/init.d/udev*
 eudev_start()
 {
-  ebegin "Start udev"
+
 	if [ -e /proc/sys/kernel/hotplug ]; then
 		echo "" >/proc/sys/kernel/hotplug
 	fi
-
+  ebegin "Start udev"
 	udevd -d
 
 	# store persistent-rules that got created while booting
@@ -233,7 +233,6 @@ done
 
 # hide kernel messages
 dmesg -n 1
-
 # load available drivers to get access to modloop media
 ebegin "Loading boot drivers"
 $MOCK modprobe -a ahci virtio_blk virtio_net virtio_console virtio_pci nvme overlay usb_storage libata cdrom sr_mod iso9660 loop squashfs simpledrm 2> /dev/null
@@ -247,27 +246,47 @@ if grep -q cdroot /proc/cmdline || grep -q netboot /proc/cmdline || grep -q "rd.
   ebegin "Mounting LiveCD"
   $MOCK sync
   # Create mountpoints
+  ebegin "Create mountpoints"
   mkdir -p /media/root-ro /media/root-rw /run/rootfsbase $sysroot/media/root-ro $sysroot/media/root-rw $sysroot/run/rootfsbase
+  eend $?
+  # Between udev starting, we loading the modules and the cdrom appearing sometimes there is a delay, so lets wait a bit here
+  ebegin "Waiting for cdrom to be available"
+  while [ ! -e /dev/sr0 ]; do
+      sleep 1
+      counter=$((counter + 1))
+      if [ $counter -ge 60 ]; then
+          exit
+      fi
+  done
+  eend
   # Mount read-only livecd
+  ebegin "Mount LiveCD RO"
   $MOCK mount /dev/sr0 /media/root-ro
+  eend $?
   $MOCK sync
   # Mount squashfs into loop device
+  ebegin "Mount rootfs as squashfs device"
   losetup /dev/loop0 /media/root-ro/rootfs.squashfs
+  eend $?
   $MOCK sync
   # Mount loop device into the rootfsbase
+  ebegin "Mount loop device into rootfsbase"
   $MOCK mount /dev/loop0 /run/rootfsbase
+  eend $?
   $MOCK sync
   # Mount writable overlay tmpfs
+  ebegin "Mount base overlay"
   $MOCK mount -t tmpfs -o "mode=0755,rw,size=25%" root-tmpfs /media/root-rw
+  eend $?
   $MOCK sync
   # Create additional mountpoints and do the overlay mount
   mkdir -p /media/root-rw/work /media/root-rw/root
+  ebegin "Mount rootfs overlay into sysroot"
   $MOCK mount -t overlay -o lowerdir=/run/rootfsbase,upperdir=/media/root-rw/root,workdir=/media/root-rw/work overlayfs $sysroot
+  eend $?
   $MOCK sync
-	eend
-	$MOCK sync
 	# immucore to run the initramfs and rootfs stages
-	ebegin "Immucore"
+	ebegin "Run immucore"
 	immucore
 	eend $?
 	# Move current mounts into sysroot mounts
@@ -289,7 +308,7 @@ fi
 
 
 # Path for booting active/passive/recovery
-ebegin "Immucore"
+ebegin "Run immucore"
 immucore
 eend $?
 
