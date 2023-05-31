@@ -1,0 +1,40 @@
+{{ if eq .Values.name "alpine-rpi" }}
+  {{ if .Values.arch }}
+  {{ if eq .Values.arch "arm64" }}
+image: alpine
+# Arm + rpi
+package_dir: "/package"
+prelude:
+  - apk update
+  - apk add linux-rpi4 mkinitfs linux-firmware-none udev lvm2 findmnt rsync parted
+steps:
+  - kernel=$(ls /lib/modules | head -n1) && depmod -a "${kernel}"
+  - mkdir -p /package/boot
+  - mkdir -p /package/lib/modules
+  - cp /boot/vmlinuz-rpi4 /package/boot/vmlinuz
+  - cp -rfv /lib/modules/* /package/lib/modules
+  # generate initramfs
+  - cp files/immucore.files /etc/mkinitfs/features.d/immucore.files
+  - kernel=$(ls /lib/modules | head -n1) && mkinitfs -o /package/boot/initrd -i files/initramfs-init -c files/mkinitfs.conf $kernel
+    {{end}}
+  {{end}}
+  {{else}}
+image: alpine
+# x86 + arm + no rpi path
+package_dir: "/package"
+prelude:
+  - apk update
+  - apk add linux-lts linux-firmware-none mkinitfs udev lvm2 findmnt rsync parted
+steps:
+  - kernel=$(ls /lib/modules | head -n1) && depmod -a "${kernel}"
+  - mkdir -p /package/boot
+  - mkdir -p /package/lib/modules
+  # TODO: Add firmware files
+  - cp /boot/vmlinuz-lts /package/boot/vmlinuz
+  - cp -rfv /lib/modules/* /package/lib/modules
+  # generate initramfs
+  - cp files/immucore.files /etc/mkinitfs/features.d/immucore.files
+  - kernel=$(ls /lib/modules | head -n1) && mkinitfs -o /package/boot/initrd -i files/initramfs-init -c files/mkinitfs.conf $kernel
+  {{end}}
+
+
