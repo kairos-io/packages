@@ -6,11 +6,13 @@ prelude:
 env:
   - GOPATH=/luetbuild/go/
   - GITHUB_ORG={{ ( index .Values.labels "github.owner" ) }}
-  - CGO_ENABLED=0
-  - LDFLAGS="-s -w -X github.com/kairos-io/immucore/internal/version.version=v${PACKAGE_VERSION}"
   {{if eq .Values.category "fips" }}
   - CGO_ENABLED=1
   - GOEXPERIMENT=boringcrypto
+  - LDFLAGS="-w -X github.com/kairos-io/immucore/internal/version.version=v${PACKAGE_VERSION}"
+  {{else}}
+  - CGO_ENABLED=0
+  - LDFLAGS="-s -w -X github.com/kairos-io/immucore/internal/version.version=v${PACKAGE_VERSION}"
   {{end}}
 steps:
   - |
@@ -18,7 +20,7 @@ steps:
     cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && git checkout v"${PACKAGE_VERSION}" -b build && go build -o {{ .Values.name }} -ldflags="${LDFLAGS}" && mv {{.Values.name}} /usr/bin/
   - chmod +x /usr/bin/{{.Values.name}}
   {{if eq .Values.category "fips" }}
-  - /usr/bin/{{.Values.name}} version| grep -i "X:boringcrypto"
+  - go tool nm /usr/bin/{{.Values.name}} | grep -i "FIPS_mode"
   {{end}}
 includes:
   - /usr/bin/{{.Values.name}}
