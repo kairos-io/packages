@@ -1,16 +1,20 @@
-image: golang:1.20
+requires:
+  - name: "toolchain-go-ubuntu"
+    category: "development"
+    version: ">=0"
+
 env:
   - GITHUB_ORG={{ ( index .Values.labels "github.owner" ) }}
   - HUGO_VERSION=0.110.0
-  {{if eq .Values.category "fips" }}
+{{if eq .Values.category "fips" }}
   - CGO_ENABLED=1
   - GOEXPERIMENT=boringcrypto
   # Because we don't track the compiled-with version on the agent we need to keep the symbols in order to checks FIPS compliance
   - LDFLAGS="-w -X github.com/kairos-io/kairos/v2/internal/common.VERSION=v${PACKAGE_VERSION}"
-  {{else}}
+{{else}}
   - CGO_ENABLED=0
   - LDFLAGS="-s -w -X github.com/kairos-io/kairos/v2/internal/common.VERSION=v${PACKAGE_VERSION}"
-  {{end}}
+{{end}}
 copy:
   - package:
       category: "static"
@@ -19,7 +23,7 @@ copy:
     source: "/usr/share/doc/kairos"
     destination: "/kairos-docs/"
 prelude:
-  - apt-get update && apt-get install -y npm
+  - apt-get update && apt-get install -y npm gcc
   - mkdir /go/src/github.com/${GITHUB_ORG}/ -p
   - cd /go/src/github.com/${GITHUB_ORG}/ && git clone --branch v${PACKAGE_VERSION} https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
 steps:
@@ -34,8 +38,8 @@ steps:
     cd /go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && \
     go build -o /usr/bin/{{ .Values.name }} -ldflags="${LDFLAGS}"
   - chmod +x /usr/bin/{{.Values.name}}
-  {{if eq .Values.category "fips" }}
+{{if eq .Values.category "fips" }}
   - go tool nm /usr/bin/{{.Values.name}} | grep -i "FIPS_mode"
-  {{end}}
+{{end}}
 includes:
   - /usr/bin/{{.Values.name}}
