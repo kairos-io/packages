@@ -131,16 +131,6 @@ rtc_exists() {
 	[ -e "$rtc" ]
 }
 
-# This is used to predict if network access will be necessary
-is_url() {
-	case "$1" in
-	http://*|https://*|ftp://*)
-		return 0;;
-	*)
-		return 1;;
-	esac
-}
-
 # support for eudev. see /etc/init.d/udev*
 eudev_start()
 {
@@ -171,6 +161,26 @@ eudev_start()
 	eend $?
 }
 
+
+# retry function
+retry() {
+  retries=$1
+  shift
+
+  count=0
+  until "$@"; do
+    exit=$?
+    wait=1
+    count=$((count + 1))
+    if [ "$count" -lt "$retries" ]; then
+      echo "Retry $count/$retries exited $exit, retrying in $wait seconds..."
+      sleep $wait
+    else
+      echo "Retry $count/$retries exited $exit, no more retries left."
+      return $exit
+    fi
+  done
+}
 
 /bin/busybox mkdir -p "$ROOT"/usr/bin \
 	"$ROOT"/usr/sbin \
@@ -261,17 +271,17 @@ if grep -q cdroot /proc/cmdline || grep -q netboot /proc/cmdline || grep -q "rd.
   eend
   # Mount read-only livecd
   ebegin "Mount LiveCD RO"
-  $MOCK mount /dev/sr0 /media/root-ro
+  retry 10 "$MOCK mount /dev/sr0 /media/root-ro"
   eend $?
   $MOCK sync
   # Mount squashfs into loop device
   ebegin "Mount rootfs as squashfs device"
-  losetup /dev/loop0 /media/root-ro/rootfs.squashfs
+  retry 5 "losetup /dev/loop0 /media/root-ro/rootfs.squashfs"
   eend $?
   $MOCK sync
   # Mount loop device into the rootfsbase
   ebegin "Mount loop device into rootfsbase"
-  $MOCK mount /dev/loop0 /run/rootfsbase
+  retry 5 "$MOCK mount /dev/loop0 /run/rootfsbase"
   eend $?
   $MOCK sync
   # Mount writable overlay tmpfs
