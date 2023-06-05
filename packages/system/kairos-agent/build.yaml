@@ -1,33 +1,32 @@
-image: opensuse/tumbleweed
+image: golang:1.20
 env:
   - GITHUB_ORG={{ ( index .Values.labels "github.owner" ) }}
+  - HUGO_VERSION=0.110.0
+  {{if eq .Values.category "fips" }}
+  - CGO_ENABLED=1
+  - GOEXPERIMENT=boringcrypto
+  # Because we don't track the compiled-with version on the agent we need to keep the symbols in order to checks FIPS compliance
+  - LDFLAGS="-w -X github.com/kairos-io/kairos/v2/internal/common.VERSION=v${PACKAGE_VERSION}"
+  {{else}}
   - CGO_ENABLED=0
   - LDFLAGS="-s -w -X github.com/kairos-io/kairos/v2/internal/common.VERSION=v${PACKAGE_VERSION}"
-  - HUGO_VERSION=0.110.0
+  {{end}}
+copy:
+  - package:
+      category: "static"
+      name: "kairos-docs"
+      version: ">=0"
+    source: "/usr/share/doc/kairos"
+    destination: "/kairos-docs/"
 prelude:
-  - zypper removerepo repo-openh264 || true 
-  - zypper ref && zypper in -y git wget tar nodejs-default gzip npm go
+  - apt-get update && apt-get install -y npm
   - mkdir /go/src/github.com/${GITHUB_ORG}/ -p
   - cd /go/src/github.com/${GITHUB_ORG}/ && git clone --branch v${PACKAGE_VERSION} https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
-  - cd /go/src/github.com/${GITHUB_ORG}/ && git clone https://github.com/${GITHUB_ORG}/kairos-docs.git
 steps:
-  # Docs for webui
-  # TODO: build this as a package and use requires
+  # Docs for webui, copy them from the package
   - mkdir -p /go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/internal/webui/public/local
-  - |
-    wget "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-{{ .Values.arch }}.tar.gz" && \
-    tar xzf hugo_extended_${HUGO_VERSION}_linux-{{ .Values.arch }}.tar.gz && \
-    rm -r hugo_extended_${HUGO_VERSION}_linux-{{ .Values.arch }}.tar.gz && \
-    chmod +x hugo && \
-    mv hugo /usr/bin && \
-    cd /go/src/github.com/${GITHUB_ORG}/kairos-docs && \
-    npm install postcss-cli && \
-    npm run prepare && \
-    HUGO_ENV="production" /usr/bin/hugo --gc -b "/local/" -d "public/"
-
-  - cp -r /go/src/github.com/${GITHUB_ORG}/kairos-docs/public/* /go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/internal/webui/public/local
+  - cp -r /kairos-docs/* /go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/internal/webui/public/local/
   # Deps for webui
-  # TODO: If we use requires we cannot run this unless we package nodejs...
   - cd /go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/internal/webui/public && npm install
   # Now for the real binary with everything bundled!
   - |
@@ -35,5 +34,8 @@ steps:
     cd /go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && \
     go build -o /usr/bin/{{ .Values.name }} -ldflags="${LDFLAGS}"
   - chmod +x /usr/bin/{{.Values.name}}
+  {{if eq .Values.category "fips" }}
+  - go tool nm /usr/bin/{{.Values.name}} | grep -i "FIPS_mode"
+  {{end}}
 includes:
   - /usr/bin/{{.Values.name}}
