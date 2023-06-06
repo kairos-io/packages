@@ -1,7 +1,7 @@
 packages:
   - name: "alpine"
     category: "distro-kernel"
-    version: "0.1.4"
+    version: "0.1.5"
     description: "Provides kernel and custom initrd for alpine"
     labels:
       autobump.strategy: "custom"
@@ -13,7 +13,7 @@ packages:
         curl -s https://raw.githubusercontent.com/alpinelinux/aports/3.18-stable/main/linux-lts/APKBUILD | grep "pkgver=" | awk -F"=" '{print $2}'
   - name: "alpine-rpi"
     category: "distro-kernel"
-    version: "0.1.4"
+    version: "0.1.5"
     description: "Provides kernel and custom initrd for alpine"
     labels:
       autobump.strategy: "custom"

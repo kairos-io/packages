@@ -1,19 +1,32 @@
 requires:
-  - name: "toolchain-go"
+  - name: "toolchain-go-ubuntu"
     category: "development"
     version: ">=0"
+
 prelude:
+{{if eq .Values.category "fips" }}
+  - apt-get update && apt-get install gcc
+{{end}}
   - mkdir go/src/github.com/${GITHUB_ORG}/ -p
   - cd go/src/github.com/${GITHUB_ORG}/ && git clone https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
 env:
   - GOPATH=/luetbuild/go/
   - GITHUB_ORG={{ ( index .Values.labels "github.owner" ) }}
+{{if eq .Values.category "fips" }}
+  - CGO_ENABLED=1
+  - GOEXPERIMENT=boringcrypto
+  - LDFLAGS="-w -X github.com/kairos-io/immucore/internal/version.version=v${PACKAGE_VERSION}"
+{{else}}
   - CGO_ENABLED=0
   - LDFLAGS="-s -w -X github.com/kairos-io/immucore/internal/version.version=v${PACKAGE_VERSION}"
+{{end}}
 steps:
   - |
     PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
-    cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/  && git checkout v"${PACKAGE_VERSION}" -b build && go build -o {{ .Values.name }} -ldflags="${LDFLAGS}" && mv {{.Values.name}} /usr/bin/
+    cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && git checkout v"${PACKAGE_VERSION}" -b build && go build -o {{ .Values.name }} -ldflags="${LDFLAGS}" && mv {{.Values.name}} /usr/bin/
   - chmod +x /usr/bin/{{.Values.name}}
+{{if eq .Values.category "fips" }}
+  - go tool nm /usr/bin/{{.Values.name}} | grep -i "FIPS_mode"
+{{end}}
 includes:
   - /usr/bin/{{.Values.name}}
