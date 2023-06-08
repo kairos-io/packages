@@ -1,7 +1,7 @@
 packages:
   - name: "kairos-agent"
     category: "system"
-    version: "2.1.1"
+    version: "2.1.3"
     arch: "amd64"
     labels:
       github.repo: "kairos-agent"
