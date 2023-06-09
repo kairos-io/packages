@@ -12,6 +12,6 @@ fi
 
 mount --rbind $HOST_DIR/dev /dev
 mount --rbind $HOST_DIR/run /run
-kairos-agent upgrade --directory /
+kairos-agent upgrade --source dir:/
 nsenter -i -m -t 1 -- reboot
 exit 1
