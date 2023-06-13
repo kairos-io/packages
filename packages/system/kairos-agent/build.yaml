@@ -1,8 +1,18 @@
+{{if eq .Values.category "fips" }}
+requires:
+  - name: "toolchain-go-ubuntu"
+    category: "fips"
+    version: ">=0"
+{{else}}
 requires:
   - name: "toolchain-go-ubuntu"
     category: "development"
     version: ">=0"
-
+{{end}}
+prelude:
+  - apt-get update && apt-get install -y npm gcc
+  - mkdir /go/src/github.com/${GITHUB_ORG}/ -p
+  - cd /go/src/github.com/${GITHUB_ORG}/ && git clone --branch v${PACKAGE_VERSION} https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
 env:
   - GITHUB_ORG={{ ( index .Values.labels "github.owner" ) }}
   - HUGO_VERSION=0.110.0
@@ -22,10 +32,6 @@ copy:
       version: ">=0"
     source: "/usr/share/doc/kairos"
     destination: "/kairos-docs/"
-prelude:
-  - apt-get update && apt-get install -y npm gcc
-  - mkdir /go/src/github.com/${GITHUB_ORG}/ -p
-  - cd /go/src/github.com/${GITHUB_ORG}/ && git clone --branch v${PACKAGE_VERSION} https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
 steps:
   # Docs for webui, copy them from the package
   - mkdir -p /go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/internal/webui/public/local
