@@ -28,7 +28,7 @@ env:
 {{end}}
 steps:
   - |
-    PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && \
+    PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
     cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && git checkout v"${PACKAGE_VERSION}" -b build && go build -ldflags="${LDFLAGS}" && mv {{.Values.name}} /usr/bin/
   - chmod +x /usr/bin/{{.Values.name}}
 {{if eq .Values.category "fips" }}
