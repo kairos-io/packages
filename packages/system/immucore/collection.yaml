@@ -10,14 +10,15 @@ packages:
       - https://github.com/kairos-io/immucore
     license: "Apache License v2"
     description: "The Kairos immutability management interface"
-  - name: "immucore"
-    category: "fips"
-    version: "0.1.1-rc1+1"
-    labels:
-      github.repo: "immucore"
-      autobump.revdeps: "true"
-      github.owner: "kairos-io"
-    uri:
-      - https://github.com/kairos-io/immucore
-    license: "Apache License v2"
-    description: "The Kairos immutability management interface"
+# Disabled as it cant be build with go 1.19.10
+  #- name: "immucore"
+    #category: "fips"
+    #version: "0.1.1-rc1+1"
+    #labels:
+      #github.repo: "immucore"
+      #autobump.revdeps: "true"
+      #github.owner: "kairos-io"
+    #uri:
+      #- https://github.com/kairos-io/immucore
+    #license: "Apache License v2"
+    #description: "The Kairos immutability management interface"
