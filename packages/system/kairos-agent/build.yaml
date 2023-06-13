@@ -40,7 +40,7 @@ steps:
   - cd /go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/internal/webui/public && npm install
   # Now for the real binary with everything bundled!
   - |
-    PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
+    PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && \
     cd /go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && \
     go build -o /usr/bin/{{ .Values.name }} -ldflags="${LDFLAGS}"
   - chmod +x /usr/bin/{{.Values.name}}
