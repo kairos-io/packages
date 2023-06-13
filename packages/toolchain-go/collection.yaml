@@ -1,25 +1,49 @@
 packages:
-- name: toolchain-go
-  category: development
-  variant: "alpine"
-  version: "1.20.2"
-  tag: "1.20.2"
-  hidden: true
-- name: toolchain-go-ubuntu
-  variant: ""
-  category: development
-  version: "1.20.2"
-  tag: "1.20.2"
-  hidden: true
-- name: toolchain-go
-  category: development
-  variant: "alpine"
-  version: "1.20.2"
-  tag: "1.20.2"
-  hidden: true
-- name: toolchain-go-ubuntu
-  variant: ""
-  category: development
-  version: "1.20.2"
-  tag: "1.20.2"
-  hidden: true
+  - name: toolchain-go
+    category: development
+    variant: "alpine"
+    version: "1.20.2"
+    tag: "1.20.2"
+    hidden: true
+  - name: toolchain-go-ubuntu
+    variant: ""
+    category: development
+    version: "1.20.2"
+    tag: "1.20.2"
+    hidden: true
+  - name: toolchain-go
+    category: development
+    variant: "alpine"
+    version: "1.20.2"
+    tag: "1.20.2"
+    hidden: true
+  - name: toolchain-go-ubuntu
+    variant: ""
+    category: development
+    version: "1.20.2"
+    tag: "1.20.2"
+    hidden: true
+  - name: toolchain-go
+    category: fips
+    variant: "alpine"
+    version: "1.19.10"
+    tag: "1.19.10"
+    hidden: true
+  - name: toolchain-go-ubuntu
+    variant: ""
+    category: fips
+    version: "1.19.10"
+    tag: "1.19.10"
+    hidden: true
+  - name: toolchain-go
+    category: fips
+    variant: "alpine"
+    version: "1.19.10"
+    tag: "1.19.10"
+    hidden: true
+  - name: toolchain-go-ubuntu
+    variant: ""
+    category: fips
+    version: "1.19.10"
+    tag: "1.19.10"
+    hidden: true

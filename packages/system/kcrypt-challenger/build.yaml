@@ -1,7 +1,14 @@
+{{if eq .Values.category "fips" }}
 requires:
-- name: "toolchain-go-ubuntu"
-  category: "development"
-  version: ">=0"
+  - name: "toolchain-go-ubuntu"
+    category: "fips"
+    version: ">=0"
+{{else}}
+requires:
+  - name: "toolchain-go-ubuntu"
+    category: "development"
+    version: ">=0"
+{{end}}
 prelude:
 {{if eq .Values.category "fips" }}
   - apt-get update && apt-get install -y gcc
@@ -10,7 +17,7 @@ prelude:
   - apt-get update && apt-get install -y gcc libssl-dev
   - cd go/src/github.com/${GITHUB_ORG}/ && git clone https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
 {{ if ne .Values.live "yes" }}
-  - cd go/src/github.com/${GITHUB_ORG}/ && git checkout v"${PACKAGE_VERSION}" -b build
+  - cd go/src/github.com/${GITHUB_ORG}/ && git checkout 3912abcec424521725ccd335181f2fde90510081 -b build
 {{ end }}
 env:
   - GOPATH=/luetbuild/go/
@@ -25,7 +32,7 @@ env:
 
 steps:
   - |
-    PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && \
+    PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
     mkdir -p /system/discovery && \
     cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && go build -o {{ .Values.binary_name }} ./cmd/discovery/main.go && mv {{ .Values.binary_name }} /system/discovery
   - chmod +x /system/discovery/{{ .Values.binary_name }}

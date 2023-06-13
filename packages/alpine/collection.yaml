@@ -1,7 +1,7 @@
 packages:
   - name: "alpine"
     category: "distro-kernel"
-    version: "6.1.32"
+    version: "6.1.33"
     description: "Provides kernel and custom initrd for alpine"
     labels:
       autobump.strategy: "custom"
@@ -11,7 +11,7 @@ packages:
         curl -s https://raw.githubusercontent.com/alpinelinux/aports/3.18-stable/main/linux-lts/APKBUILD | grep "pkgver=" | awk -F"=" '{print $2}'
       autobump.version_hook: |
         curl -s https://raw.githubusercontent.com/alpinelinux/aports/3.18-stable/main/linux-lts/APKBUILD | grep "pkgver=" | awk -F"=" '{print $2}'
-      package.version: "6.1.32"
+      package.version: "6.1.33"
   - name: "alpine-rpi"
     category: "distro-kernel"
     version: "6.1.33"

@@ -1,8 +1,14 @@
+{{if eq .Values.category "fips" }}
+requires:
+  - name: "toolchain-go-ubuntu"
+    category: "fips"
+    version: ">=0"
+{{else}}
 requires:
   - name: "toolchain-go-ubuntu"
     category: "development"
     version: ">=0"
-
+{{end}}
 prelude:
 {{if eq .Values.category "fips" }}
   - apt-get update && apt-get install gcc
