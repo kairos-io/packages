@@ -115,10 +115,10 @@ remount_fstab_entry() {
 			local oldmnt=$(awk -v d=$ROOT$dev '$1==d {print $2}' "$ROOT"/proc/mounts 2>/dev/null)
 			if [ "$oldmnt" != "$mnt" ]; then
 				mkdir -p "$mnt"
-				$MOCK mount -o move "$oldmnt" "$mnt"
+				mount -o move "$oldmnt" "$mnt"
 			fi
 			if [ -n "$mntopts" ]; then
-				$MOCK mount -o remount,"$mntopts" "$mnt"
+				mount -o remount,"$mntopts" "$mnt"
 			fi
 		fi
 	done
@@ -170,7 +170,7 @@ retry() {
   count=0
   until "$@"; do
     exit=$?
-    wait=1
+    wait=$((count + 1))
     count=$((count + 1))
     if [ "$count" -lt "$retries" ]; then
       echo "Retry $count/$retries exited $exit, retrying in $wait seconds..."
@@ -180,6 +180,35 @@ retry() {
       return $exit
     fi
   done
+}
+
+# uses the first "eth" interface with operstate 'up'.
+ip_choose_if() {
+	for x in "$ROOT"/sys/class/net/eth*; do
+		if grep -iq up $x/operstate 2>/dev/null;then
+			[ -e "$x" ] && echo ${x##*/} && return
+		fi
+	done
+	[ -e "$x" ] && echo ${x##*/} && return
+}
+
+configure_ip() {
+	device=$(ip_choose_if)
+
+	if [ -z "$device" ]; then
+		echo "ERROR: IP requested but no network device was found"
+		return 1
+	fi
+
+  # automatic configuration
+  if [ ! -e "$ROOT"/usr/share/udhcpc/default.script ]; then
+    echo "ERROR: DHCP requested but not present in initrd"
+    return 1
+  fi
+  ebegin "Obtaining IP via DHCP ($device)"
+  ifconfig "$device" 0.0.0.0
+  udhcpc -i "$device" -f -q
+  eend $?
 }
 
 /bin/busybox mkdir -p "$ROOT"/usr/bin \
@@ -200,9 +229,9 @@ export PATH="$PATH:/usr/bin:/bin:/usr/sbin:/sbin"
 
 
 
-$MOCK mount -t sysfs -o noexec,nosuid,nodev sysfs /sys
-$MOCK mount -t devtmpfs -o exec,nosuid,mode=0755,size=2M devtmpfs /dev 2>/dev/null \
-	|| $MOCK mount -t tmpfs -o exec,nosuid,mode=0755,size=2M tmpfs /dev
+mount -t sysfs -o noexec,nosuid,nodev sysfs /sys
+mount -t devtmpfs -o exec,nosuid,mode=0755,size=2M devtmpfs /dev 2>/dev/null \
+	|| mount -t tmpfs -o exec,nosuid,mode=0755,size=2M tmpfs /dev
 
 # Make sure /dev/null is a device node. If /dev/null does not exist yet, the command
 # mounting the devtmpfs will create it implicitly as an file with the "2>" redirection.
@@ -215,18 +244,18 @@ $MOCK mount -t devtmpfs -o exec,nosuid,mode=0755,size=2M devtmpfs /dev 2>/dev/nu
 # prevents an error if the device node has already been seeded.
 [ -c /dev/kmsg ] || mknod -m 660 /dev/kmsg c 1 11
 
-$MOCK mount -t proc -o noexec,nosuid,nodev proc /proc
+mount -t proc -o noexec,nosuid,nodev proc /proc
 # pty device nodes (later system will need it)
 [ -c /dev/ptmx ] || mknod -m 666 /dev/ptmx c 5 2
 [ -d /dev/pts ] || mkdir -m 755 /dev/pts
-$MOCK mount -t devpts -o gid=5,mode=0620,noexec,nosuid devpts /dev/pts
+mount -t devpts -o gid=5,mode=0620,noexec,nosuid devpts /dev/pts
 
 # shared memory area (later system will need it)
 [ -d /dev/shm ] || mkdir /dev/shm
-$MOCK mount -t tmpfs -o nodev,nosuid,noexec shm /dev/shm
+mount -t tmpfs -o nodev,nosuid,noexec shm /dev/shm
 
 # mount run
-$MOCK mount -t tmpfs -o nodev,nosuid,noexec,rw tmpfs /run
+mount -t tmpfs -o nodev,nosuid,noexec,rw tmpfs /run
 
 echo "Alpine Init $VERSION" > "$ROOT"/dev/kmsg
 echo "Alpine Init $VERSION"
@@ -245,56 +274,66 @@ done
 dmesg -n 1
 # load available drivers to get access to modloop media
 ebegin "Loading boot drivers"
-$MOCK modprobe -a ahci virtio_blk virtio_net virtio_console virtio_pci nvme overlay usb_storage libata cdrom sr_mod iso9660 loop squashfs simpledrm 2> /dev/null
+modprobe -a ahci virtio_blk virtio_net virtio_console virtio_pci nvme overlay usb_storage libata cdrom sr_mod iso9660 loop squashfs simpledrm ext4 2> /dev/null
+if [ -f "$ROOT"/etc/modules ] ; then
+	sed 's/\#.*//g' < /etc/modules |
+	while read module args; do
+		modprobe -q $module $args
+	done
+fi
+# workaround for vmware
+if grep -q VMware /sys/devices/virtual/dmi/id/sys_vendor 2>/dev/null; then
+	modprobe -a ata_piix mptspi sr-mod
+fi
+
 eend
 
 # persistent device names from eudev in order for immucore to mount stuff
 [ -x "/sbin/udevadm" ] && eudev_start
 
+# Mount network if we got rd.neednet=1
+if grep -q "rd.neednet=1" /proc/cmdline;then
+  configure_ip
+fi
+
 # Path for booting from livecd/netboot/rd.{cos,immucore}.disable
 if grep -q cdroot /proc/cmdline || grep -q netboot /proc/cmdline || grep -q "rd.immucore.disable" /proc/cmdline || grep -q "rd.cos.disable" /proc/cmdline;then
-  ebegin "Mounting LiveCD"
-  $MOCK sync
+  echo "Mounting LiveCD"
+  sync
   # Create mountpoints
   ebegin "Create mountpoints"
   mkdir -p /media/root-ro /media/root-rw /run/rootfsbase $sysroot/media/root-ro $sysroot/media/root-rw $sysroot/run/rootfsbase
   eend $?
   # Between udev starting, we loading the modules and the cdrom appearing sometimes there is a delay, so lets wait a bit here
   ebegin "Waiting for cdrom to be available"
-  while [ ! -e /dev/sr0 ]; do
-      sleep 1
-      counter=$((counter + 1))
-      if [ $counter -ge 60 ]; then
-          exit
-      fi
-  done
+  retry 10 test -e /dev/sr0
   eend
   # Mount read-only livecd
   ebegin "Mount LiveCD RO"
-  retry 10 "$MOCK mount /dev/sr0 /media/root-ro"
+  retry 10 mount /dev/sr0 /media/root-ro
   eend $?
-  $MOCK sync
+  sync
   # Mount squashfs into loop device
   ebegin "Mount rootfs as squashfs device"
-  retry 5 "losetup /dev/loop0 /media/root-ro/rootfs.squashfs"
+  retry 5 losetup /dev/loop0 /media/root-ro/rootfs.squashfs
   eend $?
-  $MOCK sync
+  sync
   # Mount loop device into the rootfsbase
   ebegin "Mount loop device into rootfsbase"
-  retry 5 "$MOCK mount /dev/loop0 /run/rootfsbase"
+  retry 5 mount /dev/loop0 /run/rootfsbase
   eend $?
-  $MOCK sync
+  sync
   # Mount writable overlay tmpfs
   ebegin "Mount base overlay"
-  $MOCK mount -t tmpfs -o "mode=0755,rw,size=25%" root-tmpfs /media/root-rw
+  mount -t tmpfs -o "mode=0755,rw,size=25%" root-tmpfs /media/root-rw
   eend $?
-  $MOCK sync
+  sync
   # Create additional mountpoints and do the overlay mount
   mkdir -p /media/root-rw/work /media/root-rw/root
   ebegin "Mount rootfs overlay into sysroot"
-  $MOCK mount -t overlay -o lowerdir=/run/rootfsbase,upperdir=/media/root-rw/root,workdir=/media/root-rw/work overlayfs $sysroot
+  mount -t overlay -o lowerdir=/run/rootfsbase,upperdir=/media/root-rw/root,workdir=/media/root-rw/work overlayfs $sysroot
   eend $?
-  $MOCK sync
+  sync
 	# immucore to run the initramfs and rootfs stages
 	ebegin "Run immucore"
 	immucore
@@ -306,7 +345,7 @@ if grep -q cdroot /proc/cmdline || grep -q netboot /proc/cmdline || grep -q "rd.
     if [ "$DIR" != "/" -a "$DIR" != "$sysroot" -a -d "$DIR" ]; then
       ebegin "Moving $DIR to $sysroot/$DIR"
       mkdir -p $sysroot/$DIR
-      $MOCK mount -o move $DIR $sysroot/$DIR
+      mount -o move $DIR $sysroot/$DIR
       eend $?
     fi
   done
@@ -375,10 +414,10 @@ fi
 
 # Mount bind system mounts to sysroot to keep them going
 mkdir -p $sysroot/sys $sysroot/proc $sysroot/dev $sysroot/run
-$MOCK mount -o bind /sys $sysroot/sys
-$MOCK mount -o bind /proc $sysroot/proc
-$MOCK mount -o bind /dev $sysroot/dev
-$MOCK mount -o bind /run $sysroot/run
+mount -o bind /sys $sysroot/sys
+mount -o bind /proc $sysroot/proc
+mount -o bind /dev $sysroot/dev
+mount -o bind /run $sysroot/run
 
 # remount according default fstab from package
 if [ -z "$has_fstab" ] && [ -f "$sysroot"/etc/fstab ]; then
