@@ -1,7 +1,7 @@
 packages:
   - name: kcrypt
     category: system
-    version: "0.6.0+1"
+    version: "0.7.0"
     labels:
       github.repo: "kcrypt"
       autobump.revdeps: "true"
@@ -10,15 +10,14 @@ packages:
       - https://github.com/kairos-io/kcrypt
     license: "Apache License v2"
     description: "Cloud native guardian for persistent data in the edge"
-# Disabled as it cant be build with go 1.19.10
-#  - name: kcrypt
-    #category: fips
-    #version: "0.6.0+1"
-    #labels:
-      #github.repo: "kcrypt"
-      #autobump.revdeps: "true"
-      #github.owner: "kairos-io"
-    #uri:
-      #- https://github.com/kairos-io/kcrypt
-    #license: "Apache License v2"
-    #description: "Cloud native guardian for persistent data in the edge"
+  - name: kcrypt
+    category: fips
+    version: "0.7.0"
+    labels:
+      github.repo: "kcrypt"
+      autobump.revdeps: "true"
+      github.owner: "kairos-io"
+    uri:
+      - https://github.com/kairos-io/kcrypt
+    license: "Apache License v2"
+    description: "Cloud native guardian for persistent data in the edge"
