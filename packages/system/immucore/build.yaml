@@ -32,7 +32,7 @@ steps:
     cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && git checkout v"${PACKAGE_VERSION}" -b build && go build -o {{ .Values.name }} -ldflags="${LDFLAGS}" && mv {{.Values.name}} /usr/bin/
   - chmod +x /usr/bin/{{.Values.name}}
 {{if eq .Values.category "fips" }}
-  - go tool nm /usr/bin/{{.Values.name}} | grep -i "FIPS_mode"
+  - /usr/bin/{{.Values.name}} version 2>&1 >/dev/null | grep -i boringcrypto
 {{end}}
 includes:
   - /usr/bin/{{.Values.name}}
