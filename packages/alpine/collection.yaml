@@ -1,7 +1,7 @@
 packages:
   - name: "alpine"
     category: "distro-kernel"
-    version: "6.1.34"
+    version: "6.1.34-1"
     description: "Provides kernel and custom initrd for alpine"
     labels:
       autobump.strategy: "custom"
@@ -14,7 +14,7 @@ packages:
       package.version: "6.1.34"
   - name: "alpine-rpi"
     category: "distro-kernel"
-    version: "6.1.34"
+    version: "6.1.34-1"
     description: "Provides kernel and custom initrd for alpine"
     labels:
       autobump.strategy: "custom"

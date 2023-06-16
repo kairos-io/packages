@@ -182,7 +182,7 @@ retry() {
   done
 }
 
-# uses the first "eth" interface with operstate 'up'.
+# uses the first "eth" interface with state 'up'.
 ip_choose_if() {
 	for x in "$ROOT"/sys/class/net/eth*; do
 		if grep -iq up $x/operstate 2>/dev/null;then
@@ -192,8 +192,21 @@ ip_choose_if() {
 	[ -e "$x" ] && echo ${x##*/} && return
 }
 
+device_up() {
+	for x in "$ROOT"/sys/class/net/eth*; do
+		if grep -iq up $x/operstate 2>/dev/null;then
+		  [ -e "$x" ] && echo "Found up device: ${x##*/}" && return
+		fi
+	done
+	[ -e "$x" ] && echo ${x##*/} && return
+}
+
 configure_ip() {
-	device=$(ip_choose_if)
+  # Sometimes it takes a bit for the device to come in UP state
+  # so first check fi any eth devices are in UP state before getting the device
+  retry 5 device_up
+
+  device=$(ip_choose_if)
 
 	if [ -z "$device" ]; then
 		echo "ERROR: IP requested but no network device was found"
@@ -300,8 +313,8 @@ eend
 # persistent device names from eudev in order for immucore to mount stuff
 [ -x "/sbin/udevadm" ] && eudev_start
 
-# Mount network if we got rd.neednet=1
-if grep -q "rd.neednet=1" /proc/cmdline;then
+# Mount network if we got rd.neednet=1 or netboot
+if grep -q "rd.neednet=1" /proc/cmdline || grep -q netboot /proc/cmdline ;then
   configure_ip
 fi
 
