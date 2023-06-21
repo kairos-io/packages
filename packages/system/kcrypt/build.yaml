@@ -32,7 +32,11 @@ steps:
     cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && git checkout v"${PACKAGE_VERSION}" -b build && go build -ldflags="${LDFLAGS}" && mv {{.Values.name}} /usr/bin/
   - chmod +x /usr/bin/{{.Values.name}}
 {{if eq .Values.category "fips" }}
+  {{ if .Values.arch }}
+    {{ if eq .Values.arch "amd64" }}
   - go tool nm /usr/bin/{{.Values.name}} | grep -i "FIPS_mode"
+    {{end}}
+  {{end}}
 {{end}}
 includes:
   - /usr/bin/{{.Values.name}}
