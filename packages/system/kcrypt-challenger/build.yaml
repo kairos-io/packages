@@ -1,4 +1,4 @@
-{{if eq .Values.category "fips" }}
+{{if or (eq .Values.category "fips") (eq .Values.category "fips-static")}}
 requires:
   - name: "toolchain-go-ubuntu"
     category: "fips"
@@ -10,7 +10,7 @@ requires:
     version: ">=0"
 {{end}}
 prelude:
-{{if eq .Values.category "fips" }}
+{{if or (eq .Values.category "fips") (eq .Values.category "fips-static")}}
   - apt-get update && apt-get install -y gcc
 {{end}}
   - mkdir go/src/github.com/${GITHUB_ORG}/ -p
@@ -23,7 +23,7 @@ env:
   - GOPATH=/luetbuild/go/
   - DEBIAN_FRONTEND=noninteractive
   - GITHUB_ORG={{ ( index .Values.labels "github.owner" ) }}
-{{if eq .Values.category "fips" }}
+{{if or (eq .Values.category "fips") (eq .Values.category "fips-static")}}
   - CGO_ENABLED=1
   - GOEXPERIMENT=boringcrypto
 {{else}}
@@ -34,9 +34,9 @@ steps:
   - |
     PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
     mkdir -p /system/discovery && \
-    cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && go build -o {{ .Values.binary_name }} ./cmd/discovery/main.go && mv {{ .Values.binary_name }} /system/discovery
+    cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && go build -ldflags="{{with .Values.ldflags}}{{.}}{{end}}" -o {{ .Values.binary_name }}  ./cmd/discovery/main.go && mv {{ .Values.binary_name }} /system/discovery
   - chmod +x /system/discovery/{{ .Values.binary_name }}
-{{if eq .Values.category "fips" }}
+{{if or (eq .Values.category "fips") (eq .Values.category "fips-static")}}
   {{ if .Values.arch }}
     {{ if eq .Values.arch "amd64" }}
   - go tool nm /system/discovery/{{ .Values.binary_name }} | grep -i "FIPS_mode"
