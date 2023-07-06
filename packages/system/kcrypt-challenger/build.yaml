@@ -22,6 +22,7 @@ prelude:
 env:
   - GOPATH=/luetbuild/go/
   - DEBIAN_FRONTEND=noninteractive
+  - CGO_LDFLAGS="-ldl"
   - GITHUB_ORG={{ ( index .Values.labels "github.owner" ) }}
 {{if or (eq .Values.category "fips") (eq .Values.category "fips-static")}}
   - CGO_ENABLED=1
