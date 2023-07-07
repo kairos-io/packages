@@ -12,7 +12,7 @@ packages:
     description: "Lyfecycle agent for kairos"
   - name: "kairos-agent"
     category: "fips"
-    version: "2.1.9"
+    version: "2.1.10"
     labels:
       github.repo: "kairos-agent"
       autobump.revdeps: "true"
