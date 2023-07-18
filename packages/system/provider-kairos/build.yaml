@@ -1,0 +1,38 @@
+{{if or (eq .Values.category "fips") (eq .Values.category "fips-static")}}
+requires:
+  - name: "toolchain-go-ubuntu"
+    category: "fips"
+    version: ">=0"
+{{else}}
+requires:
+  - name: "toolchain-go-ubuntu"
+    category: "development"
+    version: ">=0"
+{{end}}
+prelude:
+{{if or (eq .Values.category "fips") (eq .Values.category "fips-static")}}
+  - apt-get update && apt-get install gcc
+{{end}}
+  - mkdir go/src/github.com/${GITHUB_ORG}/ -p
+  - cd go/src/github.com/${GITHUB_ORG}/ && git clone https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
+env:
+  - GOPATH=/luetbuild/go/
+  - GITHUB_ORG={{ ( index .Values.labels "github.owner" ) }}
+{{if or (eq .Values.category "fips") (eq .Values.category "fips-static")}}
+  - CGO_ENABLED=1
+  - GOEXPERIMENT=boringcrypto
+  - LDFLAGS="-w -X github.com/kairos-io/provider-kairos/v2/internal/cli.VERSION=v${PACKAGE_VERSION} {{with .Values.ldflags}}{{.}}{{end}}"
+{{else}}
+  - CGO_ENABLED=0
+  - LDFLAGS="-s -w -X github.com/kairos-io/provider-kairos/v2/internal/cli.VERSION=v${PACKAGE_VERSION} {{with .Values.ldflags}}{{.}}{{end}}"
+{{end}}
+steps:
+  - |
+    PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
+    cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && git checkout v"${PACKAGE_VERSION}" -b build && go build -o {{ .Values.name }} -ldflags="${LDFLAGS}" && mv {{.Values.name}} /usr/bin/
+  - chmod +x /usr/bin/{{.Values.name}}
+{{if or (eq .Values.category "fips") (eq .Values.category "fips-static")}}
+  - /usr/bin/{{.Values.name}} version 2>&1 >/dev/null | grep -i boringcrypto
+{{end}}
+includes:
+  - /usr/bin/{{.Values.name}}

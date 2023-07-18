@@ -1,0 +1,35 @@
+packages:
+  - name: "provider-kairos"
+    category: "system"
+    version: "2.3.0"
+    labels:
+      github.repo: "provider-kairos"
+      autobump.revdeps: "true"
+      github.owner: "kairos-io"
+    uri:
+      - https://github.com/kairos-io/provider-kairos
+    license: "Apache License v2"
+    description: "The Kairos standard provider"
+  - name: "provider-kairos"
+    category: "fips"
+    version: "2.3.0"
+    labels:
+      github.repo: "provider-kairos"
+      autobump.revdeps: "true"
+      github.owner: "kairos-io"
+    uri:
+      - https://github.com/kairos-io/provider-kairos
+    license: "Apache License v2"
+    description: "The Kairos standard provider"
+  - name: "provider-kairos"
+    category: "fips-static"
+    ldflags: "-linkmode external -extldflags -static"
+    version: "2.3.0"
+    labels:
+      github.repo: "provider-kairos"
+      autobump.revdeps: "true"
+      github.owner: "kairos-io"
+    uri:
+      - https://github.com/kairos-io/provider-kairos
+    license: "Apache License v2"
+    description: "The Kairos standard provider"
