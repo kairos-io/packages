@@ -1,7 +1,7 @@
 packages:
   - name: "provider-kairos"
     category: "bundles"
-    version: "2.2.2"
+    version: "2.3.0"
     labels:
       github.repo: "provider-kairos"
       github.owner: "kairos-io"
