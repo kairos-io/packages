@@ -1,44 +1,39 @@
 packages:
-- name: k3s
-  category: k8s
-  checksum-amd64: "c3c816290461dc0e8e632e70ceb0f771382629860a851ae88545c816beb9797c"
-  version: "v1.25.11"
-  k3s_version: "2"
-  labels:
-    github.repo: "k3s-io"
-    github.owner: "k3s"
-  uri:
-    - https://github.com/k3s-io/k3s
-  license: "APL-2"
-  description: " Lightweight Kubernetes "
+  - name: k3s
+    category: k8s
+    checksum-amd64: "59c4285b5c9db1525ab0c2a08807804312f6b94640efffad92cc3e7c8385c9c0"
+    version: "1.25.11"
+    k3s_version: "2"
+    labels:
+      github.owner: "k3s-io"
+      github.repo: "k3s"
+    uri:
+      - https://github.com/k3s-io/k3s
+    license: "APL-2"
+    description: " Lightweight Kubernetes "
 
-- name: k3s
-  category: k8s
-  checksum-amd64: "c3c816290461dc0e8e632e70ceb0f771382629860a851ae88545c816beb9797c"
-  version: "v1.26.6"
-  k3s_version: "2"
-  labels:
-    github.repo: "k3s-io"
-    github.owner: "k3s"
-  uri:
-    - https://github.com/k3s-io/k3s
-  license: "APL-2"
-  description: " Lightweight Kubernetes "
+  - name: k3s
+    category: k8s
+    checksum-amd64: "4e10a9de751306b177347ddbbbfc52f3771e5f6aaf95a19441dad6f837721410"
+    version: "1.26.6"
+    k3s_version: "2"
+    labels:
+      github.owner: "k3s-io"
+      github.repo: "k3s"
+    uri:
+      - https://github.com/k3s-io/k3s
+    license: "APL-2"
+    description: " Lightweight Kubernetes "
 
-- name: k3s
-  category: k8s
-  checksum-amd64: "c3c816290461dc0e8e632e70ceb0f771382629860a851ae88545c816beb9797c"
-  version: "v1.27.3"
-  k3s_version: "2"
-  labels:
-    github.repo: "k3s-io"
-    github.owner: "k3s"
-  uri:
-    - https://github.com/k3s-io/k3s
-  license: "APL-2"
-  description: " Lightweight Kubernetes "
-
-# From provider-kairos/releases.json:
-# "v1.25.11+k3s1",
-# "v1.26.6+k3s1",
-# "v1.27.3+k3s1"
+  - name: k3s
+    category: k8s
+    checksum-amd64: "ee130a125683a2e588a1f92c144b927a184c209adb59c0fdc6930822b07b4c90"
+    version: "1.27.3"
+    k3s_version: "2"
+    labels:
+      github.owner: "k3s-io"
+      github.repo: "k3s"
+    uri:
+      - https://github.com/k3s-io/k3s
+    license: "APL-2"
+    description: " Lightweight Kubernetes "
