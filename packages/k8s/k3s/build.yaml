@@ -3,7 +3,7 @@ requires:
   category: "development"
   version: ">=0"
 env:
-  - ENV INSTALL_K3S_BIN_DIR="/usr/local/bin"
+  - INSTALL_K3S_BIN_DIR="/usr/bin"
   - INSTALL_K3S_SELINUX_WARN=true
   - INSTALL_K3S_SKIP_START="true"
   - INSTALL_K3S_SKIP_ENABLE="true"

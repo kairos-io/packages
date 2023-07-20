@@ -1,0 +1,44 @@
+packages:
+- name: k3s
+  category: k8s
+  checksum-amd64: "c3c816290461dc0e8e632e70ceb0f771382629860a851ae88545c816beb9797c"
+  version: "v1.25.11"
+  k3s_version: "2"
+  labels:
+    github.repo: "k3s-io"
+    github.owner: "k3s"
+  uri:
+    - https://github.com/k3s-io/k3s
+  license: "APL-2"
+  description: " Lightweight Kubernetes "
+
+- name: k3s
+  category: k8s
+  checksum-amd64: "c3c816290461dc0e8e632e70ceb0f771382629860a851ae88545c816beb9797c"
+  version: "v1.26.6"
+  k3s_version: "2"
+  labels:
+    github.repo: "k3s-io"
+    github.owner: "k3s"
+  uri:
+    - https://github.com/k3s-io/k3s
+  license: "APL-2"
+  description: " Lightweight Kubernetes "
+
+- name: k3s
+  category: k8s
+  checksum-amd64: "c3c816290461dc0e8e632e70ceb0f771382629860a851ae88545c816beb9797c"
+  version: "v1.27.3"
+  k3s_version: "2"
+  labels:
+    github.repo: "k3s-io"
+    github.owner: "k3s"
+  uri:
+    - https://github.com/k3s-io/k3s
+  license: "APL-2"
+  description: " Lightweight Kubernetes "
+
+# From provider-kairos/releases.json:
+# "v1.25.11+k3s1",
+# "v1.26.6+k3s1",
+# "v1.27.3+k3s1"
