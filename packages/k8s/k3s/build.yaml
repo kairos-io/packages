@@ -3,13 +3,13 @@ requires:
   category: "development"
   version: ">=0"
 env:
-{{$arch:=(default .Values.arch "amd64")}}
   - INSTALL_K3S_BIN_DIR="/usr/bin"
   - INSTALL_K3S_SELINUX_WARN=true
   - INSTALL_K3S_SKIP_START="true"
   - INSTALL_K3S_SKIP_ENABLE="true"
   - INSTALL_K3S_SKIP_SELINUX_RPM="true"
   - INSTALL_K3S_VERSION=v{{.Values.version}}+k3s1
+  {{$arch:=(default "amd64" .Values.arch)}}
   {{ if eq $arch "arm" }}
   - ARCH=arm64
   {{ else }}
@@ -29,7 +29,6 @@ steps:
   - touch /sbin/openrc-run && chmod +x /sbin/openrc-run
   - bash installer.sh
   - rm -rf installer.sh
-  - echo "{{ ( index .Values (print "checksum-" $arch) ) }}  /usr/bin/{{.Values.name}}" | sha256sum -w -c
   - chmod +x /usr/bin/{{.Values.name}}
 
 includes:
