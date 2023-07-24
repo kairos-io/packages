@@ -1,0 +1,37 @@
+requires:
+- name: "toolchain-go"
+  category: "development"
+  version: ">=0"
+env:
+  - INSTALL_K3S_BIN_DIR="/usr/bin"
+  - INSTALL_K3S_SELINUX_WARN=true
+  - INSTALL_K3S_SKIP_START="true"
+  - INSTALL_K3S_SKIP_ENABLE="true"
+  - INSTALL_K3S_SKIP_SELINUX_RPM="true"
+  - INSTALL_K3S_VERSION=v{{.Values.version}}+k3s1
+  {{$arch:=(default "amd64" .Values.arch)}}
+  {{ if eq $arch "arm" }}
+  - ARCH=arm64
+  {{ else }}
+  - ARCH={{ $arch }}
+  {{ end }}
+steps:
+  - curl -sfL https://get.k3s.io > installer.sh
+  # Let the installer script install service files both for openrc and systemd:
+  # https://github.com/k3s-io/k3s/blob/36645e7311e9bdbbf2adb79ecd8bd68556bc86f6/install.sh#L114-L122
+  - touch /bin/systemctl && chmod +x /bin/systemctl
+  - mkdir -p /etc/systemd/system/
+  - bash installer.sh
+  - bash installer.sh agent
+  # Run again to create the openrc service files
+  - rm /bin/systemctl
+  - rm -rf /etc/systemd/system/
+  - touch /sbin/openrc-run && chmod +x /sbin/openrc-run
+  - bash installer.sh
+  - rm -rf installer.sh
+  - chmod +x /usr/bin/{{.Values.name}}
+
+includes:
+- /usr/bin/{{.Values.name}}
+- /etc/systemd/system/k3s*.service
+- /etc/init.d/k3s*

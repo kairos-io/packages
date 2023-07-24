@@ -1,6 +1,6 @@
 packages:
   - name: "provider-kairos"
-    category: "bundles"
+    category: "system"
     version: "2.3.0"
     labels:
       github.repo: "provider-kairos"

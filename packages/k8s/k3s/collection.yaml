@@ -1,0 +1,36 @@
+packages:
+  - name: k3s
+    category: k8s
+    version: "1.25.11"
+    k3s_version: "2"
+    labels:
+      github.owner: "k3s-io"
+      github.repo: "k3s"
+    uri:
+      - https://github.com/k3s-io/k3s
+    license: "APL-2"
+    description: " Lightweight Kubernetes "
+
+  - name: k3s
+    category: k8s
+    version: "1.26.6"
+    k3s_version: "2"
+    labels:
+      github.owner: "k3s-io"
+      github.repo: "k3s"
+    uri:
+      - https://github.com/k3s-io/k3s
+    license: "APL-2"
+    description: " Lightweight Kubernetes "
+
+  - name: k3s
+    category: k8s
+    version: "1.27.3"
+    k3s_version: "2"
+    labels:
+      github.owner: "k3s-io"
+      github.repo: "k3s"
+    uri:
+      - https://github.com/k3s-io/k3s
+    license: "APL-2"
+    description: " Lightweight Kubernetes "

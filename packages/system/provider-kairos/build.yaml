@@ -1,21 +1,22 @@
-{{ if .Values.init  }}
-  {{ if eq .Values.init "systemd" }}
 image: golang:1.20
+env:
+  - CGO_ENABLED=0
+  - LDFLAGS="-s -w -X 'github.com/kairos-io/provider-kairos/v2/internal/cli.VERSION={{ .Values.version }}'"
 prelude:
 - apt-get update
 - apt-get install -y git
-  {{ else }}
-image: golang:1.20-alpine
-prelude:
-- apk add git
-  {{ end }}
 - git clone https://github.com/kairos-io/provider-kairos
 - |
     PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && \
     cd provider-kairos && git checkout v$PACKAGE_VERSION
 steps:
 - mkdir -p /system/providers
-- cd provider-kairos && go build -o agent-provider-kairos
+- cd provider-kairos && go build -ldflags "${LDFLAGS}" -o agent-provider-kairos
 - mv provider-kairos/agent-provider-kairos /system/providers/agent-provider-kairos
 - ln -s /system/providers/agent-provider-kairos /usr/bin/kairos
-{{ end }}
+
+includes:
+- ^/system$
+- ^/system/providers$
+- ^/system/providers/agent-provider-kairos$
+- ^/usr/bin/kairos$
