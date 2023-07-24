@@ -3,7 +3,7 @@ requires:
   category: "development"
   version: ">=0"
 prelude:
-{{$arch:=(default .Values.arch "amd64")}}
+{{$arch:=(default "amd64" .Values.arch)}}
 {{ if eq $arch "arm" }}
 {{$arch:="arm64"}}
 {{end}}
