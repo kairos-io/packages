@@ -23,15 +23,21 @@ steps:
   - mkdir -p /etc/systemd/system/
   - bash installer.sh
   - bash installer.sh agent
+  # Save the service files elsewhere because the next run will delete them
+  - mkdir -p /service-files && cp /etc/systemd/system/k3s*.service /service-files/
   # Run again to create the openrc service files
   - rm /bin/systemctl
-  - rm -rf /etc/systemd/system/
   - touch /sbin/openrc-run && chmod +x /sbin/openrc-run
   - bash installer.sh
   - rm -rf installer.sh
   - chmod +x /usr/bin/{{.Values.name}}
+  # Put systemd service files back in place
+  - mv /service-files/* /etc/systemd/system/
 
 includes:
-- /usr/bin/{{.Values.name}}
-- /etc/systemd/system/k3s*.service
-- /etc/init.d/k3s*
+- ^/usr/bin/{{.Values.name}}
+- ^/etc/systemd$
+- ^/etc/systemd/system$
+- ^/etc/systemd/system/k3s.*service$
+- ^/etc/init.d/$
+- ^/etc/init.d/k3s.*
