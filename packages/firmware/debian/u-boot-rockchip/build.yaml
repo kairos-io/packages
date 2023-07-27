@@ -5,6 +5,6 @@ prelude:
 - apt-get update
 - DEBIAN_FRONTEND=noninteractive apt-get install -y wget
 - mkdir /package
-- wget http://http.us.debian.org/debian/pool/main/u/u-boot/u-boot-rockchip_2022.10+dfsg-1_arm64.deb -O u-boot.deb
+- wget http://http.us.debian.org/debian/pool/main/u/u-boot/u-boot-rockchip_2023.01+dfsg-2_arm64.deb -O u-boot.deb
 steps:
 - dpkg -x u-boot.deb /package
