@@ -1,5 +1,3 @@
-{{ if eq .Values.arch "noarch" }} # This makes the package available only on amd64 repo - as it's blobs doesn't matter
-
 image: registry.opensuse.org/opensuse/leap:15.3
 
 
@@ -43,7 +41,4 @@ package_dir: "/data"
 - rm -rfv /data/boot
 - rm -rfv /data/usr
 package_dir: "/data"
-{{end}}
-
-
 {{end}}

@@ -2,10 +2,8 @@ packages:
   - name: "odroid-c2"
     category: "firmware"
     version: "20170419-5.204"
-    arch: "noarch"
   - name: "u-boot-rpi64"
     category: "firmware"
-    arch: "noarch"
     version: "2021.01-5.1"
     labels:
       autobump.strategy: "custom"
@@ -22,7 +20,6 @@ packages:
       package.checksum: "21099ee7f721f8602c6cd446f9f73b47ef024deca1b373b21d36ca6d20ddc583"
   - name: "raspberrypi-firmware"
     category: "firmware"
-    arch: "noarch"
     version: "2021.03.10-2.1"
     labels:
       autobump.strategy: "custom"
@@ -40,7 +37,6 @@ packages:
   - name: "raspberrypi-firmware-config"
     category: "firmware"
     version: "2021.03.10-2.1"
-    arch: "noarch"
     labels:
       autobump.strategy: "custom"
       autobump.string_replace: '{ "prefix": "" }'
@@ -57,7 +53,6 @@ packages:
   - name: "raspberrypi-firmware-dt"
     category: "firmware"
     version: "2021.03.15-2.1"
-    arch: "noarch"
     labels:
       autobump.strategy: "custom"
       autobump.string_replace: '{ "prefix": "" }'
