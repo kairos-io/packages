@@ -1,5 +1,3 @@
-{{ if eq .Values.arch "noarch" }} # This makes the package available only on amd64 repo - as it's blobs doesn't matter
-
 image: registry.opensuse.org/opensuse/leap:15.3
 
 
@@ -17,8 +15,8 @@ package_dir: "/data/boot"
 
 {{if eq .Values.name "u-boot-rpi64"}}
 - mkdir -p /data/{boot,usr}
-- wget https://download.opensuse.org/distribution/leap/15.3/repo/oss/aarch64/u-boot-rpiarm64-{{.Values.version}}.aarch64.rpm
-- rpm2cpio u-boot-rpiarm64-{{.Values.version}}.aarch64.rpm | cpio -idmv
+- PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && wget https://download.opensuse.org/distribution/leap/15.3/repo/oss/aarch64/u-boot-rpiarm64-$PACKAGE_VERSION.aarch64.rpm
+- PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && rpm2cpio u-boot-rpiarm64-$PACKAGE_VERSION.aarch64.rpm | cpio -idmv
 - mv usr/share/doc /data
 - mv usr/share/licenses /data
 - mv usr/* /data
@@ -33,8 +31,8 @@ package_dir: "/data"
 "raspberrypi-firmware-config") (eq .Values.name "raspberrypi-firmware-dt")}}
 - mkdir -p /data/boot
 - mkdir -p /data/usr
-- wget -c https://download.opensuse.org/distribution/leap/15.3/repo/oss/noarch/{{.Values.name}}-{{.Values.version}}.noarch.rpm
-- rpm2cpio {{.Values.name}}-{{.Values.version}}.noarch.rpm | cpio -idmv
+- PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && wget -c https://download.opensuse.org/distribution/leap/15.3/repo/oss/noarch/{{.Values.name}}-$PACKAGE_VERSION.noarch.rpm
+- PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && rpm2cpio {{.Values.name}}-$PACKAGE_VERSION.noarch.rpm | cpio -idmv
 {{if or (eq .Values.name "raspberrypi-firmware")}}
 - mv usr/* /data
 - rm -rfv /data/lib
@@ -43,7 +41,4 @@ package_dir: "/data"
 - rm -rfv /data/boot
 - rm -rfv /data/usr
 package_dir: "/data"
-{{end}}
-
-
 {{end}}

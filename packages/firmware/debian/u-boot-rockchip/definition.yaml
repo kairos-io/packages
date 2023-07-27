@@ -1,5 +1,5 @@
 category: arm-vendor-blob
 name: u-boot-rockchip
-version: "0.1"
+version: "0.3"
 license: "mixed"
 license_url: "https://metadata.ftp-master.debian.org/changelogs//main/u/u-boot/u-boot_2022.10+dfsg-1_copyright"
