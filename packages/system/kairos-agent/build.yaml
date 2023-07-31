@@ -20,10 +20,10 @@ env:
   - CGO_ENABLED=1
   - GOEXPERIMENT=boringcrypto
   # Because we don't track the compiled-with version on the agent we need to keep the symbols in order to checks FIPS compliance
-  - LDFLAGS="-w -X github.com/kairos-io/kairos/v2/internal/common.VERSION=v${PACKAGE_VERSION} {{with .Values.ldflags}}{{.}}{{end}}"
+  - LDFLAGS="-w -X github.com/kairos-io/kairos-agent/v2/internal/common.VERSION=v${PACKAGE_VERSION} {{with .Values.ldflags}}{{.}}{{end}}"
 {{else}}
   - CGO_ENABLED=0
-  - LDFLAGS="-s -w -X github.com/kairos-io/kairos/v2/internal/common.VERSION=v${PACKAGE_VERSION} {{with .Values.ldflags}}{{.}}{{end}}"
+  - LDFLAGS="-s -w -X github.com/kairos-io/kairos-agent/v2/internal/common.VERSION=v${PACKAGE_VERSION} {{with .Values.ldflags}}{{.}}{{end}}"
 {{end}}
 copy:
   - package:
