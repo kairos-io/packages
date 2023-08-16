@@ -2,7 +2,6 @@
 image: "opensuse/leap:15.4"
 
 prelude:
-- zypper in -y git
 {{if .Values.arch }}
   {{if eq .Values.arch "amd64"}}
 - zypper in -y --no-recommends syslinux
@@ -12,7 +11,6 @@ prelude:
 - zypper cc
 - grub2-mkimage -O i386-pc -o /usr/share/grub2/i386-pc/core.img -p /boot/grub2 -d /usr/share/grub2/i386-pc ext2 iso9660 linux echo configfile search_label search_fs_file search search_fs_uuid ls normal gzio png fat gettext font minicmd gfxterm gfxmenu all_video xfs btrfs lvm luks gcry_rijndael gcry_sha256 gcry_sha512 crypto cryptodisk test true loadenv part_gpt part_msdos biosdisk vga vbe chain boot
 - cat /usr/share/grub2/i386-pc/cdboot.img /usr/share/grub2/i386-pc/core.img > /usr/share/grub2/i386-pc/eltorito.img
-- git clone https://github.com/kairos-io/kairos && cd kairos && git checkout -b v"{{.Values.kairos_tag}}"
 
 steps:
 - mkdir -p /boot/x86_64/loader
@@ -29,7 +27,7 @@ steps:
 - cp -p /usr/share/grub2/i386-pc/eltorito.img /usr/share/grub2/i386-pc/boot_hybrid.img /boot/x86_64/loader
     {{end}}
   {{end}}
-- cp -p kairos/overlay/files-iso/boot/grub2/grub.cfg /boot/grub2/grub.cfg
+- cp -p config/grub_live_bios.cfg /boot/grub2/grub.cfg
 {{end}}
 
 {{if eq .Values.name "grub2-efi-image"}}
