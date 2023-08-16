@@ -1,4 +1,4 @@
-image: registry.opensuse.org/opensuse/leap:15.4
+image: registry.opensuse.org/opensuse/tumbleweed
 
 prelude:
 - zypper ref
