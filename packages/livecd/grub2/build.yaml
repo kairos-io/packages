@@ -1,3 +1,4 @@
+{{if eq .Values.name "grub2"}}
 image: "opensuse/leap:15.4"
 
 prelude:
@@ -14,7 +15,6 @@ prelude:
 - git clone https://github.com/kairos-io/kairos && cd kairos && git checkout -b v"{{.Values.kairos_tag}}"
 
 steps:
-{{if eq .Values.name "grub2"}}
 - mkdir -p /boot/x86_64/loader
   {{if .Values.arch }}
     {{if eq .Values.arch "amd64"}}
@@ -31,17 +31,29 @@ steps:
   {{end}}
 - cp -p kairos/overlay/files-iso/boot/grub2/grub.cfg /boot/grub2/grub.cfg
 {{end}}
+
 {{if eq .Values.name "grub2-efi-image"}}
+image: "opensuse/tumbleweed"
+prelude:
+{{if .Values.arch }}
+  {{if eq .Values.arch "amd64"}}
+- zypper in -y shim grub2-x86_64-efi
+  {{end}}
+  {{if eq .Values.arch "arm64"}}
+- zypper in -y shim grub2-arm64-efi
+  {{end}}
+{{end}}
+- zypper cc
+steps:
+- mkdir -p /EFI/BOOT
   {{if .Values.arch }}
     {{if eq .Values.arch "amd64"}}
-- mkdir -p /EFI/BOOT
 # For removable drives the name of the efi needs to be bootx64.efi
 - cp /usr/share/efi/x86_64/shim.efi /EFI/BOOT/bootx64.efi
 - cp /usr/share/efi/x86_64/grub.efi /EFI/BOOT/grub.efi
 - cp /usr/share/efi/x86_64/MokManager.efi /EFI/BOOT/MokManager.efi
     {{end}}
   {{if eq .Values.arch "arm64"}}
-- mkdir -p /EFI/BOOT
 # For removable drives the name of the efi needs to be bootaa64.efi
 - cp /usr/share/efi/aarch64/shim.efi /EFI/BOOT/bootaa64.efi
 - cp /usr/share/efi/aarch64/grub.efi /EFI/BOOT/grub.efi
