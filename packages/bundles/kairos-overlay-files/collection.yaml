@@ -1,0 +1,4 @@
+packages:
+  - name: "kairos-overlay-files"
+    category: "bundles"
+    version: "1.0.0"
