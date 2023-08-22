@@ -1,8 +1,7 @@
 name: "Create openrc services"
 stages:
-    after-install:
-    - &createfiles
-      name: "Create files"
+  initramfs:
+    - name: "Create files"
       if: |
           grep -i alpine "/etc/os-release"
       files:
@@ -61,7 +60,3 @@ stages:
         permissions: 0600
         owner: 0
         group: 0
-    after-upgrade:
-    - <<: *createfiles
-    after-reset:
-    - <<: *createfiles

@@ -1,10 +1,9 @@
 name: "Nvidia jetson specific files"
 stages:
-    after-install:
-    - &createfiles
-      name: "Create files"
+    initramfs:
+    - name: "Create files"
       if: |
-          [ -f "/sys/firmware/devicetree/base/model" ] && grep -i nvidia "/sys/firmware/devicetree/base/model"
+          [ -f "/sys/firmware/devicetree/base/model" ] && grep -i jetson "/sys/firmware/devicetree/base/model"
       files:
       - path: /etc/dracut.conf.d/iscsi.conf
         content: |
@@ -63,7 +62,3 @@ stages:
         permissions: 0600
         owner: 0
         group: 0
-    after-upgrade:
-    - <<: *createfiles
-    after-reset:
-    - <<: *createfiles
