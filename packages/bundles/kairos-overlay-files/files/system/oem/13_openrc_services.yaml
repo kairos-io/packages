@@ -19,7 +19,7 @@ stages:
               kairos-agent start
               eend $?
           }
-        permissions: 0600
+        permissions: 0755
         owner: 0
         group: 0
       - path: /etc/init.d/kairos-webui
@@ -40,7 +40,7 @@ stages:
           if [ -f /etc/environment ]; then source /etc/environment; fi
           set +o allexport
 
-        permissions: 0600
+        permissions: 0755
         owner: 0
         group: 0
       - path: /etc/issue
@@ -57,6 +57,6 @@ stages:
 
           Welcome to kairos (login with user: kairos, password: kairos)
           Kernel \r on an \m (\l)
-        permissions: 0600
+        permissions: 0755
         owner: 0
         group: 0
