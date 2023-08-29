@@ -1,0 +1,13 @@
+#cloud-config
+
+stages:
+  rootfs.after:
+    # Automatically expand persistent partition on Raspberry Pi 4
+    - if: '[ ! -f /run/cos/recovery_mode ] && [ ! -f /run/cos/live_mode ] && [ -f "/sys/firmware/devicetree/base/model" ] && grep -i "Raspberry Pi 4" "/sys/firmware/devicetree/base/model"'
+      name: "Grow persistent"
+      layout:
+        device:
+          label: COS_PERSISTENT
+        expand_partition:
+          # Size 0 is required to specify all remaining space
+          size: 0
