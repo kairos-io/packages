@@ -3,7 +3,7 @@ env:
   - GITHUB_ORG={{ ( index .Values.labels "github.owner" ) }}
   - HUGO_VERSION=0.110.0
 prelude:
-  - zypper ref && zypper in -y git wget tar nodejs-default gzip npm
+  - zypper ref && zypper in -y git wget tar nodejs-default gzip npm go
   - mkdir /go/src/github.com/${GITHUB_ORG}/ -p
   - cd /go/src/github.com/${GITHUB_ORG}/ && git clone https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
 steps:
@@ -15,6 +15,7 @@ steps:
     chmod +x hugo && \
     mv hugo /usr/bin && \
     cd /go/src/github.com/${GITHUB_ORG}/kairos-docs && \
-    npm install autoprefixer postcss-cli postcss \
+    npm install autoprefixer postcss-cli postcss && \
+    /usr/bin/hugo mod get && \
     HUGO_ENV="production" /usr/bin/hugo --gc -b "/local/" -d "/usr/share/doc/kairos"
 package_dir: "/usr/share/doc/kairos"
