@@ -15,6 +15,6 @@ steps:
     chmod +x hugo && \
     mv hugo /usr/bin && \
     cd /go/src/github.com/${GITHUB_ORG}/kairos-docs && \
-    npm install --save-dev autoprefixer postcss-cli postcss
+    npm install --save-dev autoprefixer postcss-cli postcss \
     HUGO_ENV="production" /usr/bin/hugo --gc -b "/local/" -d "/usr/share/doc/kairos"
 package_dir: "/usr/share/doc/kairos"
