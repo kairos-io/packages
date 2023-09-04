@@ -1,6 +1,6 @@
 name: "kairos-docs"
 category: "static"
-version: "2.1.1"
+version: "2.1.0"
 arch: "amd64"
 labels:
   github.repo: "kairos-docs"
