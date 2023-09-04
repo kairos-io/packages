@@ -11,3 +11,6 @@ stages:
         expand_partition:
           # Size 0 is required to specify all remaining space
           size: 0
+      commands:
+        # grow filesystem
+        - resize2fs /dev/disk/by-label/COS_PERSISTENT
