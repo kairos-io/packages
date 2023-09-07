@@ -28,7 +28,7 @@ jobs:
           
           echo "FINAL_REPO=$FINAL_REPO" >> "$GITHUB_ENV"
           echo "Setting final repo to $FINAL_REPO"
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: |
           git fetch --prune --unshallow
           mkdir build
