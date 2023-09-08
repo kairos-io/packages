@@ -19,15 +19,26 @@ env:
   {{ end }}
 steps:
   - curl -sfL https://get.k3s.io > installer.sh
-  # Let the installer script install service files for systemd:
+  # Let the installer script install service files for openrc or systemd:
   # https://github.com/k3s-io/k3s/blob/36645e7311e9bdbbf2adb79ecd8bd68556bc86f6/install.sh#L114-L122
+  {{ if eq .Values.name "k3s-openrc" }}
+  - touch /sbin/openrc-run && chmod +x /sbin/openrc-run
+  {{ else }}
   - touch /bin/systemctl && chmod +x /bin/systemctl
   - mkdir -p /etc/systemd/system/
+  {{ end }}
   - bash installer.sh
   - bash installer.sh agent
+  - rm -rf installer.sh
+  - chmod +x /usr/bin/k3s
 
 includes:
-- ^/usr/bin/{{.Values.name}}
+- ^/usr/bin/k3s
+{{ if eq .Values.name "k3s-openrc" }}
+- ^/etc/init.d/$
+- ^/etc/init.d/k3s.*
+{{ else }}
 - ^/etc/systemd$
 - ^/etc/systemd/system$
 - ^/etc/systemd/system/k3s.*service$
+{{ end }}
