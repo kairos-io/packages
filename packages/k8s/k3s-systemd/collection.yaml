@@ -1,5 +1,5 @@
 packages:
-  - name: k3s
+  - name: k3s-systemd
     category: k8s
     version: "1.25.11"
     k3s_version: "2"
@@ -11,7 +11,7 @@ packages:
     license: "APL-2"
     description: " Lightweight Kubernetes "
 
-  - name: k3s
+  - name: k3s-systemd
     category: k8s
     version: "1.26.6"
     k3s_version: "2"
@@ -23,7 +23,7 @@ packages:
     license: "APL-2"
     description: " Lightweight Kubernetes "
 
-  - name: k3s
+  - name: k3s-systemd
     category: k8s
     version: "1.27.3"
     k3s_version: "2"
