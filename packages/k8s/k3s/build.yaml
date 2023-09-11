@@ -37,6 +37,8 @@ includes:
 {{ if eq .Values.name "k3s-openrc" }}
 - ^/etc/init.d/$
 - ^/etc/init.d/k3s.*
+- ^/etc/rancher/$
+- ^/etc/rancher/k3s/$
 {{ else }}
 - ^/etc/systemd$
 - ^/etc/systemd/system$
