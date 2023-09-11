@@ -37,7 +37,7 @@ packages:
 
   - name: k3s-systemd
     category: k8s
-    version: "1.25.11"
+    version: "1.25.11+1"
     k3s_version: "2"
     labels:
       github.owner: "k3s-io"
@@ -49,7 +49,7 @@ packages:
 
   - name: k3s-systemd
     category: k8s
-    version: "1.26.6"
+    version: "1.26.6+1"
     k3s_version: "2"
     labels:
       github.owner: "k3s-io"
@@ -61,7 +61,7 @@ packages:
 
   - name: k3s-systemd
     category: k8s
-    version: "1.27.3"
+    version: "1.27.3+1"
     k3s_version: "2"
     labels:
       github.owner: "k3s-io"
