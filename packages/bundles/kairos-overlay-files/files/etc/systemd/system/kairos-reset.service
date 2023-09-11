@@ -8,6 +8,6 @@ StandardOutput=tty
 LimitNOFILE=49152
 TTYPath=/dev/tty1
 RemainAfterExit=yes
-ExecStart=/usr/bin/kairos-agent reset
+ExecStart=/usr/bin/kairos-agent reset --unattended --reboot
 [Install]
 WantedBy=multi-user.target
