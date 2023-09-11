@@ -38,7 +38,7 @@ includes:
 - ^/etc/init.d/$
 - ^/etc/init.d/k3s.*
 - ^/etc/rancher/$
-- ^/etc/rancher/k3s/$
+- ^/etc/rancher/k3s$
 {{ else }}
 - ^/etc/systemd$
 - ^/etc/systemd/system$
