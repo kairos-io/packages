@@ -37,6 +37,7 @@ includes:
 {{ if eq .Values.name "k3s-openrc" }}
 - ^/etc/init.d/$
 - ^/etc/init.d/k3s.*
+- ^/etc/runlevels/$
 {{ else }}
 - ^/etc/systemd$
 - ^/etc/systemd/system$
