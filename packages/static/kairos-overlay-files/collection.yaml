@@ -1,4 +1,4 @@
 packages:
   - name: "kairos-overlay-files"
-    category: "bundles"
+    category: "static"
     version: "1.0.7"
