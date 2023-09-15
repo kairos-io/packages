@@ -39,6 +39,7 @@ stages:
           /usr/libexec
           /var/log
           /var/lib/containerd
+          /var/lib/extensions
           /var/lib/rancher
           /var/lib/kubelet
           /var/lib/snapd
