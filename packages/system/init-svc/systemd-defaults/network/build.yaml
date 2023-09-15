@@ -1,5 +1,0 @@
-image: alpine
-package_dir: "/package"
-steps:
-- mkdir -p /package/etc/systemd/network
-- cp -rfv network/* /package/etc/systemd/network
