@@ -1,5 +1,0 @@
-image: alpine
-package_dir: "/{{.Values.category}}{{.Values.name}}"
-steps:
-- mkdir -p /{{.Values.category}}{{.Values.name}}/etc/dracut.conf.d
-- cp -rfv conf/* /{{.Values.category}}{{.Values.name}}/etc/dracut.conf.d

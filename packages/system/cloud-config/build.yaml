@@ -1,7 +1,0 @@
-image: alpine
-
-steps:
-- mkdir -p /system/oem
-- chmod 700 /system/oem
-- cp -rfv oem/* /system/oem
-- chmod -R 600 /system/oem

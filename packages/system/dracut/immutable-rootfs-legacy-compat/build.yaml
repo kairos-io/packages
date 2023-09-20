@@ -1,5 +1,0 @@
-image: alpine
-package_dir: "/package"
-steps:
-- mkdir -p /package/usr/lib/dracut/modules.d
-- cp -r 30cos-immutable-rootfs /package/usr/lib/dracut/modules.d
