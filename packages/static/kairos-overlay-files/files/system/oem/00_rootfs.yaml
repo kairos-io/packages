@@ -93,43 +93,6 @@ stages:
           /usr/share/pki/trust/anchors
           /var/lib/ca-certificates
         PERSISTENT_STATE_BIND: "true"
-    - if: '[ -e "/run/cos/uki_mode" ]'
-      # omit the persistent partition on uki mode
-      # And mount all persistent mounts under the overlay
-      name: "Layout configuration for UKI"
-      environment_file: /run/cos/cos-layout.env
-      environment:
-        RW_PATHS: "/var /etc /srv /usr"
-        OVERLAY: "tmpfs:25%"
-        PERSISTENT_STATE_PATHS: >-
-          /var
-          /etc
-          /etc/systemd
-          /etc/modprobe.d
-          /etc/rancher
-          /etc/sysconfig
-          /etc/runlevels
-          /etc/ssh
-          /etc/ssl/certs
-          /etc/iscsi
-          /etc/cni
-          /etc/kubernetes
-          /home
-          /opt
-          /root
-          /var/snap
-          /usr/libexec
-          /var/log
-          /var/lib/containerd
-          /var/lib/rancher
-          /var/lib/kubelet
-          /var/lib/snapd
-          /var/lib/wicked
-          /var/lib/longhorn
-          /var/lib/cni
-          /usr/share/pki/trust
-          /usr/share/pki/trust/anchors
-          /var/lib/ca-certificates
   rootfs.after:
     - if: '[ -r /run/cos/custom-layout.env ] && [ ! -f "/run/cos/recovery_mode" ] && [ ! -f /run/cos/live_mode ]'
       name: "add custom bind and ephemeral mounts to /run/cos/cos-layout.env"
