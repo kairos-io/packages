@@ -5,7 +5,7 @@ stages:
       if: '[ ! -f /oem/userdata ]'
       name: "Pull data from provider"
       datasource:
-        providers: ["cdrom", "gcp", "openstack", "aws", "azure", "hetzner", "packet", "vultr", "digitalocean", "metaldata"]
+        providers: ["cdrom", "gcp", "openstack", "aws", "azure", "hetzner", "packet", "vultr", "digitalocean", "metaldata", "vmware"]
         path: "/oem"
     - if: '[ ! -f /oem/userdata ]'
       name: "Sentinel file for userdata"
