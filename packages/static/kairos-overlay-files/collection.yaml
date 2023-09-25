@@ -1,4 +1,4 @@
 packages:
   - name: "kairos-overlay-files"
     category: "static"
-    version: "1.0.10"
+    version: "1.0.11"
