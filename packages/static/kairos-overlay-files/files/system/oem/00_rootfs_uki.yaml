@@ -8,7 +8,7 @@
 name: "Rootfs Layout Settings for UKI"
 stages:
   rootfs:
-    - if: '[ -e "/run/cos/uki_mode" ] && [ ! -e "/dev/disk/by-label/UKI_ISO_INSTALL" ]'
+    - if: '[ -e "/run/cos/uki_mode" ] && [ ! -e "/run/cos/uki_boot_mode" ]'
       name: "Layout configuration for UKI boot"
       environment_file: /run/cos/cos-layout.env
       environment:
@@ -46,7 +46,7 @@ stages:
           /usr/share/pki/trust
           /usr/share/pki/trust/anchors
           /var/lib/ca-certificates
-    - if: '[ -e "/run/cos/uki_mode" ] && [ -e "/dev/disk/by-label/UKI_ISO_INSTALL" ]'
+    - if: '[ -e "/run/cos/uki_mode" ] && [ -e "/run/cos/uki_install_mode" ]'
       # omit everything on installer, just set the ephemeral paths
       name: "Layout configuration for UKI installer"
       environment_file: /run/cos/cos-layout.env
