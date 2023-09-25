@@ -17,7 +17,7 @@ stages:
           groups:
             - "admin"
     - name: "Set user password if running in live or uki"
-      if: "[ -e /run/cos/live_mode ] || [ -e /run/cos/uki_mode ]"
+      if: "[ -e /run/cos/live_mode ] || [ -e /run/cos/uki_install_mode ] || [ -e /run/cos/uki_boot_mode ]"
       users:
         kairos:
           passwd: "kairos"
