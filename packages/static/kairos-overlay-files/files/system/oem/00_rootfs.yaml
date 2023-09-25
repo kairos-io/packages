@@ -12,7 +12,7 @@ stages:
       if: '[ ! -e "/sbin/systemctl" ] && [ ! -e "/usr/bin/systemctl" ] && [ ! -e "/usr/sbin/systemctl" ] && [ ! -e "/usr/bin/systemctl" ]'
       commands:
         - mount bpffs -o rw,nosuid,nodev,noexec,relatime,mode=700 /sys/fs/bpf -t bpf
-    - if: '[ ! -f "/run/cos/recovery_mode" ] &&  [ ! -e "/run/cos/uki_boot_mode" ] || [ ! -e "/run/cos/uki_install_mode" ]'
+    - if: '[ ! -f "/run/cos/recovery_mode" ] && [ ! -e "/run/cos/uki_boot_mode" ] && [ ! -e "/run/cos/uki_install_mode" ]'
       name: "Layout configuration for active/passive mode"
       environment_file: /run/cos/cos-layout.env
       environment:
