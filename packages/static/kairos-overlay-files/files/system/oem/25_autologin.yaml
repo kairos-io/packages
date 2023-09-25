@@ -1,8 +1,7 @@
 name: "Root autologin"
 stages:
   initramfs:
-    - name: "Autologin for live mode"
-      if: |
+    - if: |
         [ ! $(cat /proc/cmdline | grep -q "interactive-install") ] && \
         [ -f /run/cos/live_mode ] && \
         ( [ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] )
@@ -19,18 +18,3 @@ stages:
             ExecStart=
             ExecStart=-/sbin/agetty --autologin root --noclear %I $TERM
           permissions: 0644
-    - name: "Autologin for UKI install medium"
-      if: '[ -f "/run/cos/uki_install_mode" ] && ( [ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] )'
-      files:
-          - path: /etc/systemd/system/serial-getty@ttyS0.service.d/override.conf
-            content: |
-              [Service]
-              ExecStart=
-              ExecStart=-/sbin/agetty --autologin root --noclear %I $TERM
-            permissions: 0644
-              - path: /etc/systemd/system/getty@tty1.service.d/override.conf
-                content: |
-                  [Service]
-                  ExecStart=
-                  ExecStart=-/sbin/agetty --autologin root --noclear %I $TERM
-                permissions: 0644
