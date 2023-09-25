@@ -12,7 +12,7 @@ stages:
       if: '[ ! -e "/sbin/systemctl" ] && [ ! -e "/usr/bin/systemctl" ] && [ ! -e "/usr/sbin/systemctl" ] && [ ! -e "/usr/bin/systemctl" ]'
       commands:
         - mount bpffs -o rw,nosuid,nodev,noexec,relatime,mode=700 /sys/fs/bpf -t bpf
-    - if: '[ -e "/run/cos/active_mode" ] || [ -e "/run/cos/passive_mode" ]'
+    - if: '[ ! -f "/run/cos/recovery_mode" ] &&  [ ! -e "/run/cos/uki_boot_mode" ] || [ ! -e "/run/cos/uki_install_mode" ]'
       name: "Layout configuration for active/passive mode"
       environment_file: /run/cos/cos-layout.env
       environment:
@@ -51,7 +51,7 @@ stages:
           /usr/share/pki/trust/anchors
           /var/lib/ca-certificates
         PERSISTENT_STATE_BIND: "true"
-    - if: '[ -e "/run/cos/recovery_mode" ]'
+    - if: '[ -f "/run/cos/recovery_mode" ]'
       # omit the persistent partition on recovery mode
       name: "Layout configuration for recovery mode"
       environment_file: /run/cos/cos-layout.env
@@ -94,7 +94,7 @@ stages:
           /var/lib/ca-certificates
         PERSISTENT_STATE_BIND: "true"
   rootfs.after:
-    - if: '[ -r /run/cos/custom-layout.env ] && [ ! -f "/run/cos/recovery_mode" ] && [ ! -f /run/cos/live_mode ] && [ ! -f /run/cos/uki_install_mode]'
+    - if: '[ -r /run/cos/custom-layout.env ] && [ ! -f "/run/cos/recovery_mode" ] && [ ! -f /run/cos/live_mode ]'
       name: "add custom bind and ephemeral mounts to /run/cos/cos-layout.env"
       commands:
         - |
@@ -110,6 +110,14 @@ stages:
           echo RW_PATHS=\"${RW_PATHS}\" >> /run/cos/cos-layout.env
           echo "# persistent state paths with user ephemeral mounts" >> /run/cos/cos-layout.env
           echo PERSISTENT_STATE_PATHS=\"${PERSISTENT_STATE_PATHS}\" >> /run/cos/cos-layout.env
+    - if: '[ ! -f /run/cos/recovery_mode ] && [ ! -f /run/cos/live_mode ]'
+      name: "Grow persistent"
+      layout:
+        device:
+          label: COS_PERSISTENT
+        expand_partition:
+          # Size 0 is required to specify all remaining space
+          size: 0
   initramfs:
     - name: "Create journalctl /var/log/journal dir"
       if: '[ -e "/sbin/systemctl" ] || [ -e "/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ]'
