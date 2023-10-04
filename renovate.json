@@ -8,5 +8,11 @@
     "before 7am every weekday",
     "every weekend"
   ],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["patch"],
+      "automerge": true
+    }
+  ],
   "timezone": "Europe/Brussels"
 }
