@@ -1,6 +1,7 @@
 /usr/bin/immucore
 /usr/bin/kairos-agent
 /sbin/lvm
+/sbin/cryptsetup
 /bin/findmnt
 /bin/udevadm
 /sbin/udevadm

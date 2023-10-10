@@ -19,7 +19,7 @@ copy:
 package_dir: "/package"
 prelude:
   - apk update
-  - apk add linux-rpi4 mkinitfs linux-firmware-none udev lvm2 findmnt rsync parted
+  - apk add linux-rpi4 mkinitfs linux-firmware-none udev lvm2 findmnt rsync parted cryptsetup
 steps:
   - kernel=$(ls /lib/modules | head -n1) && depmod -a "${kernel}"
   - mkdir -p /package/boot
@@ -50,7 +50,7 @@ copy:
 package_dir: "/package"
 prelude:
   - apk update
-  - apk add linux-lts linux-firmware-none mkinitfs udev lvm2 findmnt rsync parted
+  - apk add linux-lts linux-firmware-none mkinitfs udev lvm2 findmnt rsync parted cryptsetup
 steps:
   - kernel=$(ls /lib/modules | head -n1) && depmod -a "${kernel}"
   - mkdir -p /package/boot
