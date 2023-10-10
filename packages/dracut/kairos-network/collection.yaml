@@ -1,0 +1,5 @@
+packages:
+- name: "kairos-network"
+  category: "dracut"
+  version: "1.0.0"
+  description: "package for initramfs network modules"
