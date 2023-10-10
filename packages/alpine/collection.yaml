@@ -1,7 +1,7 @@
 packages:
   - name: "alpine"
     category: "distro-kernel"
-    version: "6.1.56+1"
+    version: "6.1.56"
     description: "Provides kernel and custom initrd for alpine"
     labels:
       autobump.strategy: "custom"
