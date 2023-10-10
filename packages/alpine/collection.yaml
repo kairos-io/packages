@@ -14,7 +14,7 @@ packages:
       package.version: "6.1.56"
   - name: "alpine-rpi"
     category: "distro-kernel"
-    version: "6.1.55+1"
+    version: "6.1.55"
     description: "Provides kernel and custom initrd for alpine"
     labels:
       autobump.strategy: "custom"
