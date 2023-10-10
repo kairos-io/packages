@@ -1,6 +1,7 @@
 image: alpine
 package_dir: "/package"
 steps:
-- mkdir -p /package/etc/systemd/network
 - mkdir -p /package/etc/dracut.conf.d
-- cp -rfv conf/* /package/etc/dracut.conf.d
+- mkdir -p /package/usr/lib/dracut/modules.d
+- cp files/90-kairos-sysext.conf /package/etc/dracut.conf.d/90-kairos-sysext.conf
+- cp -r files/90kairos-sysext /package/usr/lib/dracut/modules.d/90kairos-sysext
