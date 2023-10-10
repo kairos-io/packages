@@ -10,12 +10,6 @@ copy:
       version: ">=0"
     source: "/usr/bin/immucore"
     destination: "/usr/bin/immucore"
-  - package:
-      category: "system"
-      name: "kairos-agent"
-      version: ">=0"
-    source: "/usr/bin/kairos-agent"
-    destination: "/usr/bin/kairos-agent"
 package_dir: "/package"
 prelude:
   - apk update
@@ -28,6 +22,7 @@ steps:
   - cp -rfv /lib/modules/* /package/lib/modules
   # generate initramfs
   - cp files/immucore.files /etc/mkinitfs/features.d/immucore.files
+  - cp files/tpm.modules /etc/mkinitfs/features.d/tpm.modules
   - kernel=$(ls /lib/modules | head -n1) && mkinitfs -o /package/boot/initrd -i files/initramfs-init -c files/mkinitfs.conf $kernel
     {{end}}
   {{end}}
@@ -60,7 +55,8 @@ steps:
   - cp -rfv /lib/modules/* /package/lib/modules
   # generate initramfs
   - cp files/immucore.files /etc/mkinitfs/features.d/immucore.files
+  - cp files/tpm.modules /etc/mkinitfs/features.d/tpm.modules
   - kernel=$(ls /lib/modules | head -n1) && mkinitfs -o /package/boot/initrd -i files/initramfs-init -c files/mkinitfs.conf $kernel
-  {{end}}
+{{end}}
 
 
