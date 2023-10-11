@@ -160,6 +160,8 @@ eudev_start()
 		cat "$file" >> /etc/udev/rules.d/"$dest" && rm -f "$file"
 	done
 
+	udevadm hwdb --update
+
 	# Populating /dev with existing devices through uevents
 	udevadm trigger --type=subsystems --action=add
 	udevadm trigger --type=devices --action=add
@@ -238,6 +240,14 @@ is_url() {
 	esac
 }
 
+rd_break() {
+  if grep -q "rd.break=$1" /proc/cmdline; then
+    echo "initramfs emergency recovery shell launched" > "$ROOT"/dev/kmsg
+    echo "initramfs emergency recovery shell launched"
+    exec /bin/busybox sh
+  fi
+}
+
 /bin/busybox mkdir -p "$ROOT"/usr/bin \
 	"$ROOT"/usr/sbin \
 	"$ROOT"/proc \
@@ -299,9 +309,10 @@ done
 
 # hide kernel messages
 # dmesg -n 1
+rd_break pre-modprobe
 # load available drivers to get access to media
 ebegin "Loading boot drivers"
-modprobe -a ahci virtio_blk virtio_net virtio_console virtio_pci nvme overlay usb_storage libata cdrom sr_mod iso9660 loop squashfs simpledrm ext4 tpm dm_mod 2> /dev/null
+modprobe -a ahci virtio_blk virtio_net virtio_console virtio_pci nvme overlay usb_storage libata cdrom sr_mod iso9660 loop squashfs simpledrm ext4 tpm dm_mod dm_crypt 2> /dev/null
 if [ -f "$ROOT"/etc/modules ] ; then
 	sed 's/\#.*//g' < /etc/modules |
 	while read module args; do
@@ -315,17 +326,24 @@ fi
 
 eend
 
+rd_break post-modprobe
+
+rd_break pre-udev
 # persistent device names from eudev in order for immucore to mount stuff
 [ -x "/sbin/udevadm" ] && eudev_start
+rd_break post-udev
 
+rd_break pre-network
 # Mount network if we got rd.neednet=1 or netboot
 if grep -q "rd.neednet=1" /proc/cmdline || grep -q netboot /proc/cmdline ;then
   configure_ip
 fi
+rd_break post-network
 
 # Path for booting from netboot
 if grep -q netboot /proc/cmdline; then
   echo "Netbooting"
+  rd_break pre-netboot
 
   for x in $(cat /proc/cmdline); do
     # shellcheck disable=SC2039
@@ -353,10 +371,12 @@ if grep -q netboot /proc/cmdline; then
   retry 5 losetup /dev/loop0 /tmp/rootfs.squashfs
   eend $?
   sync
+  rd_break post-netboot
 fi
 
 # Path for booting from livecd
 if grep -q cdroot /proc/cmdline ;then
+  rd_break pre-livecd
   echo "Mounting LiveCD"
   sync
   # Create mountpoints
@@ -377,10 +397,12 @@ if grep -q cdroot /proc/cmdline ;then
   retry 5 losetup /dev/loop0 /media/root-ro/rootfs.squashfs
   eend $?
   sync
+  rd_break post-livecd
 fi
 
 # shared path for netboot and livecd, we expect the rootfs to be already in /dev/loop0
 if grep -q cdroot /proc/cmdline || grep -q netboot /proc/cmdline;then
+    rd_break pre-mounts
     # Mount loop device into the rootfsbase
     ebegin "Mount loop device into rootfsbase"
     retry 5 mount /dev/loop0 /run/rootfsbase
@@ -412,16 +434,23 @@ if grep -q cdroot /proc/cmdline || grep -q netboot /proc/cmdline;then
         eend $?
       fi
     done
+    rd_break post-mounts
+    # stop udevd, will be relaunched by openrc
+    udevadm control --exit
+
   	# shellcheck disable=SC2093
   	exec switch_root "$sysroot" "$INIT"
   	echo "initramfs emergency recovery shell launched"
   	exec /bin/busybox sh
 fi
 
+rd_break pre-immucore
 # Path for booting active/passive/recovery
 ebegin "Run immucore"
 immucore
 eend $?
+
+rd_break post-immucore
 
 # by now the system should be mounted in /sysroot
 if [ -f "$sysroot/etc/.default_boot_services" ]; then
@@ -474,21 +503,24 @@ else
 fi
 
 
+rd_break pre-binds
 # Mount bind system mounts to sysroot to keep them going
 mkdir -p $sysroot/sys $sysroot/proc $sysroot/dev $sysroot/run
 mount -o bind /sys $sysroot/sys
 mount -o bind /proc $sysroot/proc
 mount -o bind /dev $sysroot/dev
 mount -o bind /run $sysroot/run
+rd_break post-binds
 
 # remount according default fstab from package
 if [ -z "$has_fstab" ] && [ -f "$sysroot"/etc/fstab ]; then
 	remount_fstab_entry "$sysroot"/etc/fstab
 fi
 
-
+rd_break pre-console
 # fix inittab if alternative console
 setup_inittab_console
+rd_break post-console
 
 ! [ -f "$sysroot"/etc/resolv.conf ] && [ -f /etc/resolv.conf ] && \
 	cp /etc/resolv.conf "$sysroot"/etc
@@ -498,6 +530,10 @@ if [ ! -x "${sysroot}${INIT}" ]; then
 	echo "Type exit to continue boot."
 	/bin/busybox sh
 fi
+
+rd_break pre-switch
+# stop udevd, will be relaunched by openrc
+udevadm control --exit
 
 # switch over to new root
 echo ""

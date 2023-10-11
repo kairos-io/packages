@@ -10,10 +10,17 @@ copy:
       version: ">=0"
     source: "/usr/bin/immucore"
     destination: "/usr/bin/immucore"
+  - package:
+      category: "system"
+      name: "kairos-agent"
+      version: ">=0"
+    source: "/usr/bin/kairos-agent"
+    destination: "/usr/bin/kairos-agent"
 package_dir: "/package"
 prelude:
   - apk update
-  - apk add linux-rpi4 mkinitfs linux-firmware-none udev lvm2 findmnt rsync parted cryptsetup
+  # multipath-tools and cryptsetup is needed to bring modules and udev rules
+  - apk add linux-rpi4 linux-firmware-none mkinitfs eudev eudev-hwids mdadm-udev device-mapper-udev lvm2 findmnt rsync parted cryptsetup multipath-tools openrc blkid
 steps:
   - kernel=$(ls /lib/modules | head -n1) && depmod -a "${kernel}"
   - mkdir -p /package/boot
@@ -45,7 +52,8 @@ copy:
 package_dir: "/package"
 prelude:
   - apk update
-  - apk add linux-lts linux-firmware-none mkinitfs udev lvm2 findmnt rsync parted cryptsetup
+  # multipath-tools and cryptsetup is needed to bring modules and udev rules
+  - apk add linux-lts linux-firmware-none mkinitfs eudev eudev-hwids mdadm-udev device-mapper-udev lvm2 findmnt rsync parted cryptsetup multipath-tools openrc blkid
 steps:
   - kernel=$(ls /lib/modules | head -n1) && depmod -a "${kernel}"
   - mkdir -p /package/boot
