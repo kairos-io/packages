@@ -123,9 +123,10 @@ stages:
       name: "Restore /etc/machine-id for systemd systems"
       commands:
         - cat /usr/local/etc/machine-id > /etc/machine-id
-    - if: '[ ! -f "/run/cos/recovery_mode" ] && [ -s /var/lib/dbus/machine-id ] && [ -f "/sbin/openrc" ]'
+    - if: '[ ! -f "/run/cos/recovery_mode" ] && [ -f "/sbin/openrc" ]'
       name: "Restore /etc/machine-id for openrc systems"
       commands:
+        - dbus-uuidgen --ensure # This makes sure that the machine-id exists and its valid
         - cat /var/lib/dbus/machine-id > /etc/machine-id
   fs:
     - if: '[ ! -f "/run/cos/recovery_mode" ] && [ ! -s /usr/local/etc/machine-id ] '

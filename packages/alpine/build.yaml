@@ -20,7 +20,7 @@ package_dir: "/package"
 prelude:
   - apk update
   # multipath-tools and cryptsetup is needed to bring modules and udev rules
-  - apk add linux-rpi4 linux-firmware-none mkinitfs eudev eudev-hwids mdadm-udev device-mapper-udev lvm2 findmnt rsync parted cryptsetup multipath-tools openrc blkid
+  - apk add linux-rpi4 linux-firmware-none mkinitfs dbus eudev eudev-hwids mdadm-udev device-mapper-udev lvm2 findmnt rsync parted cryptsetup multipath-tools openrc blkid
 steps:
   - kernel=$(ls /lib/modules | head -n1) && depmod -a "${kernel}"
   - mkdir -p /package/boot
@@ -53,7 +53,7 @@ package_dir: "/package"
 prelude:
   - apk update
   # multipath-tools and cryptsetup is needed to bring modules and udev rules
-  - apk add linux-lts linux-firmware-none mkinitfs eudev eudev-hwids mdadm-udev device-mapper-udev lvm2 findmnt rsync parted cryptsetup multipath-tools openrc blkid
+  - apk add linux-lts linux-firmware-none mkinitfs dbus eudev eudev-hwids mdadm-udev device-mapper-udev lvm2 findmnt rsync parted cryptsetup multipath-tools openrc blkid
 steps:
   - kernel=$(ls /lib/modules | head -n1) && depmod -a "${kernel}"
   - mkdir -p /package/boot
