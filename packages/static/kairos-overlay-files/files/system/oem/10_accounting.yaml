@@ -49,7 +49,7 @@ stages:
         - chown -R root:admin /usr/local/cloud-config
         - chmod 770 /usr/local/cloud-config
     - name: "Enable serial login for alpine" # https://wiki.alpinelinux.org/wiki/Enable_Serial_Console_on_Boot
-      if: '[ -e /sbin/rc-service ]'
+      if: '[ -e /sbin/openrc ]'
       commands:
         - sed -i -e 's/ttyS0.*//g' /etc/inittab
         - echo "ttyS0::respawn:/sbin/getty -L ttyS0 115200 vt100" >> /etc/inittab

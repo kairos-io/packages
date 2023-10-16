@@ -26,7 +26,7 @@ stages:
         - echo "tty1::respawn:/usr/bin/kairos-agent interactive-install --shell" >> /etc/inittab
   boot:
     - if: |
-          [ "$(kairos-agent state get boot)" == "livecd_boot" ] && [ -f "/sbin/openrc" ]
+          [ "$(kairos-agent state get boot)" == "livecd_boot" ] && [ -f "/sbin/rc-service" ]
       commands:
         - rc-service kairos-webui start
     - if: |
