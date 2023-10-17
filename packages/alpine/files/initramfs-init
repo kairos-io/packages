@@ -438,6 +438,9 @@ if grep -q cdroot /proc/cmdline || grep -q netboot /proc/cmdline;then
     # stop udevd, will be relaunched by openrc
     udevadm control --exit
 
+    # hide kernel messages from now on
+    dmesg -n 1
+
   	# shellcheck disable=SC2093
   	exec switch_root "$sysroot" "$INIT"
   	echo "initramfs emergency recovery shell launched"
@@ -494,7 +497,7 @@ if [ -r "$sysroot"/etc/apk/arch ]; then
 	fi
 fi
 
-
+# TODO: Use this at the start to set an aprox time for the initramfs?
 # use swclock if no RTC is found
 if rtc_exists || [ "$(uname -m)" = "s390x" ]; then
 	rc_add hwclock boot
@@ -534,7 +537,8 @@ fi
 rd_break pre-switch
 # stop udevd, will be relaunched by openrc
 udevadm control --exit
-
+# hide kernel messages from now on
+dmesg -n 1
 # switch over to new root
 echo ""
 # shellcheck disable=SC2093
