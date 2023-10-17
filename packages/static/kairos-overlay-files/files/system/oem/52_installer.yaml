@@ -12,7 +12,7 @@ stages:
     - if: grep -q "nodepair.enable" /proc/cmdline && [ -f "/sbin/openrc" ]
       commands:
         - sed -i -e 's/tty1.*//g' /etc/inittab
-        - echo "tty1::respawn:/usr/bin/kairos-agent install" >> /etc/inittab
+        - echo "tty1::respawn:/usr/bin/kairos-agent install tty1" >> /etc/inittab
     # Starts installer on boot for systemd based systems
     - if: |
         grep -q "interactive-install" /proc/cmdline && \
@@ -24,7 +24,7 @@ stages:
     - if: grep -q "interactive-install" /proc/cmdline && [ -f "/sbin/openrc" ]
       commands:
         - sed -i -e 's/tty1.*//g' /etc/inittab
-        - echo "tty1::respawn:/usr/bin/kairos-agent interactive-install --shell" >> /etc/inittab
+        - echo "tty1::respawn:/usr/bin/kairos-agent interactive-install --shell tty1" >> /etc/inittab
   boot:
     - if: |
           [ "$(kairos-agent state get boot)" == "livecd_boot" ] && [ -f "/sbin/rc-service" ]
