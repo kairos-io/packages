@@ -28,8 +28,8 @@ stages:
           content: |
             You are booting from livecd mode. Run 'kairos-agent install' to install the system.
           permissions: 0644
-        - path: /etc/inittab
-          content: |
-            tty1::respawn:/sbin/agetty --autologin root -i --noclear tty1
-            ttyS0::respawn:/sbin/agetty --autologin root -i --noclear ttyS0
-          permissions: 0644
+      commands:
+        - sed -i -e 's/tty1.*//g' /etc/inittab
+        - sed -i -e 's/ttyS0.*//g' /etc/inittab
+        - echo "tty1::respawn:/sbin/agetty --autologin root -i --noclear tty1" >> /etc/inittab
+        - echo "ttyS0::respawn:/sbin/agetty --autologin root -i --noclear ttyS0" >> /etc/inittab
