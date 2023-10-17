@@ -2,7 +2,7 @@ name: "Root autologin"
 stages:
   initramfs:
     - if: |
-        [ ! $(cat /proc/cmdline | grep -q "interactive-install") ] && \
+        grep -qv "interactive-install" /proc/cmdline && \
         [ -f /run/cos/live_mode ] && \
         ( [ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] )
       files:
@@ -17,4 +17,19 @@ stages:
             [Service]
             ExecStart=
             ExecStart=-/sbin/agetty --autologin root --noclear %I $TERM
+          permissions: 0644
+    - name: "Autologin on livecd for OpenRC"
+      if: |
+        grep -qv "interactive-install" /proc/cmdline ] && \
+        [ -f /run/cos/live_mode ] && \
+        [ -f "/sbin/openrc" ]
+      files:
+        - path: /etc/motd
+          content: |
+            You are booting from livecd mode. Run 'kairos-agent install' to install the system.
+          permissions: 0644
+        - path: /etc/inittab
+          content: |
+            tty1::respawn:/sbin/agetty --autologin root -i --noclear tty1
+            ttyS0::respawn:/sbin/agetty --autologin root -i --noclear ttyS0
           permissions: 0644

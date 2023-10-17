@@ -2,34 +2,36 @@ name: "Start installer on tty1"
 stages:
   initramfs:
     - if: |
-          cat /proc/cmdline | grep -q "nodepair.enable"
+          grep -q "nodepair.enable" /proc/cmdline && \
+          ( [ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] )
       commands:
         - systemctl disable getty@tty1
         - systemctl enable kairos
         - systemctl enable kairos-webui
-    # Starts installer on boot in Alpine and openRC based
-    - if: |
-          cat /proc/cmdline | grep -q "nodepair.enable"
+    # Starts installer on boot for openRC based systems
+    - if: grep -q "nodepair.enable" /proc/cmdline && [ -f "/sbin/openrc" ]
       commands:
         - sed -i -e 's/tty1.*//g' /etc/inittab
-        - echo "tty1::respawn:/usr/bin/kairos-agent install" >> /etc/inittab
+        - echo "tty1::respawn:/usr/bin/kairos-agent install tty1" >> /etc/inittab
+    # Starts installer on boot for systemd based systems
     - if: |
-          cat /proc/cmdline | grep -q "interactive-install"
+        grep -q "interactive-install" /proc/cmdline && \
+        ( [ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] )
       commands:
         - systemctl disable getty@tty1
         - systemctl enable kairos-interactive
-    # Starts installer on boot in Alpine and openRC based
-    - if: |
-          cat /proc/cmdline | grep -q "interactive-install"
+    # Starts installer on boot for openRC based systems
+    - if: grep -q "interactive-install" /proc/cmdline && [ -f "/sbin/openrc" ]
       commands:
         - sed -i -e 's/tty1.*//g' /etc/inittab
-        - echo "tty1::respawn:/usr/bin/kairos-agent interactive-install --shell" >> /etc/inittab
+        - echo "tty1::respawn:/usr/bin/kairos-agent interactive-install --shell tty1" >> /etc/inittab
   boot:
     - if: |
           [ "$(kairos-agent state get boot)" == "livecd_boot" ] && [ -f "/sbin/rc-service" ]
       commands:
         - rc-service kairos-webui start
     - if: |
-          [ "$(kairos-agent state get boot)" == "livecd_boot" ] && [ -d "/usr/share/systemd" ]
+          [ "$(kairos-agent state get boot)" == "livecd_boot" ] && \
+          ( [ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] )
       commands:
         - systemctl start kairos-webui
