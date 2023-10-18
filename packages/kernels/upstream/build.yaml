@@ -1,0 +1,20 @@
+image: "fedora:latest"
+package_dir: "/package"
+prelude:
+  - dnf update -y && dnf install -y gcc make bison flex openssl openssl-devel elfutils-libelf-devel bc kmod xxd wget xz dwarves python3 cpio perl gettext diffutils bash coreutils tar which bzip2 findutils m4 perl-interpreter perl-Carp perl-devel perl-generators make diffutils gawk binutils redhat-rpm-config hmaccalc gcc-c++ python3-devel zstd
+  - wget https://cdn.kernel.org/pub/linux/kernel/v${PACKAGE_VERSION%%.*}.x/linux-${PACKAGE_VERSION}.tar.xz
+  - ls -lh
+  - tar xf linux-${PACKAGE_VERSION}.tar.xz
+steps:
+  - mkdir -p /package/boot
+  - mkdir -p /package/lib/modules/${PACKAGE_VERSION}/
+  - cp configs/x86.config linux-${PACKAGE_VERSION}/.config
+  - cd linux-${PACKAGE_VERSION} && make olddefconfig
+  - diff configs/x86.config linux-${PACKAGE_VERSION}/.config || true
+  - cd linux-${PACKAGE_VERSION} && make kernelversion
+  - cd linux-${PACKAGE_VERSION} && make -j$(nproc) bzImage
+  - cd linux-${PACKAGE_VERSION} && make -j$(nproc) modules
+  - cd linux-${PACKAGE_VERSION} && make install
+  - cd linux-${PACKAGE_VERSION} && ZSTD_CLEVEL=19 make INSTALL_MOD_PATH="/package/" INSTALL_MOD_STRIP=1 modules_install
+  - cp /boot/* /package/boot
+
