@@ -16,7 +16,7 @@ stages:
           }
 
           start() {
-              mkdirp -p /var/log/kairos
+              mkdir -p /var/log/kairos
               kairos-agent start &> /var/log/kairos/agent.log &
               return 0
           }
