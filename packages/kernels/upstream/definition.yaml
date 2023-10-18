@@ -1,0 +1,6 @@
+category: "kernels"
+name: "linux"
+version: "6.5.7"
+labels:
+  github.repo: "linux"
+  github.owner: "torvalds"
