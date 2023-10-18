@@ -7,7 +7,7 @@ on:
   pull_request:
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
         with:
@@ -54,7 +54,7 @@ jobs:
         luetVersion: 0.36.0
         luetArch: arm64
   build:
-    runs-on: fast
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
         with:
