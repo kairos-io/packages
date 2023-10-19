@@ -1,6 +1,0 @@
-image: "alpine"
-package_dir: "/package"
-steps:
-- mkdir /package
-- cp -rfv files/* /package
-- chmod +x /package/usr/bin/cos-setup-reconcile
