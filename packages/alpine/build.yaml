@@ -1,10 +1,10 @@
 image: alpine
 package_dir: "/package"
 steps:
-  - mkdir -p /packages/etc/mkinitfs/features.d
-  - mkdir -p /packages/etc/mkinitfs/
-  - mkdir -p /packages/usr/share/mkinitfs/
-  - cp files/immucore.files /packages/etc/mkinitfs/features.d/immucore.files
-  - cp files/tpm.modules /packages/etc/mkinitfs/features.d/tpm.modules
-  - cp files/mkinitfs.conf /packages/etc/mkinitfs/mkinitfs.conf
-  - cp files/initramfs-init /packages/usr/share/mkinitfs/initramfs-init
+  - mkdir -p /package/etc/mkinitfs/features.d
+  - mkdir -p /package/etc/mkinitfs/
+  - mkdir -p /package/usr/share/mkinitfs/
+  - cp files/immucore.files /package/etc/mkinitfs/features.d/immucore.files
+  - cp files/tpm.modules /package/etc/mkinitfs/features.d/tpm.modules
+  - cp files/mkinitfs.conf /package/etc/mkinitfs/mkinitfs.conf
+  - cp files/initramfs-init /package/usr/share/mkinitfs/initramfs-init
