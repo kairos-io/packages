@@ -1,27 +1,7 @@
 packages:
   - name: "alpine"
-    category: "distro-kernel"
-    version: "6.1.56-6"
-    description: "Provides kernel and custom initrd for alpine"
-    labels:
-      autobump.strategy: "custom"
-      autobump.string_replace: '{ "prefix": "" }'
-      autobump.prefix: "prefix"
-      autobump.hook: |
-        curl -s https://raw.githubusercontent.com/alpinelinux/aports/3.18-stable/main/linux-lts/APKBUILD | grep "pkgver=" | awk -F"=" '{print $2}'
-      autobump.version_hook: |
-        curl -s https://raw.githubusercontent.com/alpinelinux/aports/3.18-stable/main/linux-lts/APKBUILD | grep "pkgver=" | awk -F"=" '{print $2}'
-      package.version: "6.1.56"
-  - name: "alpine-rpi"
-    category: "distro-kernel"
-    version: "6.1.55-6"
-    description: "Provides kernel and custom initrd for alpine"
-    labels:
-      autobump.strategy: "custom"
-      autobump.string_replace: '{ "prefix": "" }'
-      autobump.prefix: "prefix"
-      autobump.hook: |
-        curl -s https://raw.githubusercontent.com/alpinelinux/aports/3.18-stable/main/linux-rpi/APKBUILD | grep "pkgver=" | awk -F"=" '{print $2}'
-      autobump.version_hook: |
-        curl -s https://raw.githubusercontent.com/alpinelinux/aports/3.18-stable/main/linux-rpi/APKBUILD | grep "pkgver=" | awk -F"=" '{print $2}'
-      package.version: "6.1.55"
+    category: "initrd"
+    version: "3.8.1"
+    description: "Provides custom initrd scripts for alpine"
+# This syncs with the alpine version at https://gitlab.alpinelinux.org/alpine/mkinitfs/-/blob/master/initramfs-init.in?ref_type=heads
+# any changes to the initramfs-init.in file should be looked at and backported if necessary

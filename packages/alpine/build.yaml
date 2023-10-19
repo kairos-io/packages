@@ -1,70 +1,10 @@
-{{ if eq .Values.name "alpine-rpi" }}
-  {{ if .Values.arch }}
-  {{ if eq .Values.arch "arm64" }}
 image: alpine
-# Arm + rpi
-copy:
-  - package:
-      category: "system"
-      name: "immucore"
-      version: ">=0"
-    source: "/usr/bin/immucore"
-    destination: "/usr/bin/immucore"
-  - package:
-      category: "system"
-      name: "kairos-agent"
-      version: ">=0"
-    source: "/usr/bin/kairos-agent"
-    destination: "/usr/bin/kairos-agent"
 package_dir: "/package"
-prelude:
-  - apk update
-  # multipath-tools and cryptsetup is needed to bring modules and udev rules
-  - apk add linux-rpi4 linux-firmware-none mkinitfs dbus cloud-utils-growpart e2fsprogs e2fsprogs-extra xfsprogs xfsprogs-extra sgdisk eudev eudev-hwids mdadm-udev device-mapper-udev lvm2 findmnt rsync parted cryptsetup multipath-tools openrc blkid
 steps:
-  - kernel=$(ls /lib/modules | head -n1) && depmod -a "${kernel}"
-  - mkdir -p /package/boot
-  - mkdir -p /package/lib/modules
-  - cp /boot/vmlinuz-rpi4 /package/boot/vmlinuz
-  - cp -rfv /lib/modules/* /package/lib/modules
-  # generate initramfs
-  - cp files/immucore.files /etc/mkinitfs/features.d/immucore.files
-  - cp files/tpm.modules /etc/mkinitfs/features.d/tpm.modules
-  - kernel=$(ls /lib/modules | head -n1) && mkinitfs -o /package/boot/initrd -i files/initramfs-init -c files/mkinitfs.conf $kernel
-    {{end}}
-  {{end}}
-  {{else}}
-image: alpine
-# x86 + arm + no rpi path
-copy:
-  - package:
-      category: "system"
-      name: "immucore"
-      version: ">=0"
-    source: "/usr/bin/immucore"
-    destination: "/usr/bin/immucore"
-  - package:
-      category: "system"
-      name: "kairos-agent"
-      version: ">=0"
-    source: "/usr/bin/kairos-agent"
-    destination: "/usr/bin/kairos-agent"
-package_dir: "/package"
-prelude:
-  - apk update
-  # multipath-tools and cryptsetup is needed to bring modules and udev rules
-  - apk add linux-lts linux-firmware-none mkinitfs dbus cloud-utils-growpart e2fsprogs e2fsprogs-extra xfsprogs xfsprogs-extra sgdisk eudev eudev-hwids mdadm-udev device-mapper-udev lvm2 findmnt rsync parted cryptsetup multipath-tools openrc blkid
-steps:
-  - kernel=$(ls /lib/modules | head -n1) && depmod -a "${kernel}"
-  - mkdir -p /package/boot
-  - mkdir -p /package/lib/modules
-  # TODO: Add firmware files
-  - cp /boot/vmlinuz-lts /package/boot/vmlinuz
-  - cp -rfv /lib/modules/* /package/lib/modules
-  # generate initramfs
-  - cp files/immucore.files /etc/mkinitfs/features.d/immucore.files
-  - cp files/tpm.modules /etc/mkinitfs/features.d/tpm.modules
-  - kernel=$(ls /lib/modules | head -n1) && mkinitfs -o /package/boot/initrd -i files/initramfs-init -c files/mkinitfs.conf $kernel
-{{end}}
-
-
+  - mkdir -p /packages/etc/mkinitfs/features.d
+  - mkdir -p /packages/etc/mkinitfs/
+  - mkdir -p /packages/usr/share/mkinitfs/
+  - cp files/immucore.files /packages/etc/mkinitfs/features.d/immucore.files
+  - cp files/tpm.modules /packages/etc/mkinitfs/features.d/tpm.modules
+  - cp files/mkinitfs.conf /packages/etc/mkinitfs/mkinitfs.conf
+  - cp files/initramfs-init /packages/usr/share/mkinitfs/initramfs-init
