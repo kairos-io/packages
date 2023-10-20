@@ -1,7 +1,7 @@
 packages:
   - name: k3s-openrc
     category: k8s
-    version: "1.25.11+2"
+    version: "1.28.3-rc1+k3s1"
     k3s_version: "2"
     labels:
       github.owner: "k3s-io"
@@ -10,7 +10,6 @@ packages:
       - https://github.com/k3s-io/k3s
     license: "APL-2"
     description: " Lightweight Kubernetes "
-
   - name: k3s-openrc
     category: k8s
     version: "1.26.6+2"
@@ -22,7 +21,6 @@ packages:
       - https://github.com/k3s-io/k3s
     license: "APL-2"
     description: " Lightweight Kubernetes "
-
   - name: k3s-openrc
     category: k8s
     version: "1.27.3+2"
@@ -34,7 +32,6 @@ packages:
       - https://github.com/k3s-io/k3s
     license: "APL-2"
     description: " Lightweight Kubernetes "
-
   - name: k3s-systemd
     category: k8s
     version: "1.25.11+2"
@@ -46,7 +43,6 @@ packages:
       - https://github.com/k3s-io/k3s
     license: "APL-2"
     description: " Lightweight Kubernetes "
-
   - name: k3s-systemd
     category: k8s
     version: "1.26.6+2"
@@ -58,7 +54,6 @@ packages:
       - https://github.com/k3s-io/k3s
     license: "APL-2"
     description: " Lightweight Kubernetes "
-
   - name: k3s-systemd
     category: k8s
     version: "1.27.3+2"
