@@ -1,10 +1,61 @@
 name: "Create openrc services"
 stages:
   initramfs:
-    - name: "Create files"
+    - name: "Create OpenRC services"
       if: |
-          grep -i alpine "/etc/os-release"
+        [ -f "/sbin/openrc" ]
       files:
+      - path: /etc/init.d/cos-setup-boot
+        permissions: 0755
+        owner: 0
+        group: 0
+        content: |
+          #!/sbin/openrc-run
+
+          depend() {
+            provide cos-setup-boot
+          }
+
+          start() {
+            kairos-agent run-stage boot
+            eend 0
+          }
+      - path: /etc/init.d/cos-setup-network
+        permissions: 0755
+        owner: 0
+        group: 0
+        content: |
+          #!/sbin/openrc-run
+
+          depend() {
+            after net
+            provide cos-setup-network
+          }
+
+          start() {
+            kairos-agent run-stage network
+            eend 0
+          }
+      - path: /etc/init.d/cos-setup-reconcile
+        permissions: 0755
+        owner: 0
+        group: 0
+        content: |
+          #!/sbin/openrc-run
+
+          depend() {
+            provide cos-setup-reconcile
+          }
+
+          supervisor=supervise-daemon
+          name="cos-setup-reconcile"
+          command="cos-setup-reconcile"
+          supervise_daemon_args="--stdout /var/log/cos-setup-reconcile.log --stderr /var/log/cos-setup-reconcile.log"
+          pidfile="/run/cos-setup-reconcile.pid"
+          respawn_delay=360
+          set -o allexport
+          if [ -f /etc/environment ]; then source /etc/environment; fi
+          set +o allexport
       - path: /etc/init.d/kairos-agent
         content: |
           #!/sbin/openrc-run
@@ -45,7 +96,6 @@ stages:
           set -o allexport
           if [ -f /etc/environment ]; then source /etc/environment; fi
           set +o allexport
-
         permissions: 0755
         owner: 0
         group: 0
@@ -66,3 +116,12 @@ stages:
         permissions: 0755
         owner: 0
         group: 0
+    - name: "Enable OpenRC services"
+      if: |
+        [ -f "/sbin/openrc" ]
+      commands:
+        - mkdir -p /etc/runlevels/default
+        - ln -sf ../../init.d/cos-setup-boot /etc/runlevels/default/cos-setup-boot
+        - ln -sf ../../init.d/cos-setup-network /etc/runlevels/default/cos-setup-network
+        - ln -sf ../../init.d/cos-setup-reconcile /etc/runlevels/default/cos-setup-reconcile
+        - ln -sf ../../init.d/kairos-agent /etc/runlevels/default/kairos-agent

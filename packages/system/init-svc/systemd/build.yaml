@@ -1,6 +1,0 @@
-image: "alpine"
-steps:
-- mkdir -p /etc/systemd/system
-- mkdir -p /etc/systemd/network
-- cp -rfv services/* /etc/systemd/system
-- cp -rfv network/* /etc/systemd/network
