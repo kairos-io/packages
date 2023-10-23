@@ -9,6 +9,16 @@ stages:
           - wicked
     - name: "Enable systemd-network and systemd-resolved"
       if: '[ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ]'
+      files:
+        - path: /etc/systemd/network/20-dhcp.network
+          permissions: 0644
+          owner: 0
+          group: 0
+          content: |
+            [Match]
+            Name=en* eth*
+            [Network]
+            DHCP=yes
       systemctl:
         enable:
           - systemd-networkd
