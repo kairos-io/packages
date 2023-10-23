@@ -6,14 +6,13 @@ requires:
 package_dir: /kubectl
 
 steps:
-- | 
-   apk add bash && \
-   PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
-   mkdir -p /kubectl/usr/bin && \
-   curl -LO "https://dl.k8s.io/release/v$PACKAGE_VERSION/bin/linux/{{.Values.arch}}/kubectl" && \
-   curl -LO "https://dl.k8s.io/release/v$PACKAGE_VERSION/bin/linux/{{.Values.arch}}/kubectl.sha256" && \
-   cat kubectl.sha256 && \
-   ls -liah && \
-   /bin/bash -c 'echo "$(<kubectl.sha256)  kubectl" | sha256sum -c' && \
-   mv kubectl /kubectl/usr/bin && \
-   chmod +x /kubectl/usr/bin/kubectl
+- apk add bash
+- mkdir -p /kubectl/usr/bin
+- PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && curl -LO "https://dl.k8s.io/release/v$PACKAGE_VERSION/bin/linux/{{.Values.arch}}/kubectl"
+- PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && curl -LO "https://dl.k8s.io/release/v$PACKAGE_VERSION/bin/linux/{{.Values.arch}}/kubectl.sha256"
+- cat kubectl.sha256
+- sha256sum ./kubectl
+- ls -liah
+- /bin/bash -c 'echo "$(<kubectl.sha256)  kubectl" | sha256sum -c'
+- mv kubectl /kubectl/usr/bin
+- chmod +x /kubectl/usr/bin/kubectl
