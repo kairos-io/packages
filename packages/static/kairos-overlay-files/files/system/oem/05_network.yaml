@@ -1,6 +1,24 @@
 name: "Default network configuration"
 stages:
-  initramfs.before:
+  rootfs:
+    - name: "Enable systemd-network config files for DHCP" # Needed if systemd-networkd runs in the initramfs!
+      if: '[ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ]'
+      directories:
+        - path: "/etc/systemd/network/" # doesnt exist on initramfs
+          permissions: 0775
+          owner: 0
+          group: 0
+      files:
+        - path: /etc/systemd/network/20-dhcp.network
+          permissions: 0644
+          owner: 0
+          group: 0
+          content: |
+            [Match]
+            Name=en* eth*
+            [Network]
+            DHCP=yes
+  initramfs:
     - name: "Enable systemd-network config files for DHCP"
       if: '[ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ]'
       files:
@@ -10,19 +28,9 @@ stages:
           group: 0
           content: |
             [Match]
-            Name=en*
+            Name=en* eth*
             [Network]
             DHCP=yes
-        - path: /etc/systemd/network/20-dhcp-legacy.network
-          permissions: 0644
-          owner: 0
-          group: 0
-          content: |
-            [Match]
-            Name=eth*
-            [Network]
-            DHCP=yes
-  initramfs:
     - name: "Disable NetworkManager and wicked"
       if: '[ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ]'
       systemctl:
