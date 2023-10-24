@@ -1,5 +1,27 @@
 name: "Default network configuration"
 stages:
+  initramfs.before:
+    - name: "Enable systemd-network config files for DHCP"
+      if: '[ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ]'
+      files:
+        - path: /etc/systemd/network/20-dhcp.network
+          permissions: 0644
+          owner: 0
+          group: 0
+          content: |
+            [Match]
+            Name=en*
+            [Network]
+            DHCP=yes
+        - path: /etc/systemd/network/20-dhcp-legacy.network
+          permissions: 0644
+          owner: 0
+          group: 0
+          content: |
+            [Match]
+            Name=eth*
+            [Network]
+            DHCP=yes
   initramfs:
     - name: "Disable NetworkManager and wicked"
       if: '[ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ]'
@@ -9,16 +31,6 @@ stages:
           - wicked
     - name: "Enable systemd-network and systemd-resolved"
       if: '[ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ]'
-      files:
-        - path: /etc/systemd/network/20-dhcp.network
-          permissions: 0644
-          owner: 0
-          group: 0
-          content: |
-            [Match]
-            Name=en* eth*
-            [Network]
-            DHCP=yes
       systemctl:
         enable:
           - systemd-networkd
