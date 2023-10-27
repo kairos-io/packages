@@ -15,7 +15,7 @@ packages:
     binary_name: kcrypt-discovery-challenger
     category: fips
     live: "yes"
-    version: "0.5.0"
+    version: "0.6.0"
     labels:
       github.repo: "kcrypt-challenger"
       github.owner: "kairos-io"
