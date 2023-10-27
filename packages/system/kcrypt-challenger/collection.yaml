@@ -28,7 +28,7 @@ packages:
     ldflags: "-linkmode external -extldflags -static"
     category: fips-static
     live: "yes"
-    version: "0.5.0"
+    version: "0.6.0"
     labels:
       github.repo: "kcrypt-challenger"
       github.owner: "kairos-io"
