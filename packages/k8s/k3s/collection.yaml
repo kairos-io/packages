@@ -7,7 +7,6 @@ packages:
       github.owner: "k3s-io"
       github.repo: "k3s"
       autobump.sed_script: 's/\+k3s1//g'
-      autobump.strategy: "release"
     uri:
       - https://github.com/k3s-io/k3s
     license: "APL-2"
@@ -21,7 +20,6 @@ packages:
       github.owner: "k3s-io"
       github.repo: "k3s"
       autobump.sed_script: 's/\+k3s1//g'
-      autobump.strategy: "release"
     uri:
       - https://github.com/k3s-io/k3s
     license: "APL-2"
@@ -35,7 +33,6 @@ packages:
       github.owner: "k3s-io"
       github.repo: "k3s"
       autobump.sed_script: 's/\+k3s1//g'
-      autobump.strategy: "release"
     uri:
       - https://github.com/k3s-io/k3s
     license: "APL-2"
@@ -49,7 +46,6 @@ packages:
       github.owner: "k3s-io"
       github.repo: "k3s"
       autobump.sed_script: 's/\+k3s1//g'
-      autobump.strategy: "release"
     uri:
       - https://github.com/k3s-io/k3s
     license: "APL-2"
@@ -63,7 +59,6 @@ packages:
       github.owner: "k3s-io"
       github.repo: "k3s"
       autobump.sed_script: 's/\+k3s1//g'
-      autobump.strategy: "release"
     uri:
       - https://github.com/k3s-io/k3s
     license: "APL-2"
@@ -77,7 +72,6 @@ packages:
       github.owner: "k3s-io"
       github.repo: "k3s"
       autobump.sed_script: 's/\+k3s1//g'
-      autobump.strategy: "release"
     uri:
       - https://github.com/k3s-io/k3s
     license: "APL-2"
