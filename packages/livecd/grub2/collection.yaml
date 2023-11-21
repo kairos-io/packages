@@ -1,9 +1,9 @@
 packages:
   - name: "grub2"
     category: "livecd"
-    version: "0.0.10"
+    version: "0.0.11"
     description: "Grub2 booloader for live systems"
   - name: "grub2-efi-image"
     category: "livecd"
-    version: "0.0.10"
+    version: "0.0.11"
     description: "Grub2 booloader EFI image for live systems"
