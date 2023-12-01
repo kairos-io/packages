@@ -9,7 +9,7 @@ on:
 jobs:
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: fast
     env:
       ARCH: amd64
     steps:
@@ -56,6 +56,25 @@ jobs:
     - name: Set up Docker Buildx
       id: buildx
       uses: docker/setup-buildx-action@master
+    - name: Get kernel version
+      uses: mikefarah/yq@v4.40.3
+      id: kernel_version
+      with:
+        cmd: yq -r '.version' packages/kernels/upstream/definition.yaml
+    # this builds the kernel cross-compiled for arm64 so its faster
+    # notice that wee are not using builx nor platform so it runs under amd64
+    # This is much faster than building the kernel on arm64 via buildx and --platform
+    - name: Build kernel 🔧
+      uses: luet-lab/luet-github-action@master
+      with:
+        build: true
+        FINAL_REPO: quay.io/kairos/packages-arm64
+        DOCKER_USERNAME: ${{ secrets.QUAY_USERNAME }}
+        REPOSITORY_TYPE: docker
+        pushFinalImages: true
+        pushCache: true
+        CURRENT_PACKAGE: kernels/linux@${{ steps.kernel_version.outputs.result }}
+        values: values/arm64.yaml
     - name: Download meta 🔧
       uses: luet-lab/luet-github-action@master
       with:
