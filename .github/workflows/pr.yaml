@@ -22,12 +22,11 @@ jobs:
     - name: Set up Docker Buildx
       id: buildx
       uses: docker/setup-buildx-action@master
-    - name: yq - portable yaml processor
-      uses: mikefarah/yq@v4.40.3
     - name: Get kernel version
+      uses: mikefarah/yq@v4.40.3
       id: kernel_version
-      run: |
-        echo "kernel_version=$(yq -r '.version' packages/kernels/upstream/definition.yaml)" >> $GITHUB_OUTPUT
+      with:
+        cmd: yq -r '.version' packages/kernels/upstream/definition.yaml
     # this builds the kernel cross-compiled for arm64 so its faster
     # notice that wee are not using builx nor platform so it runs under amd64
     # This is much faster than building the kernel on arm64 via buildx and --platform
@@ -40,7 +39,7 @@ jobs:
         REPOSITORY_TYPE: docker
         pushFinalImages: false
         pushCache: false
-        CURRENT_PACKAGE: kernels/linux@${{ steps.kernel_version.outputs.kernel_version }}
+        CURRENT_PACKAGE: kernels/linux@${{ steps.kernel_version.outputs.result }}
         values: values/arm64.yaml
     - name: Download meta 🔧
       uses: luet-lab/luet-github-action@master
