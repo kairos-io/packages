@@ -1,5 +1,4 @@
-{{if eq .Values.name "grub2"}}
-image: "opensuse/leap:15.4"
+image: "opensuse/leap:15.5"
 
 prelude:
 {{if .Values.arch }}
@@ -13,6 +12,7 @@ prelude:
 - cat /usr/share/grub2/i386-pc/cdboot.img /usr/share/grub2/i386-pc/core.img > /usr/share/grub2/i386-pc/eltorito.img
 
 steps:
+{{if eq .Values.name "grub2"}}
 - mkdir -p /boot/x86_64/loader
   {{if .Values.arch }}
     {{if eq .Values.arch "amd64"}}
@@ -31,18 +31,6 @@ steps:
 {{end}}
 
 {{if eq .Values.name "grub2-efi-image"}}
-image: "opensuse/tumbleweed"
-prelude:
-{{if .Values.arch }}
-  {{if eq .Values.arch "amd64"}}
-- zypper in -y shim grub2-x86_64-efi
-  {{end}}
-  {{if eq .Values.arch "arm64"}}
-- zypper in -y shim grub2-arm64-efi
-  {{end}}
-{{end}}
-- zypper cc
-steps:
 - mkdir -p /EFI/BOOT
   {{if .Values.arch }}
     {{if eq .Values.arch "amd64"}}
@@ -52,6 +40,7 @@ steps:
 - cp /usr/share/efi/x86_64/MokManager.efi /EFI/BOOT/MokManager.efi
     {{end}}
   {{if eq .Values.arch "arm64"}}
+- ls -ltra /usr/share/grub2/arm64-efi/
 # For removable drives the name of the efi needs to be bootaa64.efi
 - cp /usr/share/efi/aarch64/shim.efi /EFI/BOOT/bootaa64.efi
 - cp /usr/share/efi/aarch64/grub.efi /EFI/BOOT/grub.efi
