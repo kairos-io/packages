@@ -1,5 +1,5 @@
 name: "grub2-efi"
 category: "system"
-version: "2.06-150404"
+version: "2.06-150405"
 pversion: "2.06-150400.12.2"
 license: "GPL-3.0-or-later"
