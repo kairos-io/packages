@@ -1,6 +1,6 @@
 category: "kernels"
 name: "linux"
-version: "6.5.7-1"
+version: "6.6.4"
 labels:
   autobump.revdeps: "false"
   autobump.string_replace: '{ "prefix": "" }'
@@ -10,4 +10,4 @@ labels:
     curl -Ls https://kernel.org/releases.json | jq -cr '.latest_stable.version'
   autobump.version_hook: |
     curl -Ls https://kernel.org/releases.json | jq -cr '.latest_stable.version'
-  package.version: "6.5.7"
+  package.version: "6.6.4"
