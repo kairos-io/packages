@@ -3,7 +3,7 @@ Description=kairos interactive-installer
 After=sysinit.target
 [Service]
 Type=oneshot
-# imput/output to tty as its interactive
+# input/output to tty as its interactive
 # otherwise it will be silent and with no input
 StandardInput=tty
 StandardOutput=tty
