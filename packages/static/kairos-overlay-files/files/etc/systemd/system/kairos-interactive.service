@@ -3,12 +3,15 @@ Description=kairos interactive-installer
 After=sysinit.target
 [Service]
 Type=oneshot
+# imput/output to tty as its interactive
+# otherwise it will be silent and with no input
 StandardInput=tty
-StandardOutput=journal+console
+StandardOutput=tty
 LimitNOFILE=49152
 ExecStartPre=-/bin/sh -c "dmesg -D"
 TTYPath=/dev/tty1
 RemainAfterExit=yes
 ExecStart=/usr/bin/kairos-agent interactive-install --shell
+TimeoutStopSec=10s
 [Install]
 WantedBy=multi-user.target
