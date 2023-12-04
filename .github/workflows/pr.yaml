@@ -23,7 +23,7 @@ jobs:
       id: buildx
       uses: docker/setup-buildx-action@master
     - name: Get kernel version
-      uses: mikefarah/yq@v4.40.3
+      uses: mikefarah/yq@v4.40.4
       id: kernel_version
       with:
         cmd: yq -r '.version' packages/kernels/upstream/definition.yaml
