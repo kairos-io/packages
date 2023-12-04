@@ -26,7 +26,7 @@ jobs:
       uses: mikefarah/yq@v4.40.4
       id: kernel_version
       with:
-        cmd: yq -r '.version' packages/kernels/upstream/definition.yaml
+        cmd: yq -r '.labels| with_entries(select(.key == "package.version"))|.[]' packages/kernels/upstream/definition.yaml
     # this builds the kernel cross-compiled for arm64 so its faster
     # notice that wee are not using builx nor platform so it runs under amd64
     # This is much faster than building the kernel on arm64 via buildx and --platform
