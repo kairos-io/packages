@@ -4,10 +4,11 @@ After=sysinit.target
 [Service]
 Type=oneshot
 StandardInput=tty
-StandardOutput=journal+console
+StandardOutput=tty
 LimitNOFILE=49152
 TTYPath=/dev/tty1
 RemainAfterExit=yes
 ExecStart=/usr/bin/kairos-agent reset --unattended --reboot
+TimeoutStopSec=10s
 [Install]
 WantedBy=multi-user.target
