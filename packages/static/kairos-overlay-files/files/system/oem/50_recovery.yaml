@@ -7,6 +7,8 @@ stages:
         ( [ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] )
       commands:
         - systemctl disable getty@tty1
+        - systemctl stop getty@tty1
+        - systemctl mask getty@tty1
         - systemctl enable kairos-recovery
     - name: "Starts kairos-recovery for openRC based systems"
       if: grep -q "kairos.remote_recovery_mode" /proc/cmdline &&  [ -f "/sbin/openrc" ]

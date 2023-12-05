@@ -5,6 +5,8 @@ stages:
       if: grep -q "kairos.reset" /proc/cmdline && [ ! -f "/sbin/openrc" ]
       commands:
         - systemctl disable getty@tty1
+        - systemctl stop getty@tty1
+        - systemctl mask getty@tty1
         - systemctl enable kairos-reset
     - name: "Starts kairos-reset for openRC-based systems"
       if: grep -q "kairos.reset" /proc/cmdline && [ -f "/sbin/openrc" ]
