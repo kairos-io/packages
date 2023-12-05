@@ -6,6 +6,8 @@ stages:
           ( [ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] )
       commands:
         - systemctl disable getty@tty1
+        - systemctl stop getty@tty1
+        - systemctl mask getty@tty1
         - systemctl enable kairos
         - systemctl enable kairos-webui
     # Starts installer on boot for openRC based systems
@@ -19,6 +21,8 @@ stages:
         ( [ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] )
       commands:
         - systemctl disable getty@tty1
+        - systemctl stop getty@tty1
+        - systemctl mask getty@tty1
         - systemctl enable kairos-interactive
     # Starts installer on boot for openRC based systems
     - if: grep -q "interactive-install" /proc/cmdline && [ -f "/sbin/openrc" ]
