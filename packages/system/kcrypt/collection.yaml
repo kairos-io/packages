@@ -12,7 +12,7 @@ packages:
     description: "Cloud native guardian for persistent data in the edge"
   - name: kcrypt
     category: fips
-    version: "0.7.0"
+    version: "0.8.0"
     labels:
       github.repo: "kcrypt"
       autobump.revdeps: "true"
@@ -25,11 +25,11 @@ packages:
     #ldflags: "-linkmode external -extldflags -static"
     #category: fips-static
     #version: "0.7.0"
-      #labels:
-      #github.repo: "kcrypt"
-      #autobump.revdeps: "true"
+    #labels:
+    #github.repo: "kcrypt"
+    #autobump.revdeps: "true"
     #github.owner: "kairos-io"
-      #uri:
+    #uri:
     #- https://github.com/kairos-io/kcrypt
     #license: "Apache License v2"
     #description: "Cloud native guardian for persistent data in the edge"
