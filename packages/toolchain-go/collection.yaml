@@ -3,7 +3,6 @@ packages:
     category: development
     variant: "alpine"
     version: "1.20.2"
-    tag: "1.20.2"
     hidden: true
     labels:
       autobump.revdeps: "false"
@@ -18,7 +17,6 @@ packages:
     variant: ""
     category: development
     version: "1.20.2"
-    tag: "1.20.2"
     hidden: true
     labels:
       autobump.revdeps: "false"
@@ -33,7 +31,6 @@ packages:
     category: development
     variant: "alpine"
     version: "1.20.2"
-    tag: "1.20.2"
     hidden: true
     labels:
       autobump.revdeps: "false"
@@ -48,7 +45,6 @@ packages:
     variant: ""
     category: development
     version: "1.20.2"
-    tag: "1.20.2"
     hidden: true
     labels:
       autobump.revdeps: "false"
