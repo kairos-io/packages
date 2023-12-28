@@ -2,7 +2,7 @@ packages:
   - name: toolchain-go
     category: development
     variant: "alpine"
-    version: "1.20.2"
+    version: "\"1.21.5\""
     tag: "1.20.2"
     hidden: true
     labels:
@@ -14,6 +14,7 @@ packages:
         curl -s -L "https://go.dev/dl/?mode=json" |jq '.[0].version'| sed 's/go//g'
       autobump.version_hook: |
         curl -s -L "https://go.dev/dl/?mode=json" |jq '.[0].version'| sed 's/go//g'
+      package.version: "\"1.21.5\""
   - name: toolchain-go-ubuntu
     variant: ""
     category: development
