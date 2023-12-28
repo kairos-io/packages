@@ -6,7 +6,6 @@ packages:
     tag: "1.20.2"
     hidden: true
     labels:
-      autobump.revdeps: "true"
       autobump.strategy: "custom"
       autobump.string_replace: '{ "prefix": "" }'
       autobump.prefix: "prefix"
@@ -21,7 +20,6 @@ packages:
     tag: "1.20.2"
     hidden: true
     labels:
-      autobump.revdeps: "true"
       autobump.strategy: "custom"
       autobump.string_replace: '{ "prefix": "" }'
       autobump.prefix: "prefix"
@@ -36,7 +34,6 @@ packages:
     tag: "1.20.2"
     hidden: true
     labels:
-      autobump.revdeps: "true"
       autobump.strategy: "custom"
       autobump.string_replace: '{ "prefix": "" }'
       autobump.prefix: "prefix"
@@ -51,7 +48,6 @@ packages:
     tag: "1.20.2"
     hidden: true
     labels:
-      autobump.revdeps: "true"
       autobump.strategy: "custom"
       autobump.string_replace: '{ "prefix": "" }'
       autobump.prefix: "prefix"
