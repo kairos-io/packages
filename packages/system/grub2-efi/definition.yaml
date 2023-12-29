@@ -1,6 +1,6 @@
 name: "grub2-efi"
 category: "system"
-version: "2.06-150500.27.4"
+version: "2.06-150500.27.4-1"
 license: "GPL-3.0-or-later"
 image: "registry.opensuse.org/opensuse/tumbleweed"
 labels:

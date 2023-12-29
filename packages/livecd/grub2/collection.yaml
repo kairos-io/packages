@@ -1,7 +1,7 @@
 packages:
   - name: "grub2"
     category: "livecd"
-    version: "0.0.12"
+    version: "0.0.12-1"
     description: "Grub2 bootloader for live systems"
     image: "registry.opensuse.org/opensuse/tumbleweed"
     labels:
@@ -15,7 +15,7 @@ packages:
       package.version: "2.06-150500.27.4"
   - name: "grub2-efi-image"
     category: "livecd"
-    version: "0.0.12"
+    version: "0.0.12-1"
     description: "Grub2 bootloader EFI image for live systems"
     image: "registry.opensuse.org/opensuse/tumbleweed"
     labels:
