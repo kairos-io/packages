@@ -1,4 +1,4 @@
-image: "opensuse/leap:15.5"
+image: {{.Values.image}}
 
 prelude:
 {{if .Values.arch }}

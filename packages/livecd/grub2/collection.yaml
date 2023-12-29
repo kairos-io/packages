@@ -3,7 +3,28 @@ packages:
     category: "livecd"
     version: "0.0.12"
     description: "Grub2 bootloader for live systems"
+    image: "registry.opensuse.org/opensuse/tumbleweed"
+    labels:
+      autobump.strategy: "custom"
+      autobump.string_replace: '{ "prefix": "" }'
+      autobump.prefix: "prefix"
+      autobump.hook: |
+        curl -s -L https://download.opensuse.org/tumbleweed/repo/oss/$(curl -s -L https://download.opensuse.org/tumbleweed/repo/oss/repodata/repomd.xml | dasel -r xml 'repomd.data.[0].location.-href') | zstd -d - | dasel -r xml -w json | jq '.metadata.package[] | select(.name|match("grub2-x86_64-efi$")) | select(.arch!="src").version | map(.)[2] + "-" +  map(.)[1]' -r | tail -n1
+      autobump.version_hook: |
+        curl -s -L https://download.opensuse.org/tumbleweed/repo/oss/$(curl -s -L https://download.opensuse.org/tumbleweed/repo/oss/repodata/repomd.xml | dasel -r xml 'repomd.data.[0].location.-href') | zstd -d - | dasel -r xml -w json | jq '.metadata.package[] | select(.name|match("grub2-x86_64-efi$")) | select(.arch!="src").version | map(.)[2] + "-" +  map(.)[1]' -r | tail -n1
+      package.version: "2.06-150500.27.4"
   - name: "grub2-efi-image"
     category: "livecd"
     version: "0.0.12"
     description: "Grub2 bootloader EFI image for live systems"
+    image: "registry.opensuse.org/opensuse/tumbleweed"
+    labels:
+      autobump.strategy: "custom"
+      autobump.string_replace: '{ "prefix": "" }'
+      autobump.prefix: "prefix"
+      autobump.hook: |
+        curl -s -L https://download.opensuse.org/tumbleweed/repo/oss/$(curl -s -L https://download.opensuse.org/tumbleweed/repo/oss/repodata/repomd.xml | dasel -r xml 'repomd.data.[0].location.-href') | zstd -d - | dasel -r xml -w json | jq '.metadata.package[] | select(.name|match("grub2-x86_64-efi$")) | select(.arch!="src").version | map(.)[2] + "-" +  map(.)[1]' -r | tail -n1
+      autobump.version_hook: |
+        curl -s -L https://download.opensuse.org/tumbleweed/repo/oss/$(curl -s -L https://download.opensuse.org/tumbleweed/repo/oss/repodata/repomd.xml | dasel -r xml 'repomd.data.[0].location.-href') | zstd -d - | dasel -r xml -w json | jq '.metadata.package[] | select(.name|match("grub2-x86_64-efi$")) | select(.arch!="src").version | map(.)[2] + "-" +  map(.)[1]' -r | tail -n1
+      package.version: "2.06-150500.27.4"
+
