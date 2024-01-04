@@ -9,6 +9,8 @@ stages:
       sysctl:
         net.core.rmem_max: 2500000
         vm.max_map_count: 262144
+        fs.inotify.max_user_instances: 8192
+        fs.inotify.max_user_watches: 524288
   initramfs:
     - name: "Default systemd config"
       if: '[ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ]'
