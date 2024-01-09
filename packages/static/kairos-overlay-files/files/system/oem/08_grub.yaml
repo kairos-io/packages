@@ -22,7 +22,7 @@ stages:
     # the boot stage.
     - name: "Remove GRUB sentinels"
       if: |
-          cat /proc/cmdline | grep -q "active.img"
+          cat /proc/cmdline | grep -q "active.img" && grep -vq "rd.immucore.uki" /proc/cmdline
       commands:
       - |
           mount -o rw,remount /run/initramfs/cos-state
@@ -31,7 +31,7 @@ stages:
           mount -o ro,remount /run/initramfs/cos-state
     - name: "Create upgrade failure sentinel if necessary"
       if: |
-          cat /proc/cmdline | grep -q "upgrade_failure"
+          cat /proc/cmdline | grep -q "upgrade_failure" && grep -vq "rd.immucore.uki" /proc/cmdline
       files:
       - path: /run/cos/upgrade_failure
         content: "1"
@@ -44,6 +44,7 @@ stages:
 
     - &statemount
       name: "Mount state"
+      if: grep -vq "rd.immucore.uki" /proc/cmdline
       commands:
       - |
           STATEDIR=/tmp/mnt/STATE
@@ -56,7 +57,7 @@ stages:
     - &customhook
       name: "Hook boot assessment grub configuration"
       if: |
-           ! grep -q "grub_boot_assessment" /tmp/mnt/STATE/grubcustom
+           ! grep -q "grub_boot_assessment" /tmp/mnt/STATE/grubcustom && grep -vq "rd.immucore.uki" /proc/cmdline
       commands:
       - |
         cat << 'EOF' >> /tmp/mnt/STATE/grubcustom
@@ -75,6 +76,7 @@ stages:
     # This configuration is separated so it can be tracked separately from the install hook
     - &bootgrub
       name: "Add boot assessment grub configuration"
+      if: grep -vq "rd.immucore.uki" /proc/cmdline
       files:
       - path: "/tmp/mnt/STATE/grub_boot_assessment"
         owner: 0
@@ -100,11 +102,12 @@ stages:
             fi
     - &grubinstall
       name: "Grub branding"
-      if: '[ -e "/etc/kairos/branding/grubmenu.cfg" ]'
+      if: '[ -e "/etc/kairos/branding/grubmenu.cfg" ] && grep -vq "rd.immucore.uki" /proc/cmdline'
       commands:
       - cp -rfv /etc/kairos/branding/grubmenu.cfg /tmp/mnt/STATE/grubmenu
     - &stateumount
       name: "umount state"
+      if: grep -vq "rd.immucore.uki" /proc/cmdline
       commands:
       - umount /tmp/mnt/STATE
 
@@ -113,6 +116,7 @@ stages:
     after-upgrade:
     - <<: *statemount
     - name: "Set upgrade sentinel"
+      if: grep -vq "rd.immucore.uki" /proc/cmdline
       commands:
       - |
           grub2-editenv /tmp/mnt/STATE/boot_assessment set enable_boot_assessment=yes
