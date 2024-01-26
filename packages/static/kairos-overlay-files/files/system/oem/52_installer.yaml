@@ -17,7 +17,7 @@ stages:
         - systemctl enable kairos
         - systemctl enable kairos-webui
     # Starts installer on boot for openRC based systems
-    - if: grep -q "nodepair.enable" /proc/cmdline && [ -f "/sbin/openrc" ]
+    - if: grep -q "nodepair.enable" /proc/cmdline && [ "$(kairos-agent state get kairos.init)" == "openrc" ]
       commands:
         - sed -i -e 's/tty1.*//g' /etc/inittab
         - echo "tty1::respawn:/usr/bin/kairos-agent install tty1" >> /etc/inittab
@@ -37,13 +37,13 @@ stages:
         - systemctl mask getty@tty1
         - systemctl enable kairos-interactive
     # Starts installer on boot for openRC based systems
-    - if: grep -q "interactive-install" /proc/cmdline && [ -f "/sbin/openrc" ]
+    - if: grep -q "interactive-install" /proc/cmdline && [ "$(kairos-agent state get kairos.init)" == "openrc" ]
       commands:
         - sed -i -e 's/tty1.*//g' /etc/inittab
         - echo "tty1::respawn:/usr/bin/kairos-agent interactive-install --shell tty1" >> /etc/inittab
   boot:
     - if: |
-        [ "$(kairos-agent state get boot)" == "livecd_boot" ] && [ -f "/sbin/rc-service" ]
+        [ "$(kairos-agent state get boot)" == "livecd_boot" ] && [ "$(kairos-agent state get kairos.init)" == "openrc" ]
       commands:
         - rc-service kairos-webui start
     - if: | 

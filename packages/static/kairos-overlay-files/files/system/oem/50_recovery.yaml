@@ -10,7 +10,7 @@ stages:
         - systemctl mask getty@tty1
         - systemctl enable kairos-recovery
     - name: "Starts kairos-recovery for openRC based systems"
-      if: grep -q "kairos.remote_recovery_mode" /proc/cmdline &&  [ -f "/sbin/openrc" ]
+      if: grep -q "kairos.remote_recovery_mode" /proc/cmdline && [ "$(kairos-agent state get kairos.init)" == "openrc" ]
       commands:
         - sed -i -e 's/tty1.*//g' /etc/inittab
         - echo "tty1::respawn:/usr/bin/kairos-agent recovery tty1" >> /etc/inittab

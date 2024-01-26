@@ -21,7 +21,7 @@ stages:
       if: |
         grep -qv "interactive-install" /proc/cmdline ] && \
         [ -f /run/cos/live_mode ] && \
-        [ -f "/sbin/openrc" ]
+        [ "$(kairos-agent state get kairos.init)" == "openrc" ]
       files:
         - path: /etc/motd
           content: |
