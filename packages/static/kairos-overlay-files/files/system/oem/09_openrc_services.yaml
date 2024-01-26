@@ -3,7 +3,7 @@ stages:
   initramfs:
     - name: "Create OpenRC services"
       if: |
-        [ -f "/sbin/openrc" ]
+        [ "$(kairos-agent state get kairos.init)" == "openrc" ]
       files:
       - path: /etc/init.d/cos-setup-boot
         permissions: 0755
@@ -118,7 +118,7 @@ stages:
         group: 0
     - name: "Enable OpenRC services"
       if: |
-        [ -f "/sbin/openrc" ]
+        [ "$(kairos-agent state get kairos.init)" == "openrc" ]
       commands:
         - mkdir -p /etc/runlevels/default
         - ln -sf ../../init.d/cos-setup-boot /etc/runlevels/default/cos-setup-boot
