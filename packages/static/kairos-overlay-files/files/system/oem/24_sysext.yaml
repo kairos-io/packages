@@ -2,7 +2,7 @@ name: "sysext"
 stages:
   fs.after:
     - name: "Default sysext extensions dirs"
-      if: '[ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ]'
+      if: '[ "$(kairos-agent state get kairos.init)" == "systemd" ]'
       directories:
         - path: /etc/extensions
         - path: /run/extensions
@@ -11,7 +11,7 @@ stages:
         - path: /usr/local/lib/extensions
   initramfs:
     - name: "systemd-sysext initramfs settings"
-      if: '[ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ]'
+      if: '[ "$(kairos-agent state get kairos.init)" == "systemd" ]'
       systemctl:
         enable:
           - systemd-sysext

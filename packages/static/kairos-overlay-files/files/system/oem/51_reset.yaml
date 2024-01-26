@@ -2,7 +2,8 @@ name: "Start reset on tty1"
 stages:
   initramfs:
     - name: "Starts kairos-reset for systemd based systems"
-      if: grep -q "kairos.reset" /proc/cmdline && [ ! -f "/sbin/openrc" ]
+      if: |
+        grep -q "kairos.reset" /proc/cmdline && [ "$(kairos-agent state get kairos.init)" == "systemd" ]
       commands:
         - systemctl disable getty@tty1
         - systemctl stop getty@tty1

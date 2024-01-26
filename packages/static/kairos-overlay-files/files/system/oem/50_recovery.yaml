@@ -3,8 +3,7 @@ stages:
   initramfs:
     - name: "Starts kairos-recovery and generate a temporary pass"
       if: |
-        grep -q "kairos.remote_recovery_mode" /proc/cmdline && \
-        ( [ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] )
+        grep -q "kairos.remote_recovery_mode" /proc/cmdline && [ "$(kairos-agent state get kairos.init)" == "systemd" ]
       commands:
         - systemctl disable getty@tty1
         - systemctl stop getty@tty1

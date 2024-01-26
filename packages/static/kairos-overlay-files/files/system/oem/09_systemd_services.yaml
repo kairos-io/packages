@@ -13,7 +13,7 @@ stages:
         fs.inotify.max_user_watches: 524288
   initramfs:
     - name: "Default systemd config"
-      if: '[ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ]'
+      if: '[ "$(kairos-agent state get kairos.init)" == "systemd" ]'
       systemctl:
         enable:
           - multi-user.target
@@ -34,7 +34,7 @@ stages:
       commands:
       - ssh-keygen -A
     - name: "Create systemd services"
-      if: '[ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ]'
+      if: '[ "$(kairos-agent state get kairos.init)" == "systemd" ]'
       files:
         - path: /etc/systemd/system/cos-setup-boot.service
           permissions: 0644
@@ -123,7 +123,7 @@ stages:
             [Install]
             WantedBy=multi-user.target
     - name: "Enable systemd services"
-      if: '[ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ]'
+      if: '[ "$(kairos-agent state get kairos.init)" == "systemd" ]'
       commands:
         - ln -sf /etc/systemd/system/cos-setup-reconcile.timer /etc/systemd/system/multi-user.target.wants/cos-setup-reconcile.timer
         - ln -sf /etc/systemd/system/cos-setup-fs.service /etc/systemd/system/sysinit.target.wants/cos-setup-fs.service
