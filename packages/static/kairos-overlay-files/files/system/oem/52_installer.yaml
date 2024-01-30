@@ -4,7 +4,8 @@ stages:
     # Start installer if we get the install-mode cmdline and NOT the install-mode-interactive cmdline as we can have both
     # and we dont want to trigger both
     # Works in livecd or uki install mode
-    - if: grep -q "install-mode" /proc/cmdline && grep -vq "install-mode-interactive" && ([ "$(kairos-agent state get boot)" == "livecd_boot" ] || [ -f /run/cos/uki_install_mode ]) && [ "$(kairos-agent state get kairos.init)" == "systemd" ]
+    # TODO: Drop nodepair.enable keyword in Kairos 4.0.0
+    - if: (grep -q "install-mode" /proc/cmdline || grep -q "nodepair.enable" /proc/cmdline ) && grep -vq "install-mode-interactive" && ([ "$(kairos-agent state get boot)" == "livecd_boot" ] || [ -f /run/cos/uki_install_mode ]) && [ "$(kairos-agent state get kairos.init)" == "systemd" ]
       commands:
         - systemctl disable getty@tty1
         - systemctl stop getty@tty1
@@ -12,13 +13,15 @@ stages:
         - systemctl enable kairos
         - systemctl enable kairos-webui
     # Starts installer on boot for openRC based systems
-    - if: grep -q "install-mode" /proc/cmdline && grep -vq "install-mode-interactive" && [ "$(kairos-agent state get kairos.init)" == "openrc" ]
+    # TODO: Drop nodepair.enable keyword in Kairos 4.0.0
+    - if: (grep -q "install-mode" /proc/cmdline || grep -q "nodepair.enable" /proc/cmdline ) && grep -vq "install-mode-interactive" && [ "$(kairos-agent state get kairos.init)" == "openrc" ]
       commands:
         - sed -i -e 's/tty1.*//g' /etc/inittab
         - echo "tty1::respawn:/usr/bin/kairos-agent install tty1" >> /etc/inittab
     # Starts interactive installer on boot for systemd based systems in livecd or uki install mode
+    # TODO: Drop interactive-install keyword in Kairos 4.0.0
     - if: |
-        grep -q "install-mode-interactive" /proc/cmdline && ([ "$(kairos-agent state get boot)" == "livecd_boot" ] || [ -f /run/cos/uki_install_mode ]) && [ "$(kairos-agent state get kairos.init)" == "systemd" ]
+        (grep -q "interactive-install" /proc/cmdline || grep -q "install-mode-interactive" /proc/cmdline) && ([ "$(kairos-agent state get boot)" == "livecd_boot" ] || [ -f /run/cos/uki_install_mode ]) && [ "$(kairos-agent state get kairos.init)" == "systemd" ]
       commands:
         - systemctl stop kairos
         - systemctl disable kairos
@@ -27,7 +30,8 @@ stages:
         - systemctl mask getty@tty1
         - systemctl enable kairos-interactive
     # Starts installer on boot for openRC based systems
-    - if: grep -q "install-mode-interactive" /proc/cmdline && [ "$(kairos-agent state get kairos.init)" == "openrc" ]
+    # TODO: Drop interactive-install keyword in Kairos 4.0.0
+    - if: (grep -q "interactive-install" /proc/cmdline || grep -q "install-mode-interactive" /proc/cmdline) && [ "$(kairos-agent state get kairos.init)" == "openrc" ]
       commands:
         - sed -i -e 's/tty1.*//g' /etc/inittab
         - echo "tty1::respawn:/usr/bin/kairos-agent interactive-install --shell tty1" >> /etc/inittab
