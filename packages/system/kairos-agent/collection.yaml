@@ -1,7 +1,7 @@
 packages:
   - name: "kairos-agent"
     category: "system"
-    version: "2.7.6"
+    version: "2.7.7"
     labels:
       github.repo: "kairos-agent"
       autobump.revdeps: "true"
