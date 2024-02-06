@@ -5,8 +5,6 @@ prelude:
 - mkdir go/src/github.com/{{ ( index .Values.labels "github.owner" ) }}/ -p
 - PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && cd go/src/github.com/{{ ( index .Values.labels "github.owner" ) }}/ && git clone --branch v${PACKAGE_VERSION} https://github.com/{{ ( index .Values.labels "github.owner" ) }}/{{ ( index .Values.labels "github.repo" ) }}.git
 
-env:
-  - GITHUB_ORG=
 steps:
   - pip install pyinstaller
   - pyinstaller go/src/github.com/{{ ( index .Values.labels "github.owner" ) }}/{{ ( index .Values.labels "github.repo" ) }}/src/ukify/ukify.py -F
