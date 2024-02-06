@@ -1,0 +1,6 @@
+name: "ukify"
+category: "system"
+version: "255"
+labels:
+  github.repo: "systemd"
+  github.owner: "systemd"
