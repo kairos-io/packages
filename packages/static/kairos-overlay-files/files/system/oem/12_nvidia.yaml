@@ -11,9 +11,9 @@ stages:
         permissions: 0644
         owner: 0
         group: 0
-      # TODO: This is no longer read. This should be moved to cloud-init file.
       - path: /etc/elemental/config.yaml
         content: |
+          #cloud-config
           cosign: false
           verify: false
           install:
@@ -40,6 +40,7 @@ stages:
         group: 0
       - path: /system/oem/mount.yaml
         content: |
+          #cloud-config
           ## TODO: this is a workaround
           ## The orin packages are writing to /usr/local, which is mounted to COS_PERSISTENT.
           ## We probably should run this in immucore, overlaying the /usr/local of the image to COS_PERSISTENT.
