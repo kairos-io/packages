@@ -20,13 +20,17 @@ jobs:
       uses: tj-actions/changed-files@v42
       with:
         files: packages/**
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: ^1.20
     - name: Validate changed packages bump version
       if: steps.changed-files.outputs.any_changed == 'true'
       env:
         PKG_ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
       run: |
-        echo "One or more package file(s) has changed."
-        echo "List all the files that have changed: $PKG_ALL_CHANGED_FILES"
+        cd tools/bump-version
+        go run main.go $PKG_ALL_CHANGED_FILES
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3.0.0
       with:
