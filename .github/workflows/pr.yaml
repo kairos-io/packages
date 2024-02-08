@@ -20,13 +20,8 @@ jobs:
       uses: tj-actions/changed-files@v42
       with:
         files_yaml: |
-          definition:
-            - packages/**definition.yaml
-            - packages/**collection.yaml
           packages:
             - packages/**
-            - '!packages/**definition.yaml'
-            - '!packages/**collection.yaml'
     - name: Validate changed packages bump version
       if: steps.changed-files-yaml.outputs.packages_any_changed == 'true'
       env:
