@@ -19,13 +19,11 @@ jobs:
       id: changed-files
       uses: tj-actions/changed-files@v42
       with:
-        files_yaml: |
-          packages:
-            - packages/**
+        files: packages/**
     - name: Validate changed packages bump version
-      if: steps.changed-files-yaml.outputs.packages_any_changed == 'true'
+      if: steps.changed-files.outputs.any_changed == 'true'
       env:
-        PKG_ALL_CHANGED_FILES: ${{ steps.changed-files-yaml.outputs.packages_all_changed_files }}
+        PKG_ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
       run: |
         echo "One or more package file(s) has changed."
         echo "List all the files that have changed: $PKG_ALL_CHANGED_FILES"
