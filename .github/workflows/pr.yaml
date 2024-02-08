@@ -23,7 +23,7 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
-        go-version: ^1.23
+        go-version: 1.21.1
     - name: Validate changed packages bump version
       if: steps.changed-files.outputs.any_changed == 'true'
       env:
