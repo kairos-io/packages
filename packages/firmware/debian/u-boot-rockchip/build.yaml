@@ -1,6 +1,5 @@
 image: ubuntu
 
-
 package_dir: /package
 prelude:
 - apt-get update
