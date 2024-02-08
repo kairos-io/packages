@@ -19,7 +19,7 @@ func reduceRelated(file string, files []string) []string {
 	dir := filepath.Dir(file)
 	for _, f := range files {
 		otherDir := filepath.Dir(f)
-		if isDefinitionFile(f) && (strings.Contains(dir, otherDir) || strings.Contains(otherDir, dir)) {
+		if isDefinitionFile(f) && strings.HasPrefix(dir, otherDir) {
 			relatedFiles = append(relatedFiles, f)
 		}
 	}
