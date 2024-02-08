@@ -6,6 +6,26 @@ concurrency:
 on:
   pull_request:
 jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v42
+        with:
+          files: packages/**
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.21.1
+      - name: Validate changed packages bump version
+        if: steps.changed-files.outputs.any_changed == 'true'
+        env:
+          PKG_ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+        run: |
+          cd tools/bump-validator
+          go run main.go $PKG_ALL_CHANGED_FILES
+
   build-arm64:
     runs-on: fast
     env:
@@ -15,22 +35,6 @@ jobs:
     - run: |
         git fetch --prune --unshallow
         mkdir build
-    - name: Get changed files
-      id: changed-files
-      uses: tj-actions/changed-files@v42
-      with:
-        files: packages/**
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: 1.21.1
-    - name: Validate changed packages bump version
-      if: steps.changed-files.outputs.any_changed == 'true'
-      env:
-        PKG_ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
-      run: |
-        cd tools/bump-validator
-        go run main.go $PKG_ALL_CHANGED_FILES
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3.0.0
       with:
@@ -60,6 +64,7 @@ jobs:
         values: values/arm64.yaml
         buildx: true
         platform: linux/arm64
+
   build:
     runs-on: fast
     env:
@@ -69,22 +74,6 @@ jobs:
       - run: |
           git fetch --prune --unshallow
           mkdir build
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v42
-        with:
-          files: packages/**
-      - name: Set up Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: 1.21.1
-      - name: Validate changed packages bump version
-        if: steps.changed-files.outputs.any_changed == 'true'
-        env:
-          PKG_ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
-        run: |
-          cd tools/bump-validator
-          go run main.go $PKG_ALL_CHANGED_FILES
       - name: Download meta 🔧
         uses: luet-lab/luet-github-action@v0.1.2
         with:
