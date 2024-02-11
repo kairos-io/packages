@@ -1,0 +1,9 @@
+packages:
+  - name: "systemd-boot"
+    category: "system"
+    version: "255"
+    image: "fedora:39"
+    labels:
+      github.repo: "systemd"
+      autobump.revdeps: "true"
+      github.owner: "systemd"
