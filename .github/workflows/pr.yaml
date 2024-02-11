@@ -6,6 +6,29 @@ concurrency:
 on:
   pull_request:
 jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v42
+        with:
+          files: packages/**
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.21.1
+      - name: Validate changed packages bump version
+        if: steps.changed-files.outputs.any_changed == 'true'
+        env:
+          PKG_ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+        run: |
+          cd tools/bump-validator
+          go run main.go $PKG_ALL_CHANGED_FILES
+
   build-arm64:
     runs-on: fast
     env:
@@ -44,6 +67,7 @@ jobs:
         values: values/arm64.yaml
         buildx: true
         platform: linux/arm64
+
   build:
     runs-on: fast
     env:
