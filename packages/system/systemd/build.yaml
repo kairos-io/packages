@@ -1,0 +1,27 @@
+image: {{ .Values.image }}
+
+package_dir: /package
+
+prelude:
+  - dnf update -y && dnf install -y gcc meson git ninja-build gperf libpcap libcap libcap-devel cmake libmount-devel python3-jinja2 rsync diffutils python3-pyelftools
+  - mkdir src/ -p
+  - cd src/ && git clone --branch v{{ .Values.version }} https://github.com/systemd/systemd.git
+
+steps:
+  # Minimal systemd build, remove almost everything, we only interested in the efi boot files
+  - cd src/systemd && meson setup build -Dmode=release -Dbootloader=true -Defi=true -Dnss-resolve=disabled -Dlogind=false -Dcoredump=false -Dhomed=disabled -Dfirstboot=false -Dhostnamed=false -Dhibernate=false -Dinitrd=false -Dimportd=false -Dkernel-install=false -Dlocaled=false -Dmachined=false -Dnetworkd=false -Dnss-myhostname=false -Dnss-mymachines=false -Dnss-systemd=false -Doomd=false -Dportabled=false -Dhwdb=false -Dpstore=false -Dquotacheck=false -Drandomseed=false -Drepart=false -Dresolve=false -Drfkill=false -Dsysext=false -Danalyze=false -Dsysupdate=false -Dsysusers=false -Dstoragetm=false -Dtimedated=false -Dtimesyncd=false -Dtmpfiles=false -Duserdb=false -Dvconsole=false -Dxdg-autostart=false -Didn=false -Dpolkit=false -Dnscd=false -Dkmod=false -Ddbus=false -Dglib=false -Dbacklight=false -Dldconfig=false -Dgshadow=false -Dwheel-group=false -Dadm-group=false -Dxkbcommon=false -Dzstd=false -Dlz4=false -Dutmp=false -Dlink-udev-shared=false -Dlink-systemctl-shared=false -Dlink-networkd-shared=false -Dlink-timesyncd-shared=false -Dlink-journalctl-shared=false -Dlink-boot-shared=false -Dlink-portabled-shared=false -Dblkid=false -Denvironment-d=false -Dqrencode=false -Dpwquality=false -Dlibcurl=false -Dfdisk=false -Dlibidn2=false -Dlibiptc=false -Dopenssl=false -Ddns-over-tls=false -Didn=false -Dgnutls=false -Dp11kit=false -Dlibidn=false -Dlibidn2=false -Dgcrypt=false -Dxz=false -Dzlib=false -Dbzip2=false
+  - cd src/systemd && ninja -C build
+  # Artifacts located at src/systemd/build/src/boot/efi/
+  # change the x64 to aa64 for arm64
+  - mkdir -p /package
+{{ if .Values.arch }}
+  {{ if eq .Values.arch "arm64" }}
+  - cp src/systemd/build/src/boot/efi/systemd-bootaa64.efi /package/
+  - cp src/systemd/build/src/boot/efi/linuxaa64.efi.stub /package/
+  - cp src/systemd/build/src/boot/efi/addonaa64.efi.stub /package/
+  {{else}}
+  - cp src/systemd/build/src/boot/efi/systemd-bootx64.efi /package/
+  - cp src/systemd/build/src/boot/efi/linuxx64.efi.stub /package/
+  - cp src/systemd/build/src/boot/efi/addonx64.efi.stub /package/
+  {{end}}
+{{end}}
