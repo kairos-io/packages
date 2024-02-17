@@ -3,7 +3,7 @@ image: {{ .Values.image }}
 package_dir: /package
 
 prelude:
-  - dnf update -y && dnf install -y gcc meson git ninja-build gperf libpcap libcap libcap-devel cmake libmount-devel python3-jinja2 rsync diffutils python3-pyelftools openssl-devel tpm2-* python3-pip
+  - dnf update -y && dnf install -y gcc meson git ninja-build gperf libpcap libcap libcap-devel cmake libmount-devel python3-jinja2 rsync diffutils python3-pyelftools openssl-devel tpm2-* python3-pip python3-cryptography python3-pefile
   - mkdir -p src/
   - PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && cd src/ && git clone --branch v${PACKAGE_VERSION} https://github.com/systemd/systemd.git
 
