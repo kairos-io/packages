@@ -9,7 +9,7 @@ packages:
       github.owner: "systemd"
   - name: "systemd-ukify"
     category: "system"
-    version: "255+1"
+    version: "255+2"
     image: "fedora:39"
     labels:
       github.repo: "systemd"
