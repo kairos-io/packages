@@ -3,7 +3,7 @@ image: {{ .Values.image }}
 package_dir: /package
 
 prelude:
-  - dnf update -y && dnf install -y gcc meson git ninja-build gperf libpcap libcap libcap-devel cmake libmount-devel python3-jinja2 rsync diffutils python3-pyelftools openssl-devel tpm2-*
+  - dnf update -y && dnf install -y gcc meson git ninja-build gperf libpcap libcap libcap-devel cmake libmount-devel python3-jinja2 rsync diffutils python3-pyelftools openssl-devel tpm2-* python3-pip
   - mkdir -p src/
   - PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && cd src/ && git clone --branch v${PACKAGE_VERSION} https://github.com/systemd/systemd.git
 
@@ -41,7 +41,11 @@ steps:
   - cp src/systemd/build/systemd-measure /package/lib64/
   - PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && cp src/systemd/build/src/shared/libsystemd-shared-${PACKAGE_VERSION}-kairos.so /package/usr/lib/systemd/
   # ukify is copied in two places according to upstream, I guess to maintain backwards compatibility
-  - cp src/systemd/build/ukify /package/usr/bin/
-  - cp src/systemd/build/ukify /package/usr/lib/systemd/
+  # use of pyinstaller to create a single binary with all deps bundled
+  - pip install pyinstaller
+  - pyinstaller src/systemd/build/ukify -F
+  - chmod +x /usr/bin/ukify
+  - cp dist/ukify /package/usr/bin/
+  - cp dist/ukify /package/usr/lib/systemd/
 {{end}}
   - ls -ltra /package
