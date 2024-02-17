@@ -30,9 +30,15 @@ steps:
   {{end}}
 {{else if eq .Values.name "systemd-ukify"}}
   - mkdir -p /package/usr/lib/systemd/
+  - mkdir -p /package/usr/lib64/systemd/
+  - mkdir -p /package/lib64
+  - mkdir -p /package/lib
   - mkdir -p /package/usr/bin/
   # ukify calls systemd-measure to measure and sign
   - cp src/systemd/build/systemd-measure /package/usr/lib/systemd/
+  - cp src/systemd/build/systemd-measure /package/usr/lib64/systemd/
+  - cp src/systemd/build/systemd-measure /package/lib/
+  - cp src/systemd/build/systemd-measure /package/lib64/
   - PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && cp src/systemd/build/src/shared/libsystemd-shared-${PACKAGE_VERSION}-kairos.so /package/usr/lib/systemd/
   # ukify is copied in two places according to upstream, I guess to maintain backwards compatibility
   - cp src/systemd/build/ukify /package/usr/bin/
