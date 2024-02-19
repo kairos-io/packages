@@ -1,16 +1,14 @@
 packages:
   - name: "systemd-boot"
     category: "system"
-    version: "255+1"
-    image: "fedora:39"
+    version: "255+3"
     labels:
       github.repo: "systemd"
       autobump.revdeps: "true"
       github.owner: "systemd"
   - name: "systemd-ukify"
     category: "system"
-    version: "255+2"
-    image: "fedora:39"
+    version: "255+3"
     labels:
       github.repo: "systemd"
       autobump.revdeps: "true"

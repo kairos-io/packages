@@ -1,17 +1,25 @@
-image: {{ .Values.image }}
+image: opensuse/leap:15.5
 
 package_dir: /package
 
 prelude:
-  - dnf update -y && dnf install -y gcc meson git ninja-build gperf libpcap libcap libcap-devel cmake libmount-devel python3-jinja2 rsync diffutils python3-pyelftools openssl-devel tpm2-* python3-pip python3-cryptography python3-pefile
+  - zypper ref && zypper in -y gcc13 git ninja gperf libpcap libpcap-devel libcap-devel cmake libmount-devel rsync diffutils openssl-devel tpm2-* python311-pip python311-cryptography
+  - update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 1
   - mkdir -p src/
   - PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && cd src/ && git clone --branch v${PACKAGE_VERSION} https://github.com/systemd/systemd.git
 
 steps:
   # Minimal systemd build, remove almost everything, we only interested in the efi boot files
-  # To get systemd-measure to build we need to set blkid, openssl and bootloader to true
-  # Set also the shared lib name with an appended kairos so we can use it everywhere without overwriting the system one
-  - PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && cd src/systemd && meson setup build -Dmode=release -Dbootloader=true -Defi=true -Dblkid=true -Dopenssl=true -Dshared-lib-tag=${PACKAGE_VERSION}-kairos -Dnss-resolve=disabled -Dlogind=false -Dcoredump=false -Dhomed=disabled -Dfirstboot=false -Dhostnamed=false -Dhibernate=false -Dinitrd=false -Dimportd=false -Dkernel-install=false -Dlocaled=false -Dmachined=false -Dnetworkd=false -Dnss-myhostname=false -Dnss-mymachines=false -Dnss-systemd=false -Doomd=false -Dportabled=false -Dhwdb=false -Dpstore=false -Dquotacheck=false -Drandomseed=false -Drepart=false -Dresolve=false -Drfkill=false -Dsysext=false -Danalyze=false -Dsysupdate=false -Dsysusers=false -Dstoragetm=false -Dtimedated=false -Dtimesyncd=false -Dtmpfiles=false -Duserdb=false -Dvconsole=false -Dxdg-autostart=false -Didn=false -Dpolkit=false -Dnscd=false -Dkmod=false -Ddbus=false -Dglib=false -Dbacklight=false -Dldconfig=false -Dgshadow=false -Dwheel-group=false -Dadm-group=false -Dxkbcommon=false -Dzstd=false -Dlz4=false -Dutmp=false -Dlink-udev-shared=false -Dlink-systemctl-shared=false -Dlink-networkd-shared=false -Dlink-timesyncd-shared=false -Dlink-journalctl-shared=false -Dlink-boot-shared=false -Dlink-portabled-shared=false -Denvironment-d=false -Dqrencode=false -Dpwquality=false -Dlibcurl=false -Dfdisk=false -Dlibidn2=false -Dlibiptc=false -Ddns-over-tls=false -Didn=false -Dgnutls=false -Dp11kit=false -Dlibidn=false -Dlibidn2=false -Dgcrypt=false -Dxz=false -Dzlib=false -Dbzip2=false
+  # To get systemd-measure to build we need to set blkid, openssl and bootloader to true (-Dbootloader=true -Defi=true -Dblkid=true -Dopenssl=true)
+  # To builod ukify we need to set -Dukify=true
+  # Set also the shared lib name with an appended kairos so we can use it everywhere without overwriting the system one (shared-lib-tag)
+  # Set the sbat values to kairos in case we want to use them in the future (-Dsbat-distro="Kairos" -Dsbat-distro-url="kairos.io" -Dsbat-distro-summary="Kairos" -Dsbat-distro-version="kairos-${PACKAGE_VERSION}")
+  # install meson ninja2 pefile pyelftools with pip as there is no package available in leap 15.5
+  # use a requirements.txt file to install the needed python packages specific versions  so we can reuse it on the osbuilder
+  - pip3 install -r ukify-requirements.txt
+  # install dev tools
+  - pip3 install meson ninja2
+  - PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && cd src/systemd && env CC=gcc-13 meson setup build -Dmode=release -Dbootloader=true -Defi=true -Dukify=true -Dblkid=true -Dopenssl=true -Dshared-lib-tag=${PACKAGE_VERSION}-kairos -Dsbat-distro="Kairos" -Dsbat-distro-url="kairos.io" -Dsbat-distro-summary="Kairos" -Dsbat-distro-version="kairos-${PACKAGE_VERSION}" -Ddns-servers='' -Dsysvinit-path= -Dsysvrcnd-path= -Dtpm=false -Dinstall-tests=false -Dnss-resolve=disabled -Dlogind=false -Dcoredump=false -Dhomed=disabled -Dfirstboot=false -Dhostnamed=false -Dhibernate=false -Dinitrd=false -Dimportd=false -Dkernel-install=false -Dlocaled=false -Dmachined=false -Dnetworkd=false -Dnss-myhostname=false -Dnss-mymachines=false -Dnss-systemd=false -Doomd=false -Dportabled=false -Dhwdb=false -Dpstore=false -Dquotacheck=false -Drandomseed=false -Drepart=false -Dresolve=false -Drfkill=false -Dsysext=false -Danalyze=false -Dsysupdate=false -Dsysusers=false -Dstoragetm=false -Dtimedated=false -Dtimesyncd=false -Dtmpfiles=false -Duserdb=false -Dvconsole=false -Dxdg-autostart=false -Didn=false -Dpolkit=false -Dnscd=false -Dkmod=false -Ddbus=false -Dglib=false -Dbacklight=false -Dldconfig=false -Dgshadow=false -Dwheel-group=false -Dadm-group=false -Dxkbcommon=false -Dzstd=false -Dlz4=false -Dutmp=false -Dlink-udev-shared=false -Dlink-systemctl-shared=false -Dlink-networkd-shared=false -Dlink-timesyncd-shared=false -Dlink-journalctl-shared=false -Dlink-boot-shared=false -Dlink-portabled-shared=false -Denvironment-d=false -Dqrencode=false -Dpwquality=false -Dlibcurl=false -Dfdisk=false -Dlibidn2=false -Dlibiptc=false -Ddns-over-tls=false -Didn=false -Dgnutls=false -Dp11kit=false -Dlibidn=false -Dlibidn2=false -Dgcrypt=false -Dxz=false -Dzlib=false -Dbzip2=false
   - cd src/systemd && ninja -C build
 {{if eq .Values.name "systemd-boot"}}
   # Artifacts located at src/systemd/build/src/boot/efi/
@@ -29,6 +37,7 @@ steps:
     {{end}}
   {{end}}
 {{else if eq .Values.name "systemd-ukify"}}
+  - mkdir -p /package/usr/kairos/
   - mkdir -p /package/usr/lib/systemd/
   - mkdir -p /package/usr/lib64/systemd/
   - mkdir -p /package/lib64
@@ -40,14 +49,12 @@ steps:
   - cp src/systemd/build/systemd-measure /package/lib/
   - cp src/systemd/build/systemd-measure /package/lib64/
   - PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && cp src/systemd/build/src/shared/libsystemd-shared-${PACKAGE_VERSION}-kairos.so /package/usr/lib/systemd/
+  - PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && cp src/systemd/build/src/shared/libsystemd-shared-${PACKAGE_VERSION}-kairos.so /package/usr/lib64/systemd/
+  - PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && cp src/systemd/build/src/shared/libsystemd-shared-${PACKAGE_VERSION}-kairos.so /package/lib/
+  - PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && cp src/systemd/build/src/shared/libsystemd-shared-${PACKAGE_VERSION}-kairos.so /package/lib64/
   # ukify is copied in two places according to upstream, I guess to maintain backwards compatibility
-  # use of pyinstaller to create a single binary with all deps bundled
   - src/systemd/build/ukify --version
-  - pip install pyinstaller
-  - pyinstaller src/systemd/build/ukify -F
-  - chmod +x dist/ukify
-  - dist/ukify --version
-  - cp dist/ukify /package/usr/bin/
-  - cp dist/ukify /package/usr/lib/systemd/
+  - cp src/systemd/build/ukify /package/usr/bin/
+  - cp src/systemd/build/ukify /package/usr/lib/systemd/
+  - cp ukify-requirements.txt /package/usr/kairos/ukify-requirements.txt
 {{end}}
-  - ls -ltra /package
