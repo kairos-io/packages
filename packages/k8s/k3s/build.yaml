@@ -32,6 +32,7 @@ steps:
   - rm -rf installer.sh
   - chmod +x /usr/bin/k3s
   - TAG=$INSTALL_K3S_VERSION ./fetch-template.sh
+  - mkdir -p /usr/share/config/kairos/k3s/
   - mv config.toml.tmpl /usr/share/config/kairos/k3s/containerd-config.toml.tmpl
 
 includes:
