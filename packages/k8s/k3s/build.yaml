@@ -32,12 +32,16 @@ steps:
   - rm -rf installer.sh
   - chmod +x /usr/bin/k3s
   - TAG=$INSTALL_K3S_VERSION ./fetch-template.sh
-  - mv config.toml.tmpl /etc/k3s-config.toml.tmpl
+  - mv config.toml.tmpl /usr/share/config/kairos/k3s/containerd-config.toml.tmpl
 
 includes:
 - ^/usr/bin/k3s
-- ^/etc$
-- ^/etc/k3s-config.toml.tmpl$
+- ^/usr$
+- ^/usr/share$
+- ^/usr/share/config$
+- ^/usr/share/config/kairos$
+- ^/usr/share/config/kairos/k3s$
+- ^/usr/share/config/kairos/k3s/containerd-config.toml.tmpl$
 {{ if eq .Values.name "k3s-openrc" }}
 - ^/etc/init.d/$
 - ^/etc/init.d/k3s.*
