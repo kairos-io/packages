@@ -32,10 +32,12 @@ steps:
   - rm -rf installer.sh
   - chmod +x /usr/bin/k3s
   - TAG=$INSTALL_K3S_VERSION ./fetch-template.sh
+  - mv config.toml.tmpl /etc/k3s-config.toml.tmpl
 
 includes:
 - ^/usr/bin/k3s
-- ^config.toml.tmpl
+- ^/etc$
+- ^/etc/k3s-config.toml.tmpl$
 {{ if eq .Values.name "k3s-openrc" }}
 - ^/etc/init.d/$
 - ^/etc/init.d/k3s.*
