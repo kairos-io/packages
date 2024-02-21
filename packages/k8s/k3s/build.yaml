@@ -31,7 +31,7 @@ steps:
   - bash installer.sh agent
   - rm -rf installer.sh
   - chmod +x /usr/bin/k3s
-  - TAG=INSTALL_K3S_VERSION fetch-template.sh
+  - TAG=$INSTALL_K3S_VERSION fetch-template.sh
 
 includes:
 - ^/usr/bin/k3s
