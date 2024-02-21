@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 if [[ -z $TAG ]]; then
   echo "TAG should be set"
   exit 1
@@ -17,7 +19,7 @@ TMPDIR=$(mktemp -d)
 cd $TMPDIR
 echo $TMPDIR
 
-git clone --depth 1 --branch $TAG git@github.com:k3s-io/k3s.git
+git clone --depth 1 --branch $TAG https://github.com/k3s-io/k3s.git
 cd $TMPDIR/k3s
 
 cat << EOF > main.go
