@@ -3,7 +3,7 @@ package_dir: /package
 {{if eq .Values.name "systemd-boot"}}
 image: fedora:39
 prelude:
-    - dnf install -y systemd-boot
+    - dnf install -y systemd-boot curl
 steps:
   # Artifacts located at src/systemd/build/src/boot/efi/
   # change the x64 to aa64 for arm64
@@ -13,10 +13,12 @@ steps:
   - cp /usr/lib/systemd/boot/efi/systemd-bootaa64.efi /package/usr/kairos/
   - cp /usr/lib/systemd/boot/efi/linuxaa64.efi.stub /package/usr/kairos/
   - cp /usr/lib/systemd/boot/efi/addonaa64.efi.stub /package/usr/kairos/
+  - curl -L https://github.com/pbatard/efifs/releases/download/v1.9/ext2_aa64.efi -o /package/usr/kairos/ext2_aa64.efi
     {{else}}
   - cp /usr/lib/systemd/boot/efi/systemd-bootx64.efi /package/usr/kairos/
   - cp /usr/lib/systemd/boot/efi/linuxx64.efi.stub /package/usr/kairos/
   - cp /usr/lib/systemd/boot/efi/addonx64.efi.stub /package/usr/kairos/
+  - curl -L https://github.com/pbatard/efifs/releases/download/v1.9/ext2_x64.efi -o /package/usr/kairos/ext2_x64.efi
     {{end}}
 {{end}}
 {{else if eq .Values.name "systemd-ukify"}}
