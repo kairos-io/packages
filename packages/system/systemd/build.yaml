@@ -3,24 +3,31 @@ package_dir: /package
 {{if eq .Values.name "systemd-boot"}}
 image: fedora:39
 prelude:
-    - dnf install -y systemd-boot curl
+    - dnf install -y systemd-boot curl git make python libuuid-devel gcc g++ nasm gcc-aarch64-linux-gnu
+    - export
 steps:
   # Artifacts located at src/systemd/build/src/boot/efi/
   # change the x64 to aa64 for arm64
   - mkdir -p /package/usr/kairos/
-    {{ if .Values.arch }}
+  {{ if .Values.arch }}
     {{ if eq .Values.arch "arm64" }}
   - cp /usr/lib/systemd/boot/efi/systemd-bootaa64.efi /package/usr/kairos/
   - cp /usr/lib/systemd/boot/efi/linuxaa64.efi.stub /package/usr/kairos/
   - cp /usr/lib/systemd/boot/efi/addonaa64.efi.stub /package/usr/kairos/
+  # Im not able to compile for arm64
   - curl -L https://github.com/pbatard/efifs/releases/download/v1.9/ext2_aa64.efi -o /package/usr/kairos/ext2_aa64.efi
     {{else}}
+  - git clone --recurse-submodules https://github.com/tianocore/edk2.git
+  - cd edk2 && make -C BaseTools
+  - cd edk2 && git clone --recurse-submodules https://github.com/pbatard/efifs.git EfiFsPkg
+  - cd edk2/EfiFsPkg/grub && git apply ../0001-GRUB-fixes.patch
+  - cd edk2 && source ./edksetup.sh --reconfig && ./EfiFsPkg/set_grub_cpu.sh X64 && build -a X64 -b RELEASE -t GCC5 -p EfiFsPkg/EfiFsPkg.dsc
   - cp /usr/lib/systemd/boot/efi/systemd-bootx64.efi /package/usr/kairos/
   - cp /usr/lib/systemd/boot/efi/linuxx64.efi.stub /package/usr/kairos/
   - cp /usr/lib/systemd/boot/efi/addonx64.efi.stub /package/usr/kairos/
-  - curl -L https://github.com/pbatard/efifs/releases/download/v1.9/ext2_x64.efi -o /package/usr/kairos/ext2_x64.efi
+  - cp edk2/Build/EfiFs/RELEASE_GCC5/X64/ext2.efi /package/usr/kairos/ext2_x64.efi
     {{end}}
-{{end}}
+  {{end}}
 {{else if eq .Values.name "systemd-ukify"}}
 
 image: opensuse/leap:15.5
