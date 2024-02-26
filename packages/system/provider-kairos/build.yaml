@@ -1,10 +1,13 @@
-image: golang:1.20
+requires:
+- name: "toolchain-go-ubuntu"
+  category: "development"
+  version: ">=0"
 env:
   - CGO_ENABLED=0
-  - LDFLAGS="-s -w -X 'github.com/kairos-io/provider-kairos/v2/internal/cli.VERSION={{ .Values.version }}'"
+  - PACKAGE_VERSION={{ .Values.tag }}
+  - LDFLAGS="-s -w -X 'github.com/kairos-io/provider-kairos/v2/internal/cli.VERSION={{ .Values.tag }}'"
 prelude:
-- apt-get update
-- apt-get install -y git
+- apt-get update && apt-get install -y git
 - git clone https://github.com/kairos-io/provider-kairos
 - |
     PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && \
@@ -13,6 +16,7 @@ steps:
 - mkdir -p /system/providers
 - cd provider-kairos && go build -ldflags "${LDFLAGS}" -o agent-provider-kairos
 - mv provider-kairos/agent-provider-kairos /system/providers/agent-provider-kairos
+- upx -1 /system/providers/agent-provider-kairos
 - ln -s /system/providers/agent-provider-kairos /usr/bin/kairos
 
 includes:
