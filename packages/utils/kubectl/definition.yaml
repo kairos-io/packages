@@ -1,6 +1,7 @@
 name: kubectl
 category: container
-version: "1.29.1"
+version: "1.29.1+1"
+tag: "1.29.1"
 arch: "amd64"
 labels:
   github.repo: "kubectl"

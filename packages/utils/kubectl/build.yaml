@@ -1,12 +1,13 @@
 requires:
 - category: "development"
-  name: "toolchain-go"
+  name: "toolchain-go-ubuntu"
   version: ">=0"
 
 package_dir: /kubectl
+env:
+  - PACKAGE_VERSION={{ .Values.tag }}
 
 steps:
-- apk add bash
 - mkdir -p /kubectl/usr/bin
 - PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && curl -LO "https://dl.k8s.io/release/v$PACKAGE_VERSION/bin/linux/{{.Values.arch}}/kubectl"
 - PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && curl -LO "https://dl.k8s.io/release/v$PACKAGE_VERSION/bin/linux/{{.Values.arch}}/kubectl.sha256"
@@ -16,3 +17,4 @@ steps:
 - /bin/bash -c 'echo "$(<kubectl.sha256)  kubectl" | sha256sum -c'
 - mv kubectl /kubectl/usr/bin
 - chmod +x /kubectl/usr/bin/kubectl
+- upx -1 /kubectl/usr/bin/kubectl
