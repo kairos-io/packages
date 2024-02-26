@@ -1,10 +1,11 @@
 requires:
-- name: "toolchain-go"
+- name: "toolchain-go-ubuntu"
   category: "development"
   version: ">=0"
 env:
 - PATH=$PATH:/usr/local/go/bin
 - CGO_ENABLED=0
+- PACKAGE_VERSION={{ .Values.tag }}
 prelude:
 - |
    PACKAGE_VERSION=v${PACKAGE_VERSION%\-*} && \
@@ -13,6 +14,7 @@ steps:
 - |
    cd nerdctl && \
    make binaries && \
-   make BINDIR=/usr/bin install
+   make BINDIR=/usr/bin install && \
+   upx -1 /usr/bin/nerdctl
 includes:
 - /usr/bin/nerdctl

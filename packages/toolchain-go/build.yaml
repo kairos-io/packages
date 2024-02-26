@@ -1,11 +1,19 @@
 {{ if .Values.variant }}
-image: "golang:{{.Values.version}}-{{.Values.variant}}"
+image: "golang:{{.Values.tag}}-{{.Values.variant}}"
 {{ else }}
-image: "golang:{{.Values.version}}"
+image: "golang:{{.Values.tag}}"
 {{ end }}
 
-{{ if eq .Values.variant "alpine" }}
 prelude:
+{{ if eq .Values.variant "alpine" }}
 - apk update
 - apk add curl make git bash
+{{ end }}
+{{ if eq .Values.variant "bookworm" }}
+- apt-get update && apt-get install -y curl xz-utils
+- curl -LO https://github.com/upx/upx/releases/download/v4.2.2/upx-4.2.2-{{ .Values.arch }}_linux.tar.xz
+- tar -xvf upx-4.2.2-{{ .Values.arch }}_linux.tar.xz
+- mv upx-4.2.2-{{ .Values.arch }}_linux/upx /usr/bin/
+- rm -rf upx-4.2.2-{{ .Values.arch }}_linux
+- chmod +x /usr/bin/upx
 {{ end }}

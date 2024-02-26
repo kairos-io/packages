@@ -1,10 +1,11 @@
 requires:
-- name: "toolchain-go"
+- name: "toolchain-go-ubuntu"
   category: "development"
   version: ">=0"
 env:
 - PATH=$PATH:/usr/local/go/bin
 - CGO_ENABLED=0
+- PACKAGE_VERSION={{ .Values.tag }}
 prelude:
 - |
    PACKAGE_VERSION=v${PACKAGE_VERSION%\-*} && \
@@ -13,6 +14,8 @@ steps:
 - |
    cd k9s && \
    make build && \
-   cp execs/k9s /usr/bin
+   cp execs/k9s /usr/bin && \
+   upx /usr/bin/k9s
+
 includes:
 - /usr/bin/k9s
