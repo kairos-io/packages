@@ -18,7 +18,7 @@ packages:
   - name: toolchain-go-ubuntu
     variant: "bookworm"
     category: development
-    version: "1.21.7+1"
+    version: "1.21.7+2"
     tag: "1.21.7"
     hidden: true
     labels:
