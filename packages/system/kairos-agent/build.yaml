@@ -43,6 +43,7 @@ steps:
     PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
     cd /go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && \
     go build -ldflags="${LDFLAGS}" -o /usr/bin/{{ .Values.name }}
+  - upx -1 /usr/bin/{{.Values.name}}
   - chmod +x /usr/bin/{{.Values.name}}
 {{if or (eq .Values.category "fips") (eq .Values.category "fips-static")}}
   {{ if .Values.arch }}
