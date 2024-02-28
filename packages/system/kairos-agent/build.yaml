@@ -15,15 +15,13 @@ prelude:
   - PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && cd /go/src/github.com/${GITHUB_ORG}/ && git clone --branch v${PACKAGE_VERSION} https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
 env:
   - GITHUB_ORG={{ ( index .Values.labels "github.owner" ) }}
-  - HUGO_VERSION=0.110.0
+  - HUGO_VERSION=0.113.0
+  - LDFLAGS="-s -w -X github.com/kairos-io/kairos-agent/v2/internal/common.VERSION=v${PACKAGE_VERSION} {{with .Values.ldflags}}{{.}}{{end}}"
 {{if or (eq .Values.category "fips") (eq .Values.category "fips-static")}}
   - CGO_ENABLED=1
   - GOEXPERIMENT=boringcrypto
-  # Because we don't track the compiled-with version on the agent we need to keep the symbols in order to checks FIPS compliance
-  - LDFLAGS="-w -X github.com/kairos-io/kairos-agent/v2/internal/common.VERSION=v${PACKAGE_VERSION} {{with .Values.ldflags}}{{.}}{{end}}"
 {{else}}
   - CGO_ENABLED=0
-  - LDFLAGS="-s -w -X github.com/kairos-io/kairos-agent/v2/internal/common.VERSION=v${PACKAGE_VERSION} {{with .Values.ldflags}}{{.}}{{end}}"
 {{end}}
 steps:
   - |
@@ -35,7 +33,7 @@ steps:
 {{if or (eq .Values.category "fips") (eq .Values.category "fips-static")}}
   {{ if .Values.arch }}
     {{ if eq .Values.arch "amd64" }}
-  - go tool nm /usr/bin/{{.Values.name}} | grep -i "FIPS_mode"
+  - /usr/bin/{{.Values.name}} version --long | grep -i "boringcrypto"
     {{end}}
   {{end}}
 {{end}}
