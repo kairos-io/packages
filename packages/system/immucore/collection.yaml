@@ -1,7 +1,7 @@
 packages:
   - name: "immucore"
     category: "system"
-    version: "0.1.17"
+    version: "0.1.18"
     labels:
       github.repo: "immucore"
       autobump.revdeps: "true"
