@@ -1,7 +1,7 @@
 packages:
   - name: k3s-openrc
     category: k8s
-    version: "1.29.0+2"
+    version: "1.29.0+4"
     k3s_version: "2"
     labels:
       github.owner: "k3s-io"
@@ -14,7 +14,7 @@ packages:
 
   - name: k3s-openrc
     category: k8s
-    version: "1.28.5+2"
+    version: "1.28.5+4"
     k3s_version: "2"
     labels:
       github.owner: "k3s-io"
@@ -27,7 +27,7 @@ packages:
 
   - name: k3s-openrc
     category: k8s
-    version: "1.27.9+2"
+    version: "1.27.9+4"
     k3s_version: "2"
     labels:
       github.owner: "k3s-io"
@@ -40,7 +40,7 @@ packages:
 
   - name: k3s-systemd
     category: k8s
-    version: "1.29.0+3"
+    version: "1.29.0+4"
     k3s_version: "2"
     labels:
       github.owner: "k3s-io"
@@ -53,7 +53,7 @@ packages:
 
   - name: k3s-systemd
     category: k8s
-    version: "1.28.5+3"
+    version: "1.28.5+4"
     k3s_version: "2"
     labels:
       github.owner: "k3s-io"
@@ -66,7 +66,7 @@ packages:
 
   - name: k3s-systemd
     category: k8s
-    version: "1.27.9+3"
+    version: "1.27.9+4"
     k3s_version: "2"
     labels:
       github.owner: "k3s-io"
