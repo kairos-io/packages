@@ -3,7 +3,7 @@ packages:
     binary_name: kcrypt-discovery-challenger
     category: system
     live: "yes"
-    version: "0.7.0+1"
+    version: "0.7.0"
     labels:
       github.repo: "kcrypt-challenger"
       github.owner: "kairos-io"
@@ -29,10 +29,10 @@ packages:
     #category: fips-static
     #live: "yes"
     #version: "0.5.0"
-      #labels:
-      #github.repo: "kcrypt-challenger"
+    #labels:
+    #github.repo: "kcrypt-challenger"
     #github.owner: "kairos-io"
-      #uri:
+    #uri:
     #- https://github.com/kairos-io/kcrypt-challenger
     #license: "Apache License v2"
     #description: "Cloud native guardian for persistent data in the edge"
