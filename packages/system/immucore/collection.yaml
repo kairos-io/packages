@@ -1,7 +1,7 @@
 packages:
   - name: "immucore"
     category: "system"
-    version: "0.1.21"
+    version: "0.1.21+1"
     labels:
       github.repo: "immucore"
       autobump.revdeps: "true"
@@ -12,7 +12,7 @@ packages:
     description: "The Kairos immutability management interface"
   - name: "immucore"
     category: "fips"
-    version: "0.1.21"
+    version: "0.1.21+1"
     labels:
       github.repo: "immucore"
       autobump.revdeps: "true"
@@ -21,16 +21,3 @@ packages:
       - https://github.com/kairos-io/immucore
     license: "Apache License v2"
     description: "The Kairos immutability management interface"
-    # doesnt build so disable for now
-#- name: "immucore"
-#category: "fips-static"
-#ldflags: "-linkmode external -extldflags -static"
-#version: "0.1.6"
-#labels:
-#  github.repo: "immucore"
-#  autobump.revdeps: "true"
-#  github.owner: "kairos-io"
-#uri:
-#  - https://github.com/kairos-io/immucore
-#license: "Apache License v2"
-#description: "The Kairos immutability management interface"

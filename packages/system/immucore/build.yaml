@@ -34,5 +34,11 @@ steps:
 {{if or (eq .Values.category "fips") (eq .Values.category "fips-static")}}
   - /usr/bin/{{.Values.name}} version | grep -i boringcrypto
 {{end}}
+  - mkdir -p /usr/lib/dracut/modules.d
+  - mkdir -p /etc/dracut.conf.d/
+  - cp -r {{.Values.name}}/dracut/28immucore /usr/lib/dracut/modules.d/28immucore
+  - cp {{.Values.name}}/dracut/10-immucore.conf /etc/dracut.conf.d/10-immucore.conf
 includes:
   - /usr/bin/{{.Values.name}}
+  - /usr/lib/dracut/modules.d/28immucore
+  - /etc/dracut.conf.d/10-immucore.conf
