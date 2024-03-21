@@ -17,3 +17,6 @@ prelude:
 - rm -rf upx-4.2.2-{{ .Values.arch }}_linux
 - chmod +x /usr/bin/upx
 {{ end }}
+{{ if eq .Values.variant "bullseye" }}
+- apt-get update && apt-get install -y curl xz-utils upx
+{{ end }}

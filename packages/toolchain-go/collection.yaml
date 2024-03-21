@@ -67,12 +67,6 @@ packages:
     version: "1.19.10"
     tag: "1.19.10"
     hidden: true
-  - name: toolchain-go-ubuntu
-    variant: "bookworm"
-    category: fips
-    version: "1.19.10"
-    tag: "1.19.10"
-    hidden: true
   - name: toolchain-go
     category: fips
     variant: "alpine"
@@ -80,8 +74,8 @@ packages:
     tag: "1.19.10"
     hidden: true
   - name: toolchain-go-ubuntu
-    variant: "bookworm"
+    variant: "bullseye"
     category: fips
-    version: "1.19.10"
+    version: "1.19.10+1"
     tag: "1.19.10"
     hidden: true
