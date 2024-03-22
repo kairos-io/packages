@@ -3,7 +3,7 @@ stages:
   initramfs:
     - name: "Starts kairos-reset for systemd based systems"
       if: |
-        grep -q "kairos.reset" /proc/cmdline && \
+        (grep -q "kairos.reset" /proc/cmdline || [ -f /run/cos/autoreset_mode ]) && \
         ( [ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] )
       commands:
         - systemctl disable getty@tty1
