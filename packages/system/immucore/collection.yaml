@@ -23,7 +23,7 @@ packages:
     description: "The Kairos immutability management interface"
   - name: "immucore"
     category: "system"
-    version: "0.1.17-1"
+    version: "0.1.17-2"
     labels:
       github.repo: "immucore"
       autobump.revdeps: "true"
