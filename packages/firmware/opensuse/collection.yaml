@@ -52,7 +52,7 @@ packages:
       package.checksum: "022aaea609c6f4503c46a9b72203e60220bd2a9792ca413f55b1e1e6736626781f89ed20a18e33fdafd0ffb0c7bd1a405deae87fb295ab6ef3adb4dd88ece6f1"
   - name: "raspberrypi-firmware-dt"
     category: "firmware"
-    version: "2023.11.21-2.1"
+    version: "2023.11.21-3.3"
     labels:
       autobump.strategy: "custom"
       autobump.string_replace: '{ "prefix": "" }'
@@ -64,5 +64,5 @@ packages:
       # We do assume that checksum is sha256
       autobump.checksum_hook: |
         curl -s -L https://download.opensuse.org/ports/aarch64/tumbleweed/repo/oss/$(curl -s -L https://download.opensuse.org/ports/aarch64/tumbleweed/repo/oss/repodata/repomd.xml | dasel -r xml 'repomd.data.[0].location.-href') | zstd -d - | dasel -r xml -w json | jq '.metadata.package[] | select(.name=="raspberrypi-firmware-dt") | select(.arch!="src").checksum."#text"' -r | tail -n1
-      package.version: "2023.11.21-2.1"
-      package.checksum: "36539b4b9270139fb313971e8c7851f3015fcc87f5a271f20a0cee92f4ff3f0ceeb620dd847f8e38469d3c216635c0d492bb553e44bfb41b74ea8a83850e51d0"
+      package.version: "2023.11.21-3.3"
+      package.checksum: "efbe401a3e2fdec4fb73d59ebfac9175f933b8e74416cdf5867eae3b04cbb3fff07ba8fa2d0b2782ae607a82df2f465fe210334780cf19d7bc3ca5c90c49811b"
