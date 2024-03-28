@@ -23,6 +23,30 @@ packages:
       - https://github.com/kairos-io/kcrypt-challenger
     license: "Apache License v2"
     description: "Cloud native guardian for persistent data in the edge"
+  - name: kcrypt-challenger
+    binary_name: kcrypt-discovery-challenger
+    category: system
+    live: "yes"
+    version: "0.6.0+cve1"
+    labels:
+      github.repo: "kcrypt-challenger"
+      github.owner: "kairos-io"
+    uri:
+      - https://github.com/kairos-io/kcrypt-challenger
+    license: "Apache License v2"
+    description: "Cloud native guardian for persistent data in the edge"
+  - name: kcrypt-challenger
+    binary_name: kcrypt-discovery-challenger
+    category: fips
+    live: "yes"
+    version: "0.6.0+cve1"
+    labels:
+      github.repo: "kcrypt-challenger"
+      github.owner: "kairos-io"
+    uri:
+      - https://github.com/kairos-io/kcrypt-challenger
+    license: "Apache License v2"
+    description: "Cloud native guardian for persistent data in the edge"
     #- name: kcrypt-challenger
     #binary_name: kcrypt-discovery-challenger
     #ldflags: "-linkmode external -extldflags -static"

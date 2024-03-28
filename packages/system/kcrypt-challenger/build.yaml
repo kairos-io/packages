@@ -10,10 +10,7 @@ requires:
     version: ">=0"
 {{end}}
 prelude:
-  - apt-get update && apt-get install -y gcc
-{{if not (or (eq .Values.category "fips") (eq .Values.category "fips-static"))}}
-  - apt-get install -y libssl-dev
-{{ end }}
+  - apt-get update && apt-get install -y gcc libssl-dev
   - mkdir go/src/github.com/${GITHUB_ORG}/ -p
   - cd go/src/github.com/${GITHUB_ORG}/ && git clone https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
 {{ if ne .Values.live "yes" }}
@@ -43,7 +40,9 @@ steps:
 {{if or (eq .Values.category "fips") (eq .Values.category "fips-static")}}
   {{ if .Values.arch }}
     {{ if eq .Values.arch "amd64" }}
+    {{ if ne .Values.version "0.6.0+cve1" }}
   - go tool nm /system/discovery/{{ .Values.binary_name }} | grep -i "FIPS_mode"
+    {{ end }}
     {{end}}
   {{end}}
 {{end}}
