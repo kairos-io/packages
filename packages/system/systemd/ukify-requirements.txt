@@ -1,5 +1,5 @@
 cffi==1.15.1
 cryptography==41.0.7
 pefile==2023.2.7
-pycparser==2.21
+pycparser==2.22
 pyelftools==0.30
