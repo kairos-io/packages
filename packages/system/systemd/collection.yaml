@@ -1,14 +1,14 @@
 packages:
   - name: "systemd-boot"
     category: "system"
-    version: "255+4"
+    version: "255-5"
     labels:
       github.repo: "systemd"
       autobump.revdeps: "true"
       github.owner: "systemd"
   - name: "systemd-ukify"
     category: "system"
-    version: "255+3"
+    version: "255-5"
     labels:
       github.repo: "systemd"
       autobump.revdeps: "true"

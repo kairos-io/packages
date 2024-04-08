@@ -27,7 +27,7 @@ prelude:
   - zypper ref && zypper in -y gcc13 git ninja gperf libpcap libpcap-devel libcap-devel cmake libmount-devel rsync diffutils openssl-devel tpm2-* python311-pip python311-cryptography
   - update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 1
   - mkdir -p src/
-  - PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && cd src/ && git clone --branch v${PACKAGE_VERSION} https://github.com/systemd/systemd.git
+  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && cd src/ && git clone --branch v${PACKAGE_VERSION} https://github.com/systemd/systemd.git
 
 steps:
   # Minimal systemd build, remove almost everything, we only interested in the efi boot files
@@ -40,7 +40,7 @@ steps:
   - pip3 install -r ukify-requirements.txt
   # install dev tools
   - pip3 install meson ninja2
-  - PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && cd src/systemd && env CC=gcc-13 meson setup build -Dmode=release -Dbootloader=true -Defi=true -Dukify=true -Dblkid=true -Dopenssl=true -Dshared-lib-tag=${PACKAGE_VERSION}-kairos -Dsbat-distro="Kairos" -Dsbat-distro-url="kairos.io" -Dsbat-distro-summary="Kairos" -Dsbat-distro-version="kairos-${PACKAGE_VERSION}" -Ddns-servers='' -Dsysvinit-path= -Dsysvrcnd-path= -Dtpm=false -Dinstall-tests=false -Dnss-resolve=disabled -Dlogind=false -Dcoredump=false -Dhomed=disabled -Dfirstboot=false -Dhostnamed=false -Dhibernate=false -Dinitrd=false -Dimportd=false -Dkernel-install=false -Dlocaled=false -Dmachined=false -Dnetworkd=false -Dnss-myhostname=false -Dnss-mymachines=false -Dnss-systemd=false -Doomd=false -Dportabled=false -Dhwdb=false -Dpstore=false -Dquotacheck=false -Drandomseed=false -Drepart=false -Dresolve=false -Drfkill=false -Dsysext=false -Danalyze=false -Dsysupdate=false -Dsysusers=false -Dstoragetm=false -Dtimedated=false -Dtimesyncd=false -Dtmpfiles=false -Duserdb=false -Dvconsole=false -Dxdg-autostart=false -Didn=false -Dpolkit=false -Dnscd=false -Dkmod=false -Ddbus=false -Dglib=false -Dbacklight=false -Dldconfig=false -Dgshadow=false -Dwheel-group=false -Dadm-group=false -Dxkbcommon=false -Dzstd=false -Dlz4=false -Dutmp=false -Dlink-udev-shared=false -Dlink-systemctl-shared=false -Dlink-networkd-shared=false -Dlink-timesyncd-shared=false -Dlink-journalctl-shared=false -Dlink-boot-shared=false -Dlink-portabled-shared=false -Denvironment-d=false -Dqrencode=false -Dpwquality=false -Dlibcurl=false -Dfdisk=false -Dlibidn2=false -Dlibiptc=false -Ddns-over-tls=false -Didn=false -Dgnutls=false -Dp11kit=false -Dlibidn=false -Dlibidn2=false -Dgcrypt=false -Dxz=false -Dzlib=false -Dbzip2=false
+  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && cd src/systemd && env CC=gcc-13 meson setup build -Dmode=release -Dbootloader=true -Defi=true -Dukify=true -Dblkid=true -Dopenssl=true -Dshared-lib-tag=${PACKAGE_VERSION}-kairos -Dsbat-distro="Kairos" -Dsbat-distro-url="kairos.io" -Dsbat-distro-summary="Kairos" -Dsbat-distro-version="kairos-${PACKAGE_VERSION}" -Ddns-servers='' -Dsysvinit-path= -Dsysvrcnd-path= -Dtpm=false -Dinstall-tests=false -Dnss-resolve=disabled -Dlogind=false -Dcoredump=false -Dhomed=disabled -Dfirstboot=false -Dhostnamed=false -Dhibernate=false -Dinitrd=false -Dimportd=false -Dkernel-install=false -Dlocaled=false -Dmachined=false -Dnetworkd=false -Dnss-myhostname=false -Dnss-mymachines=false -Dnss-systemd=false -Doomd=false -Dportabled=false -Dhwdb=false -Dpstore=false -Dquotacheck=false -Drandomseed=false -Drepart=false -Dresolve=false -Drfkill=false -Dsysext=false -Danalyze=false -Dsysupdate=false -Dsysusers=false -Dstoragetm=false -Dtimedated=false -Dtimesyncd=false -Dtmpfiles=false -Duserdb=false -Dvconsole=false -Dxdg-autostart=false -Didn=false -Dpolkit=false -Dnscd=false -Dkmod=false -Ddbus=false -Dglib=false -Dbacklight=false -Dldconfig=false -Dgshadow=false -Dwheel-group=false -Dadm-group=false -Dxkbcommon=false -Dzstd=false -Dlz4=false -Dutmp=false -Dlink-udev-shared=false -Dlink-systemctl-shared=false -Dlink-networkd-shared=false -Dlink-timesyncd-shared=false -Dlink-journalctl-shared=false -Dlink-boot-shared=false -Dlink-portabled-shared=false -Denvironment-d=false -Dqrencode=false -Dpwquality=false -Dlibcurl=false -Dfdisk=false -Dlibidn2=false -Dlibiptc=false -Ddns-over-tls=false -Didn=false -Dgnutls=false -Dp11kit=false -Dlibidn=false -Dlibidn2=false -Dgcrypt=false -Dxz=false -Dzlib=false -Dbzip2=false
   - cd src/systemd && ninja -C build
   - mkdir -p /package/usr/kairos/
   - mkdir -p /package/usr/lib/systemd/
@@ -53,10 +53,10 @@ steps:
   - cp src/systemd/build/systemd-measure /package/usr/lib64/systemd/
   - cp src/systemd/build/systemd-measure /package/lib/
   - cp src/systemd/build/systemd-measure /package/lib64/
-  - PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && cp src/systemd/build/src/shared/libsystemd-shared-${PACKAGE_VERSION}-kairos.so /package/usr/lib/systemd/
-  - PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && cp src/systemd/build/src/shared/libsystemd-shared-${PACKAGE_VERSION}-kairos.so /package/usr/lib64/systemd/
-  - PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && cp src/systemd/build/src/shared/libsystemd-shared-${PACKAGE_VERSION}-kairos.so /package/lib/
-  - PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && cp src/systemd/build/src/shared/libsystemd-shared-${PACKAGE_VERSION}-kairos.so /package/lib64/
+  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && cp src/systemd/build/src/shared/libsystemd-shared-${PACKAGE_VERSION}-kairos.so /package/usr/lib/systemd/
+  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && cp src/systemd/build/src/shared/libsystemd-shared-${PACKAGE_VERSION}-kairos.so /package/usr/lib64/systemd/
+  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && cp src/systemd/build/src/shared/libsystemd-shared-${PACKAGE_VERSION}-kairos.so /package/lib/
+  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && cp src/systemd/build/src/shared/libsystemd-shared-${PACKAGE_VERSION}-kairos.so /package/lib64/
   # ukify is copied in two places according to upstream, I guess to maintain backwards compatibility
   - src/systemd/build/ukify --version
   - cp src/systemd/build/ukify /package/usr/bin/
