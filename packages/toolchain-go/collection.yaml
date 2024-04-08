@@ -2,7 +2,7 @@ packages:
   - name: toolchain-go
     category: development
     variant: "alpine"
-    version: "1.21.6"
+    version: "1.22.2"
     tag: "1.21.6"
     hidden: true
     labels:
@@ -14,11 +14,11 @@ packages:
         curl -s -L "https://go.dev/dl/?mode=json" |jq -r '.[0].version'| sed 's/go//g'
       autobump.version_hook: |
         curl -s -L "https://go.dev/dl/?mode=json" |jq -r '.[0].version'| sed 's/go//g'
-      package.version: "1.21.6"
+      package.version: "1.22.2"
   - name: toolchain-go-ubuntu
     variant: "bookworm"
     category: development
-    version: "1.21.7+2"
+    version: "1.22.2"
     tag: "1.21.7"
     hidden: true
     labels:
@@ -30,7 +30,7 @@ packages:
         curl -s -L "https://go.dev/dl/?mode=json" |jq -r '.[0].version'| sed 's/go//g'
       autobump.version_hook: |
         curl -s -L "https://go.dev/dl/?mode=json" |jq -r '.[0].version'| sed 's/go//g'
-      package.version: "1.21.7"
+      package.version: "1.22.2"
   - name: toolchain-go
     category: development
     variant: "alpine"
@@ -67,12 +67,6 @@ packages:
     version: "1.19.10"
     tag: "1.19.10"
     hidden: true
-  - name: toolchain-go-ubuntu
-    variant: "bookworm"
-    category: fips
-    version: "1.19.10"
-    tag: "1.19.10"
-    hidden: true
   - name: toolchain-go
     category: fips
     variant: "alpine"
@@ -80,8 +74,8 @@ packages:
     tag: "1.19.10"
     hidden: true
   - name: toolchain-go-ubuntu
-    variant: "bookworm"
+    variant: "bullseye"
     category: fips
-    version: "1.19.10"
+    version: "1.19.10+1"
     tag: "1.19.10"
     hidden: true

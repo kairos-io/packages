@@ -1,17 +1,17 @@
 packages:
   - name: k3s-openrc
     category: k8s
-    version: "1.29.0+4"
+    version: "1.29.3"
     k3s_version: "2"
     labels:
       github.owner: "k3s-io"
       github.repo: "k3s"
       autobump.sed_script: 's/\+k3s1//g'
+      autobump.skip_if_contains: '["rc"]'
     uri:
       - https://github.com/k3s-io/k3s
     license: "APL-2"
     description: " Lightweight Kubernetes "
-
   - name: k3s-openrc
     category: k8s
     version: "1.28.5+4"
@@ -20,11 +20,11 @@ packages:
       github.owner: "k3s-io"
       github.repo: "k3s"
       autobump.sed_script: 's/\+k3s1//g'
+      autobump.skip_if_contains: '["rc"]'
     uri:
       - https://github.com/k3s-io/k3s
     license: "APL-2"
     description: " Lightweight Kubernetes "
-
   - name: k3s-openrc
     category: k8s
     version: "1.27.9+4"
@@ -33,24 +33,24 @@ packages:
       github.owner: "k3s-io"
       github.repo: "k3s"
       autobump.sed_script: 's/\+k3s1//g'
+      autobump.skip_if_contains: '["rc"]'
     uri:
       - https://github.com/k3s-io/k3s
     license: "APL-2"
     description: " Lightweight Kubernetes "
-
   - name: k3s-systemd
     category: k8s
-    version: "1.29.0+4"
+    version: "1.29.3"
     k3s_version: "2"
     labels:
       github.owner: "k3s-io"
       github.repo: "k3s"
       autobump.sed_script: 's/\+k3s1//g'
+      autobump.skip_if_contains: '["rc"]'
     uri:
       - https://github.com/k3s-io/k3s
     license: "APL-2"
     description: " Lightweight Kubernetes "
-
   - name: k3s-systemd
     category: k8s
     version: "1.28.5+4"
@@ -59,11 +59,11 @@ packages:
       github.owner: "k3s-io"
       github.repo: "k3s"
       autobump.sed_script: 's/\+k3s1//g'
+      autobump.skip_if_contains: '["rc"]'
     uri:
       - https://github.com/k3s-io/k3s
     license: "APL-2"
     description: " Lightweight Kubernetes "
-
   - name: k3s-systemd
     category: k8s
     version: "1.27.9+4"
@@ -72,6 +72,7 @@ packages:
       github.owner: "k3s-io"
       github.repo: "k3s"
       autobump.sed_script: 's/\+k3s1//g'
+      autobump.skip_if_contains: '["rc"]'
     uri:
       - https://github.com/k3s-io/k3s
     license: "APL-2"
