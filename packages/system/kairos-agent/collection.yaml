@@ -12,7 +12,7 @@ packages:
     description: "Lifecycle agent for kairos"
   - name: "kairos-agent"
     category: "fips"
-    version: "2.8.11"
+    version: "2.9.0"
     labels:
       github.repo: "kairos-agent"
       autobump.revdeps: "true"
