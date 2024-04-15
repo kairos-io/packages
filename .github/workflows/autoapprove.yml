@@ -12,13 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.actor == 'ci-robbot' }}
     steps:
-      - name: Dependabot metadata
-        id: metadata
-        uses: dependabot/fetch-metadata@v1.3.4
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-          skip-commit-verification: true
-
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -36,7 +29,6 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: Enable auto-merge for Dependabot PRs
-        if: ${{ contains(github.event.pull_request.title, 'Bump')}}
         run: gh pr merge --auto --squash "$PR_URL"
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
