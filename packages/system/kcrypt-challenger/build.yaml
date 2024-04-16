@@ -10,15 +10,9 @@ requires:
     version: ">=0"
 {{end}}
 prelude:
-  - apt-get update && apt-get install -y gcc
-{{if not (or (eq .Values.category "fips") (eq .Values.category "fips-static"))}}
-  - apt-get install -y libssl-dev
-{{ end }}
+  - apt-get update && apt-get install -y gcc libssl-dev
   - mkdir go/src/github.com/${GITHUB_ORG}/ -p
   - cd go/src/github.com/${GITHUB_ORG}/ && git clone https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
-{{ if ne .Values.live "yes" }}
-  - cd go/src/github.com/${GITHUB_ORG}/ && git checkout 3912abcec424521725ccd335181f2fde90510081 -b build
-{{ end }}
 env:
   - GOPATH=/luetbuild/go/
   - DEBIAN_FRONTEND=noninteractive
@@ -38,14 +32,14 @@ steps:
     PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
     mkdir -p /system/discovery && \
     cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && go build -ldflags="${LDFLAGS}" -o {{ .Values.binary_name }}  ./cmd/discovery/main.go && mv {{ .Values.binary_name }} /system/discovery
-  - upx -1 /system/discovery/{{ .Values.binary_name }}
-  - chmod +x /system/discovery/{{ .Values.binary_name }}
 {{if or (eq .Values.category "fips") (eq .Values.category "fips-static")}}
   {{ if .Values.arch }}
     {{ if eq .Values.arch "amd64" }}
   - go tool nm /system/discovery/{{ .Values.binary_name }} | grep -i "FIPS_mode"
     {{end}}
   {{end}}
+  - upx -1 /system/discovery/{{ .Values.binary_name }}
+  - chmod +x /system/discovery/{{ .Values.binary_name }}
 {{end}}
 includes:
   - /system/discovery/{{ .Values.binary_name }}
