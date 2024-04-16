@@ -395,17 +395,18 @@ if grep -q cdroot /proc/cmdline ;then
   rd_break pre-livecd
   echo "Mounting Live Media"
   sync
+  label=$(grep -o CDLABEL.* /proc/cmdline | cut -f 1 -d ' ' | cut -f 2 -d '=' )
   # Create mountpoints
   ebegin "Create mountpoints"
   mkdir -p /media/root-ro /media/root-rw /run/rootfsbase $sysroot/media/root-ro $sysroot/media/root-rw $sysroot/run/rootfsbase
   eend $?
   # Between udev starting, we loading the modules and the cdrom appearing sometimes there is a delay, so lets wait a bit here
   ebegin "Waiting for Live Media to be available"
-  retry 10 test -e /dev/disk/by-label/COS_LIVE
+  retry 10 test -e /dev/disk/by-label/$label
   eend
   # Mount read-only livecd
   ebegin "Mount Live Media RO"
-  retry 10 mount /dev/disk/by-label/COS_LIVE /media/root-ro
+  retry 10 mount /dev/disk/by-label/$label /media/root-ro
   eend $?
   sync
   # Mount squashfs into loop device
