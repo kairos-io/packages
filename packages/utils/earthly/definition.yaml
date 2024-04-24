@@ -1,7 +1,7 @@
 name: earthly
 category: utils
 arch: "amd64"
-version: "0.8.8"
+version: "0.8.9"
 labels:
   github.repo: "earthly"
   github.owner: "earthly"
