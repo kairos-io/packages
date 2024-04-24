@@ -8,7 +8,7 @@
 name: "Rootfs Layout Settings for UKI"
 stages:
   rootfs:
-    - if: '[ -e "/run/cos/uki_boot_mode" ] && [ ! -e "/run/cos/recovery_mode" ]'
+    - if: '[ -e "/run/cos/uki_boot_mode" ] && [ ! -e "/run/cos/recovery_mode" ] && [ ! -e "/run/cos/autoreset_mode" ]'
       name: "Layout configuration for UKI boot"
       environment_file: /run/cos/cos-layout.env
       environment:
@@ -46,9 +46,9 @@ stages:
           /var/lib/wicked
           /var/log
           /var/snap
-    - if: '[ -e "/run/cos/uki_boot_mode" ] && [ -e "/run/cos/recovery_mode" ]'
-      # omit the persistent partition on recovery mode
-      name: "Layout configuration for recovery mode on UKI"
+    - if: '[ -e "/run/cos/uki_boot_mode" ] && ([ -e "/run/cos/recovery_mode" ] || [ -e "/run/cos/autoreset_mode" ])'
+      # omit the persistent partition on recovery mode/autoreset
+      name: "Layout configuration for recovery/autoreset mode on UKI"
       environment_file: /run/cos/cos-layout.env
       environment:
         OVERLAY: "tmpfs:25%"

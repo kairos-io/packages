@@ -30,7 +30,6 @@ steps:
   - |
     PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
     cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && git checkout v"${PACKAGE_VERSION}" -b build && go build -ldflags="${LDFLAGS}" && mv {{.Values.name}} /usr/bin/
-  - chmod +x /usr/bin/{{.Values.name}}
 {{if or (eq .Values.category "fips") (eq .Values.category "fips-static")}}
   {{ if .Values.arch }}
     {{ if eq .Values.arch "amd64" }}
@@ -38,5 +37,7 @@ steps:
     {{end}}
   {{end}}
 {{end}}
+  - upx -1 /usr/bin/{{.Values.name}}
+  - chmod +x /usr/bin/{{.Values.name}}
 includes:
   - /usr/bin/{{.Values.name}}

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSION=3.8.1-kairos1
+VERSION=3.8.1-kairos2
 INIT=/sbin/init
 sysroot="$ROOT"/sysroot
 
@@ -393,19 +393,20 @@ fi
 # Path for booting from livecd
 if grep -q cdroot /proc/cmdline ;then
   rd_break pre-livecd
-  echo "Mounting LiveCD"
+  echo "Mounting Live Media"
   sync
+  label=$(grep -o CDLABEL.* /proc/cmdline | cut -f 1 -d ' ' | cut -f 2 -d '=' )
   # Create mountpoints
   ebegin "Create mountpoints"
   mkdir -p /media/root-ro /media/root-rw /run/rootfsbase $sysroot/media/root-ro $sysroot/media/root-rw $sysroot/run/rootfsbase
   eend $?
   # Between udev starting, we loading the modules and the cdrom appearing sometimes there is a delay, so lets wait a bit here
-  ebegin "Waiting for cdrom to be available"
-  retry 10 test -e /dev/sr0
+  ebegin "Waiting for Live Media to be available"
+  retry 10 test -e /dev/disk/by-label/$label
   eend
   # Mount read-only livecd
-  ebegin "Mount LiveCD RO"
-  retry 10 mount /dev/sr0 /media/root-ro
+  ebegin "Mount Live Media RO"
+  retry 10 mount /dev/disk/by-label/$label /media/root-ro
   eend $?
   sync
   # Mount squashfs into loop device

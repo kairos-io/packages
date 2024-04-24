@@ -1,5 +1,5 @@
 requires:
-- name: "toolchain-go"
+- name: "toolchain-go-ubuntu"
   category: "development"
   version: ">=0"
 env:
@@ -31,18 +31,10 @@ steps:
   - bash installer.sh agent
   - rm -rf installer.sh
   - chmod +x /usr/bin/k3s
-  - TAG=$INSTALL_K3S_VERSION ./fetch-template.sh
-  - mkdir -p /usr/share/config/kairos/k3s/
-  - mv config.toml.tmpl /usr/share/config/kairos/k3s/containerd-config.toml.tmpl
+  - upx -1 /usr/bin/k3s
 
 includes:
 - ^/usr/bin/k3s
-- ^/usr$
-- ^/usr/share$
-- ^/usr/share/config$
-- ^/usr/share/config/kairos$
-- ^/usr/share/config/kairos/k3s$
-- ^/usr/share/config/kairos/k3s/containerd-config.toml.tmpl$
 {{ if eq .Values.name "k3s-openrc" }}
 - ^/etc/init.d/$
 - ^/etc/init.d/k3s.*

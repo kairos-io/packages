@@ -92,3 +92,4 @@ jobs:
         REPOSITORY_TYPE: docker
         createRepo: true
         pushCache: true
+        revisionSHA: true
