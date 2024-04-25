@@ -21,6 +21,28 @@ packages:
       - https://github.com/kairos-io/kairos-agent
     license: "Apache License v2"
     description: "Lifecycle agent for kairos"
+  - name: "kairos-agent"
+    category: "system"
+    version: "2.8.12"
+    labels:
+      github.repo: "kairos-agent"
+      autobump.revdeps: "true"
+      github.owner: "kairos-io"
+    uri:
+      - https://github.com/kairos-io/kairos-agent
+    license: "Apache License v2"
+    description: "Lifecycle agent for kairos"
+  - name: "kairos-agent"
+    category: "fips"
+    version: "2.8.12"
+    labels:
+      github.repo: "kairos-agent"
+      autobump.revdeps: "true"
+      github.owner: "kairos-io"
+    uri:
+      - https://github.com/kairos-io/kairos-agent
+    license: "Apache License v2"
+    description: "Lifecycle agent for kairos"
 # doesnt build so disable for now
 #- name: "kairos-agent"
 #    category: "fips-static"
