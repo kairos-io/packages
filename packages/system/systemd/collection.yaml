@@ -6,6 +6,7 @@ packages:
       github.repo: "systemd"
       autobump.revdeps: "true"
       github.owner: "systemd"
+      autobump.skip_if_contains: '["rc"]'
   - name: "systemd-ukify"
     category: "system"
     version: "255-5"
@@ -13,3 +14,4 @@ packages:
       github.repo: "systemd"
       autobump.revdeps: "true"
       github.owner: "systemd"
+      autobump.skip_if_contains: '["rc"]'
