@@ -96,8 +96,8 @@ stages:
       name: "add custom bind and ephemeral mounts to /run/cos/cos-layout.env"
       commands:
         - |
-          source /run/cos/cos-layout.env
-          source /run/cos/custom-layout.env
+          . /run/cos/cos-layout.env
+          . /run/cos/custom-layout.env
           PERSISTENT_STATE_PATHS="${PERSISTENT_STATE_PATHS} ${CUSTOM_BIND_MOUNTS} "
           RW_PATHS="${RW_PATHS} ${CUSTOM_EPHEMERAL_MOUNTS}"
           # Remove the existing lines that we are gonna rewrite

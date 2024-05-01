@@ -37,7 +37,7 @@ set -e
 SCRIPT_DIR="$(dirname $(readlink -f "${0}"))"
 SCRIPT_NAME="$(basename "${0}")"
 
-source "${SCRIPT_DIR}/nvcommon_build.sh"
+. "${SCRIPT_DIR}/nvcommon_build.sh"
 
 function usage {
         cat <<EOM

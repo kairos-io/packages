@@ -64,7 +64,7 @@ stages:
         set bootfile="/grub_boot_assessment"
         search --no-floppy --file --set=bootfile_loc "${bootfile}"
         if [ "${bootfile_loc}" ]; then
-           source "(${bootfile_loc})${bootfile}"
+           . "(${bootfile_loc})${bootfile}"
         fi
         EOF
     # Overrides the active cmdline by adding "rd.emergency=reboot", "rd.shell=0" and "panic=5"
