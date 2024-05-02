@@ -54,7 +54,7 @@ stages:
           pidfile="/run/cos-setup-reconcile.pid"
           respawn_delay=360
           set -o allexport
-          if [ -f /etc/environment ]; then source /etc/environment; fi
+          if [ -f /etc/environment ]; then . /etc/environment; fi
           set +o allexport
       - path: /etc/init.d/kairos-agent
         content: |
@@ -94,7 +94,7 @@ stages:
           pidfile="/run/${RC_SVCNAME}.pid"
           respawn_delay=5
           set -o allexport
-          if [ -f /etc/environment ]; then source /etc/environment; fi
+          if [ -f /etc/environment ]; then . /etc/environment; fi
           set +o allexport
         permissions: 0755
         owner: 0
