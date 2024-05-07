@@ -23,9 +23,9 @@ env:
 {{else}}
   - CGO_ENABLED=0
 {{end}}
-# Deps for webui
-  - cd /go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/internal/webui/public && npm install
 steps:
+  # Deps for webui
+  - cd /go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/internal/webui/public && npm install
   - |
     PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
     cd /go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && \
