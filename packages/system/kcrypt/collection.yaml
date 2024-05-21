@@ -12,7 +12,7 @@ packages:
     description: "Cloud native guardian for persistent data in the edge"
   - name: kcrypt
     category: fips
-    version: "0.10.1"
+    version: "0.11.0"
     labels:
       github.repo: "kcrypt"
       autobump.revdeps: "true"
