@@ -29,7 +29,12 @@ env:
 steps:
   - |
     PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
-    cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && git checkout v"${PACKAGE_VERSION}" -b build && go build -o {{ .Values.name }} -ldflags="${LDFLAGS}" && mv {{.Values.name}} /usr/bin/
+    cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && \
+    git checkout v"${PACKAGE_VERSION}" -b build && \
+    go mod tidy -compat=1.19 && \
+    go mod download && \
+    go build -o {{ .Values.name }} -ldflags="${LDFLAGS}" && \
+    mv {{.Values.name}} /usr/bin/
   - chmod +x /usr/bin/{{.Values.name}}
 {{if or (eq .Values.category "fips") (eq .Values.category "fips-static")}}
   - /usr/bin/{{.Values.name}} version | grep -i boringcrypto
