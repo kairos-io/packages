@@ -1,18 +1,7 @@
 packages:
   - name: "immucore"
     category: "system"
-    version: "0.1.31"
-    labels:
-      github.repo: "immucore"
-      autobump.revdeps: "true"
-      github.owner: "kairos-io"
-    uri:
-      - https://github.com/kairos-io/immucore
-    license: "Apache License v2"
-    description: "The Kairos immutability management interface"
-  - name: "immucore"
-    category: "system"
-    version: "0.1.17-3"
+    version: "0.1.32"
     labels:
       github.repo: "immucore"
       autobump.revdeps: "true"
@@ -23,7 +12,7 @@ packages:
     description: "The Kairos immutability management interface"
   - name: "immucore"
     category: "fips"
-    version: "0.1.31"
+    version: "0.1.32"
     labels:
       github.repo: "immucore"
       autobump.revdeps: "true"
