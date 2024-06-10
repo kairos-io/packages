@@ -52,6 +52,7 @@ stages:
           /var/lib/tailscale
           /var/lib/wicked
           /var/log
+          /var/run/cilium
           /var/snap
         PERSISTENT_STATE_BIND: "true"
     - if: '[ -f "/run/cos/recovery_mode" ] && grep -vq "rd.immucore.uki" /proc/cmdline'
@@ -101,6 +102,7 @@ stages:
           /var/lib/tailscale
           /var/lib/wicked
           /var/log
+          /var/run/cilium
           /var/snap
         PERSISTENT_STATE_BIND: "true"
   rootfs.after:
