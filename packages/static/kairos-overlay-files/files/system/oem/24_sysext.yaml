@@ -10,6 +10,20 @@ stages:
         - path: /usr/lib/extensions
         - path: /usr/local/lib/extensions
   initramfs:
+    - name: "systemd-sysext uki config"
+      if: '[ -e "/run/cos/uki_boot_mode" ] && [ ! -e "/run/cos/recovery_mode" ] && [ ! -e "/run/cos/autoreset_mode" ]'
+      files:
+        - path: /etc/systemd/system/systemd-sysext.service.d/uki.conf
+          permissions: 0644
+          owner: 0
+          group: 0
+          content: |
+            [Service]
+            TimeoutStartSec=10
+            ExecStart=systemd-sysext refresh --image-policy="root=verity+signed+absent:usr=verity+signed+absent"
+            ExecReload=systemd-sysext refresh --image-policy="root=verity+signed+absent:usr=verity+signed+absent"
+            [Unit]
+            JobRunningTimeoutSec=5
     - name: "systemd-sysext initramfs settings"
       if: '[ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ]'
       systemctl:
