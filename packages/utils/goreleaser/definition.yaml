@@ -1,6 +1,6 @@
 name: goreleaser
 category: utils
-version: "1.25.1"
+version: "2.0.0"
 description: "Deliver Go binaries as fast and easily as possible"
 labels:
   github.repo: "goreleaser"
