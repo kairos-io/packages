@@ -2,7 +2,7 @@ packages:
   - name: toolchain-go
     category: development
     variant: "alpine"
-    version: "1.22.4+1"
+    version: "1.22.4"
     hidden: true
     labels:
       autobump.revdeps: "false"
