@@ -1,7 +1,8 @@
+{{ $version := semver .Values.version  }}
 {{ if .Values.variant }}
-image: "golang:{{.Values.tag}}-{{.Values.variant}}"
+image: "golang:{{ $version.Major }}.{{$version.Minor}}.{{$version.Patch }}-{{.Values.variant}}"
 {{ else }}
-image: "golang:{{.Values.tag}}"
+image: "golang:{{ $version.Major }}.{{$version.Minor}}.{{$version.Patch }}"
 {{ end }}
 
 prelude:
