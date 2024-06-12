@@ -32,6 +32,7 @@ stages:
             [Unit]
             # Make it timeout early to avoid blocking boot if keys are not in there to unlock sysext
             JobRunningTimeoutSec=5
+  initramfs.after:
     - name: "systemd-sysext initramfs settings"
       if: '[ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ]'
       systemctl:
