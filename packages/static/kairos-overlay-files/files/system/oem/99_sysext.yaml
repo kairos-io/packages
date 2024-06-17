@@ -32,6 +32,15 @@ stages:
             [Unit]
             # Make it timeout early to avoid blocking boot if keys are not in there to unlock sysext
             JobRunningTimeoutSec=5
+    - name: "systemd-sysext set hierarchy system-wide"
+      if: '[ -e "/run/cos/uki_boot_mode" ] && [ ! -e "/run/cos/recovery_mode" ] && [ ! -e "/run/cos/autoreset_mode" ]'
+      files:
+        - path: /etc/profile.d/systemd-sysext.sh
+          permissions: 0644
+          owner: 0
+          group: 0
+          content: |
+            export SYSTEMD_SYSEXT_HIERARCHIES="/usr/local/bin:/usr/local/sbin:/usr/local/include:/usr/local/lib:/usr/local/share:/usr/local/src:/usr/bin:/usr/share:/usr/lib:/usr/include:/usr/src:/usr/sbin"
     - name: "systemd-sysext initramfs settings"
       if: '[ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ]'
       systemctl:
