@@ -9,7 +9,7 @@ packages:
       autobump.skip_if_contains: '["rc"]'
   - name: "systemd-ukify"
     category: "system"
-    version: "256"
+    version: "255-5"
     labels:
       github.repo: "systemd"
       autobump.revdeps: "true"
