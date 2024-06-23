@@ -1,6 +1,6 @@
 name: edgevpn
 category: utils
-version: "0.26.0"
+version: "0.26.1"
 tag: "0.24.6"
 labels:
   github.repo: "edgevpn"
