@@ -1,0 +1,20 @@
+requires:
+  - name: "toolchain-go-ubuntu"
+    category: "development"
+    version: ">=0"
+prelude:
+  - apt-get update && apt-get install -y gcc libssl-dev
+  - mkdir -p go/src/github.com/${GITHUB_ORG}/
+  - cd go/src/github.com/${GITHUB_ORG}/ && git clone https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
+env:
+  - CGO_ENABLED=0
+  - GITHUB_ORG={{ ( index .Values.labels "github.owner" ) }}
+  - LDFLAGS="-s -w {{with .Values.ldflags}}{{.}}{{end}}"
+steps:
+  - |
+    PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
+    cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && \
+    go build -ldflags="${LDFLAGS}" -o {{ .Values.name }} && \
+    mv {{ .Values.name }} /usr/bin/
+includes:
+- /usr/bin/{{.Values.name}}

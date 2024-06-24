@@ -1,0 +1,10 @@
+name: luet
+category: utils
+version: "0.35.2"
+labels:
+  github.repo: "luet"
+  github.owner: "mudler"
+uri:
+  - https://github.com/mudler/luet
+license: "GPL-3.0 License"
+description: "0-dependency Container-based Package Manager using SAT solver and QLearning"
