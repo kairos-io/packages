@@ -1,6 +1,6 @@
 name: "nerdctl"
 category: "utils"
-version: "2.0.0-beta.5"
+version: "2.0.0-rc.0"
 tag: "1.7.2"
 platform: linux
 labels:
