@@ -17,7 +17,7 @@ packages:
   - name: toolchain-go-ubuntu
     variant: "bookworm"
     category: development
-    version: "1.22.4"
+    version: "1.22.5"
     hidden: true
     labels:
       autobump.revdeps: "false"
@@ -28,7 +28,7 @@ packages:
         curl -s -L "https://go.dev/dl/?mode=json" |jq -r '.[0].version'| sed 's/go//g'
       autobump.version_hook: |
         curl -s -L "https://go.dev/dl/?mode=json" |jq -r '.[0].version'| sed 's/go//g'
-      package.version: "1.22.4"
+      package.version: "1.22.5"
   - name: toolchain-go
     category: development
     variant: "alpine"
