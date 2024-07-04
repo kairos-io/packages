@@ -5,7 +5,7 @@ requires:
 
 package_dir: /kubectl
 env:
-  - PACKAGE_VERSION={{ .Values.tag }}
+  - PACKAGE_VERSION={{ .Values.version }}
 
 steps:
 - mkdir -p /kubectl/usr/bin
