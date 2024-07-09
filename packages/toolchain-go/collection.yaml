@@ -68,12 +68,18 @@ packages:
   - name: toolchain-go
     category: fips
     variant: "alpine"
-    version: "1.19.10"
+    version: "1.22.5"
+    tag: "1.22.5"
+    hidden: true
+  - name: toolchain-go-ubuntu
+    category: fips
+    variant: "bullseye"
+    version: "1.19.10+1"
     tag: "1.19.10"
     hidden: true
   - name: toolchain-go-ubuntu
-    variant: "bullseye"
     category: fips
-    version: "1.19.10+1"
-    tag: "1.19.10"
+    variant: "bullseye"
+    version: "1.22.5"
+    tag: "1.22.5"
     hidden: true
