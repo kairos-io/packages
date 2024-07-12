@@ -1,7 +1,7 @@
 packages:
   - name: "provider-kairos"
     category: "system"
-    version: "2.6.5"
+    version: "2.7.1"
     tag: "2.6.4"
     labels:
       github.repo: "provider-kairos"
