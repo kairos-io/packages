@@ -1,15 +1,7 @@
 packages:
   - name: "systemd-boot"
     category: "system"
-    version: "256.2"
-    labels:
-      github.repo: "systemd"
-      autobump.revdeps: "true"
-      github.owner: "systemd"
-      autobump.skip_if_contains: '["rc"]'
-  - name: "systemd-ukify"
-    category: "system"
-    version: "255-5"
+    version: "256.2-1"
     labels:
       github.repo: "systemd"
       autobump.revdeps: "true"
