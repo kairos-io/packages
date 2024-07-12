@@ -1,7 +1,7 @@
 packages:
   - name: "immucore"
     category: "system"
-    version: "0.3.0"
+    version: "0.4.0"
     labels:
       github.repo: "immucore"
       autobump.revdeps: "true"
@@ -12,7 +12,7 @@ packages:
     description: "The Kairos immutability management interface"
   - name: "immucore"
     category: "fips"
-    version: "0.3.0"
+    version: "0.4.0"
     labels:
       github.repo: "immucore"
       autobump.revdeps: "true"
