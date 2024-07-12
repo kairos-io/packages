@@ -4,8 +4,8 @@ requires:
   version: ">=0"
 env:
   - CGO_ENABLED=0
-  - PACKAGE_VERSION={{ .Values.tag }}
-  - LDFLAGS="-s -w -X 'github.com/kairos-io/provider-kairos/v2/internal/cli.VERSION={{ .Values.tag }}'"
+  - PACKAGE_VERSION={{ .Values.version }}
+  - LDFLAGS="-s -w -X 'github.com/kairos-io/provider-kairos/v2/internal/cli.VERSION={{ .Values.version }}'"
 prelude:
 - apt-get update && apt-get install -y git
 - git clone https://github.com/kairos-io/provider-kairos
