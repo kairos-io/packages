@@ -1,15 +1,16 @@
 name: Build ARM64
 concurrency:
-  group: "master-arm64-build"
+  group: "master-arm64-build-test"
   #cancel-in-progress: true
 
 on:
+  pull_request:
   push:
     branches: [ main ]
 jobs:
 
   build:
-    runs-on: fast
+    runs-on: github-arm64-2c-8gb
     env:
       ARCH: amd64
     steps:
