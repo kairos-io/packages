@@ -10,7 +10,7 @@ on:
 jobs:
 
   build:
-    runs-on: github-arm64-2c-8gb
+    runs-on: oracle-aarch64-4cpu-16gb
     env:
       ARCH: amd64
     steps:
