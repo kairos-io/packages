@@ -32,7 +32,7 @@ jobs:
         path: /tmp
         key: ${{ runner.os }}-metadata
     - name: Build packages 🔧
-      uses: luet-lab/luet-github-action@master
+      uses: itxaka/luet-github-action@master
       with:
         build: true
         fromIndex: true
