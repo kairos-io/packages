@@ -1,7 +1,8 @@
 [Unit]
 Description=kairos interactive-installer
-After=sysinit.target
+After=multi-user.target
 [Service]
+## Dont mark it as running until it finishes
 Type=oneshot
 # input/output to tty as its interactive
 # otherwise it will be silent and with no input
@@ -17,5 +18,7 @@ ExecStart=/usr/bin/kairos-agent interactive-install --shell
 # Start systemd messages on tty
 ExecStartPost=-/usr/bin/kill -SIGRTMIN+20 1
 TimeoutStopSec=10s
+# Restart if it fails, like user doing control+c
+Restart=on-failure
 [Install]
 WantedBy=multi-user.target

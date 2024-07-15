@@ -1,8 +1,8 @@
 [Unit]
 Description=kairos installer
-After=sysinit.target
+After=multi-user.target
 [Service]
-Type=oneshot
+Type=simple
 StandardInput=tty
 StandardOutput=tty
 LimitNOFILE=49152
