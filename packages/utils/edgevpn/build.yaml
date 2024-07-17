@@ -1,7 +1,16 @@
+{{ if eq .Values.version "0.23.1" }}
+# edgevpn 0.23.x can only be built with golang 1.19.x
 requires:
-- name: "toolchain-go-ubuntu"
-  category: "development"
-  version: ">=0"
+  - name: "toolchain-go-ubuntu"
+    category: "development"
+    version: "<1.20.0"
+{{ else }}
+requires:
+  - name: "toolchain-go-ubuntu"
+    category: "development"
+    version: ">=0"
+{{ end }}
+
 prelude:
 - mkdir go/src/github.com/${GITHUB_ORG}/ -p
 - cd go/src/github.com/${GITHUB_ORG}/ && git clone https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git

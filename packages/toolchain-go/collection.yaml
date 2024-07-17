@@ -59,6 +59,21 @@ packages:
         curl -s -L "https://go.dev/dl/?mode=json" |jq -r '.[0].version'| sed 's/go//g'
       autobump.version_hook: |
         curl -s -L "https://go.dev/dl/?mode=json" |jq -r '.[0].version'| sed 's/go//g'
+  - name: toolchain-go-ubuntu
+    variant: "bookworm"
+    category: development
+    version: "1.19.13"
+    tag: "1.19.13"
+    hidden: true
+    labels:
+      autobump.revdeps: "false"
+      autobump.strategy: "custom"
+      autobump.string_replace: '{ "prefix": "" }'
+      autobump.prefix: "prefix"
+      autobump.hook: |
+        curl -s -L "https://go.dev/dl/?mode=json" |jq -r '.[0].version'| sed 's/go//g'
+      autobump.version_hook: |
+        curl -s -L "https://go.dev/dl/?mode=json" |jq -r '.[0].version'| sed 's/go//g'
   - name: toolchain-go
     category: fips
     variant: "alpine"

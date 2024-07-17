@@ -1,0 +1,23 @@
+packages:
+  - name: edgevpn
+    category: utils
+    version: "0.26.2"
+    tag: "0.24.6"
+    labels:
+      github.repo: "edgevpn"
+      github.owner: "mudler"
+    uri:
+      - https://github.com/mudler/edgevpn
+    license: "GPL-3"
+    description: "The immutable, decentralized, statically built VPN"
+  - name: edgevpn
+    category: utils
+    version: "0.23.1"
+    tag: "0.23.1"
+    labels:
+      github.repo: "edgevpn"
+      github.owner: "mudler"
+    uri:
+      - https://github.com/mudler/edgevpn
+    license: "GPL-3"
+    description: "The immutable, decentralized, statically built VPN"
