@@ -12,9 +12,10 @@ env:
   - LDFLAGS="-s -w {{with .Values.ldflags}}{{.}}{{end}}"
 steps:
   - |
-    PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
-    cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && \
-    go build -ldflags="${LDFLAGS}" -o {{ .Values.name }} && \
+    PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && \
+    cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && git checkout $PACKAGE_VERSION && \
+    go build -ldflags="${LDFLAGS} -X github.com/mudler/luet/cmd.Version=$PACKAGE_VERSION -X github.com/mudler/luet/cmd.BuildTime={{ dateInZone "2006-01-02T15:04:05Z" (now) "UTC" }}" -o {{ .Values.name }} && \
     mv {{ .Values.name }} /usr/bin/
+  - /usr/bin/{{ .Values.name }} version
 includes:
 - /usr/bin/{{.Values.name}}
