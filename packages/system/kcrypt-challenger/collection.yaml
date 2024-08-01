@@ -2,7 +2,7 @@ packages:
   - name: kcrypt-challenger
     binary_name: kcrypt-discovery-challenger
     category: system
-    version: "0.9.0"
+    version: "0.9.1"
     labels:
       github.repo: "kcrypt-challenger"
       github.owner: "kairos-io"
