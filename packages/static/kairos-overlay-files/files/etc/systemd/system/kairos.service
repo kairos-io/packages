@@ -15,5 +15,3 @@ ExecStart=/usr/bin/kairos-agent install
 # Start systemd messages on tty
 ExecStartPost=-/usr/bin/kill -SIGRTMIN+20 1
 TimeoutStopSec=10s
-[Install]
-WantedBy=multi-user.target
