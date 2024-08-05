@@ -20,3 +20,5 @@ ExecStartPost=-/usr/bin/kill -SIGRTMIN+20 1
 TimeoutStopSec=10s
 # Restart if it fails, like user doing control+c
 Restart=on-failure
+[Install]
+WantedBy=multi-user.target

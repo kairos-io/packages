@@ -15,3 +15,5 @@ RemainAfterExit=yes
 ExecStart=/usr/bin/kairos-agent recovery
 # Start systemd messages on tty
 ExecStartPost=-/usr/bin/kill -SIGRTMIN+20 1
+[Install]
+WantedBy=multi-user.target
