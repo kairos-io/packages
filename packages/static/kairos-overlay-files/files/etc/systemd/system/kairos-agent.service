@@ -6,3 +6,5 @@ Wants=network.target
 Restart=on-failure
 RestartSec=5s
 ExecStart=/usr/bin/kairos-agent start
+[Install]
+WantedBy=multi-user.target
