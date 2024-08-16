@@ -1,7 +1,7 @@
 packages:
   - name: "systemd-boot"
     category: "system"
-    version: "256.4"
+    version: "256.5"
     labels:
       github.repo: "systemd"
       autobump.revdeps: "true"
