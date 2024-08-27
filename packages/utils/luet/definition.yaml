@@ -1,6 +1,6 @@
 name: luet
 category: utils
-version: "0.35.4"
+version: "0.35.5"
 labels:
   github.repo: "luet"
   github.owner: "mudler"
