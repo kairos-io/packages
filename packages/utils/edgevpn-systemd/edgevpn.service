@@ -5,7 +5,8 @@ After=network.target
 [Service]
 EnvironmentFile=/etc/systemd/system.conf.d/edgevpn.env
 LimitNOFILE=49152
-ExecStartPre=-/bin/sh -c "sysctl -w net.core.rmem_max=2500000"
+ExecStartPre=-/bin/sh -c "sysctl -w net.core.rmem_max=7500000"
+ExecStartPre=-/bin/sh -c "sysctl -w net.core.wmem_max=7500000"
 ExecStart=/usr/bin/edgevpn
 Restart=always
 
