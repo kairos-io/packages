@@ -2,6 +2,7 @@ name: "Fix home directory permissions (kairos issue #2797)"
 stages:
   initramfs.after:
     - name: "Fix permissions"
+      if: '[ ! -f "/usr/local/.kairos/skip-home-directory-ownership-fix" ]'
       commands:
         - |
           # Iterate over users in /etc/passwd and chown their directories
@@ -13,3 +14,4 @@ stages:
                   echo "Directory $homedir does not exist for user $user"
               fi
           done
+          echo "https://github.com/kairos-io/kairos/issues/2843" > /usr/local/.kairos/skip-home-directory-ownership-fix
