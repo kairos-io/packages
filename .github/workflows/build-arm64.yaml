@@ -9,7 +9,7 @@ on:
 jobs:
 
   build:
-    runs-on: github-arm64-2c-8gb
+    runs-on: ARM64
     env:
       ARCH: amd64
     steps:
