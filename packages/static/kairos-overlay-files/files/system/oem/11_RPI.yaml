@@ -1,4 +1,3 @@
-#cloud-config
 name: "RPI configs"
 stages:
   initramfs.before:
