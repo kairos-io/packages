@@ -1,3 +1,5 @@
+#cloud-config
+
 name: "Start installer on tty1"
 stages:
   initramfs:

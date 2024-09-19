@@ -1,3 +1,5 @@
+# cloud-config
+
 name: "Create openrc services"
 stages:
   initramfs:

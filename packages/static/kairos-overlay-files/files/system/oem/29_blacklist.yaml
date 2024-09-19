@@ -1,3 +1,5 @@
+#cloud-config
+
 stages:
   initramfs.before:
     - name: "Blacklist bpfilter on Alpine ( bug: https://github.com/kairos-io/kairos/issues/277 )"

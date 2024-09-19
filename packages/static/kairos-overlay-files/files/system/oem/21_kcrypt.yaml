@@ -1,3 +1,5 @@
+#cloud-config
+
 name: "Kcrypt"
 stages:
   after-upgrade:

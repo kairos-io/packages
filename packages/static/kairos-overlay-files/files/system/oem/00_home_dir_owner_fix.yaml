@@ -1,3 +1,5 @@
+#cloud-config
+
 name: "Fix home directory permissions (kairos issue #2797)"
 stages:
   network.after:

@@ -1,3 +1,5 @@
+#cloud-config
+
 name: "sysext"
 stages:
   fs.after:

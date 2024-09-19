@@ -1,3 +1,5 @@
+#cloud-config
+
 name: "c3os sentinel migration"
 stages:
   fs.after:

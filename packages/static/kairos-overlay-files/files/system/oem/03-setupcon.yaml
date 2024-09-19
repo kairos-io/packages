@@ -1,3 +1,5 @@
+# cloud-config
+
 name: "Fonts fix for ubuntu"
 stages:
   initramfs.after:

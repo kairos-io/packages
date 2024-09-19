@@ -1,3 +1,5 @@
+# cloud-config
+
 name: "Default user, permissions and serial login"
 stages:
   initramfs:

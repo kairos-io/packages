@@ -1,3 +1,5 @@
+#cloud-config
+
 name: "Root autologin"
 stages:
   initramfs:

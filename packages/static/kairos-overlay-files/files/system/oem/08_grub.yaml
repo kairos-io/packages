@@ -1,3 +1,5 @@
+# cloud-config
+
 # Rootfs Kairos OEM configuration file
 #
 # This file is part of Kairos and will get reset during upgrades.

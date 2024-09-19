@@ -1,3 +1,5 @@
+# cloud-config
+
 name: "Start agent"
 stages:
   boot:

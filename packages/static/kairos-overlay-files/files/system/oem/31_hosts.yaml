@@ -1,3 +1,5 @@
+#cloud-config
+
 stages:
   initramfs.before:
     # For debian based distributions, /etc/hosts is present but empty. This is because the file

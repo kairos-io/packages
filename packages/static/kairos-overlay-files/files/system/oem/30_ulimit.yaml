@@ -1,3 +1,5 @@
+#cloud-config
+
 stages:
   boot.before:
     - name: "Setup higher limit for open files"

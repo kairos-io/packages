@@ -1,3 +1,5 @@
+#cloud-config
+
 name: "Start reset on tty1"
 stages:
   initramfs:

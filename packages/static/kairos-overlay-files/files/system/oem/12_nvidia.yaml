@@ -1,3 +1,5 @@
+#cloud-config
+
 name: "Nvidia jetson specific files"
 stages:
     initramfs:
