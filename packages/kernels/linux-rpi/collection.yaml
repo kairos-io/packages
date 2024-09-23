@@ -1,0 +1,9 @@
+packages:
+  - name: "linux-rpi"
+    category: "kernels"
+    version: "rpi-6.6.y"
+    labels:
+      github.repo: "raspberrypi"
+      autobump.revdeps: "true"
+      github.owner: "kernel"
+      autobump.skip_if_contains: '["rc"]'

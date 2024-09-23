@@ -1,0 +1,17 @@
+package_dir: /out
+
+image: ubuntu:24.04
+
+prelude:
+  - apt-get update -y && apt-get install -y gcc gcc-aarch64-linux-gnu git make flex bc bison libssl-dev xz-utils kmod
+  - git clone --branch {{ .Values.version }} --depth 1 https://github.com/raspberrypi/linux.git linux
+
+steps:
+  - mkdir -p make /build
+  - mkdir -p /out/boot/overlays
+  - cd linux && CROSS_COMPILE=aarch64-linux-gnu- ARCH=arm64 make O=/build bcm2711_defconfig
+  - cd linux && CROSS_COMPILE=aarch64-linux-gnu- ARCH=arm64 make O=/build -j $(nproc) Image.gz modules dtbs
+  - cd linux && CROSS_COMPILE=aarch64-linux-gnu- ARCH=arm64 make O=/build INSTALL_MOD_PATH=/out modules_install
+  - cp /build/arch/arm64/boot/dts/broadcom/*.dtb /out/boot/
+  - cp /build/arch/arm64/boot/dts/overlays/*.dtb* /out/boot/overlays/
+  - cp /build/arch/arm64/boot/Image.gz /out/boot/Image
