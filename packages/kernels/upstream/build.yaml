@@ -41,7 +41,12 @@ steps:
   {{ end }}
 {{ end }}
   - cd linux-${PACKAGE_VERSION} && make -j$(nproc) modules
-  - cd linux-${PACKAGE_VERSION} && make install
-  - cd linux-${PACKAGE_VERSION} && ZSTD_CLEVEL=19 make INSTALL_MOD_PATH="/package/" INSTALL_MOD_STRIP=1 modules_install
-  - cp /boot/* /package/boot
+  - cd linux-${PACKAGE_VERSION} && ZSTD_CLEVEL=19 INSTALL_MOD_PATH="/package" INSTALL_MOD_STRIP=1 make modules_install
+{{ if .Values.arch }}
+  {{ if eq .Values.arch "arm64" }}
+  - cp /linux-${PACKAGE_VERSION}/arch/arm64/boot/Image /package/boot/vmlinuz-${PACKAGE_VERSION}
+  {{else}}
+  - cp /linux-${PACKAGE_VERSION}/arch/x86/boot/bzImage /package/boot/vmlinuz-${PACKAGE_VERSION}
+  {{ end }}
+{{ end }}
 
