@@ -10,7 +10,7 @@ env:
   - INSTALL_K3S_SKIP_SELINUX_RPM="true"
   # Remove any possible "+N" from the end of the version. We only bump that to
   # avoid overwritting existing images when we want the package to be rebuilt.
-  - INSTALL_K3S_VERSION=v{{ regexReplaceAll "\\+\\d+$" .Values.version "" }}+k3s1
+  - INSTALL_K3S_VERSION=v{{ regexReplaceAll "\\+\\d+$" .Values.version "" }}+k3s{{.Values.k3s_version}}
   {{$arch:=(default "amd64" .Values.arch)}}
   {{ if eq $arch "arm" }}
   - ARCH=arm64

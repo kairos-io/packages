@@ -2,7 +2,7 @@ packages:
   - name: k3s-openrc
     category: k8s
     version: "1.31.1"
-    k3s_version: "2"
+    k3s_version: "1"
     labels:
       github.owner: "k3s-io"
       github.repo: "k3s"
@@ -14,8 +14,8 @@ packages:
     description: " Lightweight Kubernetes "
   - name: k3s-openrc
     category: k8s
-    version: "1.28.9"
-    k3s_version: "2"
+    version: "1.30.5"
+    k3s_version: "1"
     labels:
       github.owner: "k3s-io"
       github.repo: "k3s"
@@ -27,8 +27,8 @@ packages:
     description: " Lightweight Kubernetes "
   - name: k3s-openrc
     category: k8s
-    version: "1.29.4"
-    k3s_version: "2"
+    version: "1.29.9"
+    k3s_version: "1"
     labels:
       github.owner: "k3s-io"
       github.repo: "k3s"
@@ -41,7 +41,7 @@ packages:
   - name: k3s-systemd
     category: k8s
     version: "1.31.1"
-    k3s_version: "2"
+    k3s_version: "1"
     labels:
       github.owner: "k3s-io"
       github.repo: "k3s"
@@ -53,8 +53,8 @@ packages:
     description: " Lightweight Kubernetes "
   - name: k3s-systemd
     category: k8s
-    version: "1.28.9"
-    k3s_version: "2"
+    version: "1.30.5"
+    k3s_version: "1"
     labels:
       github.owner: "k3s-io"
       github.repo: "k3s"
@@ -66,8 +66,8 @@ packages:
     description: " Lightweight Kubernetes "
   - name: k3s-systemd
     category: k8s
-    version: "1.29.4"
-    k3s_version: "2"
+    version: "1.29.9"
+    k3s_version: "1"
     labels:
       github.owner: "k3s-io"
       github.repo: "k3s"
