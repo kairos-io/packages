@@ -7,7 +7,7 @@ packages:
       github.owner: "k3s-io"
       github.repo: "k3s"
       autobump.sed_script: 's/\+k3s[0-9]//g'
-      autobump.skip_if_contains: '["rc"]'
+      autobump.skip_if_contains: '["k3s"]' # disable autobump
     uri:
       - https://github.com/k3s-io/k3s
     license: "APL-2"
@@ -20,7 +20,7 @@ packages:
       github.owner: "k3s-io"
       github.repo: "k3s"
       autobump.sed_script: 's/\+k3s1[0-9]//g'
-      autobump.skip_if_contains: '["rc"]'
+      autobump.skip_if_contains: '["k3s"]' # disable autobump
     uri:
       - https://github.com/k3s-io/k3s
     license: "APL-2"
@@ -33,7 +33,7 @@ packages:
       github.owner: "k3s-io"
       github.repo: "k3s"
       autobump.sed_script: 's/\+k3s[0-9]//g'
-      autobump.skip_if_contains: '["rc"]'
+      autobump.skip_if_contains: '["k3s"]' # disable autobump
     uri:
       - https://github.com/k3s-io/k3s
     license: "APL-2"
@@ -46,7 +46,7 @@ packages:
       github.owner: "k3s-io"
       github.repo: "k3s"
       autobump.sed_script: 's/\+k3s[0-9]//g'
-      autobump.skip_if_contains: '["rc"]'
+      autobump.skip_if_contains: '["k3s"]' # disable autobump
     uri:
       - https://github.com/k3s-io/k3s
     license: "APL-2"
@@ -59,7 +59,7 @@ packages:
       github.owner: "k3s-io"
       github.repo: "k3s"
       autobump.sed_script: 's/\+k3s[0-9]//g'
-      autobump.skip_if_contains: '["rc"]'
+      autobump.skip_if_contains: '["k3s"]' # disable autobump
     uri:
       - https://github.com/k3s-io/k3s
     license: "APL-2"
@@ -72,7 +72,7 @@ packages:
       github.owner: "k3s-io"
       github.repo: "k3s"
       autobump.sed_script: 's/\+k3s[0-9]//g'
-      autobump.skip_if_contains: '["rc"]'
+      autobump.skip_if_contains: '["k3s"]' # disable autobump
     uri:
       - https://github.com/k3s-io/k3s
     license: "APL-2"
