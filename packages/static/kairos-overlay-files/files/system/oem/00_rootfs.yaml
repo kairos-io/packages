@@ -42,6 +42,7 @@ stages:
           /var/lib/containerd
           /var/lib/calico
           /var/lib/dbus
+          /var/lib/etcd
           /var/lib/extensions
           /var/lib/kubelet
           /var/lib/longhorn
