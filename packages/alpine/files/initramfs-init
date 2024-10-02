@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSION=3.8.1-kairos4
+VERSION=3.8.2-kairos3
 INIT=/sbin/init
 sysroot="$ROOT"/sysroot
 # This is where we mount the livecd
