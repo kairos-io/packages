@@ -1,8 +1,16 @@
 #!/bin/sh
 
-VERSION=3.8.1-kairos2
+VERSION=3.8.1-kairos3
 INIT=/sbin/init
 sysroot="$ROOT"/sysroot
+# This is where we mount the livecd
+liveroot=/run/initramfs/live
+# This is where we mount the root squash file
+rootfsbase=/run/rootfsbase
+# This is the base dir for the overlay, it needs to be RW
+rootRW=/run/overlay
+# This is the name of the rootfs squash that comes in the livecd/netboot
+rootfssquash=rootfs.squashfs
 
 # some helpers
 ebegin() {
@@ -375,16 +383,16 @@ if grep -q netboot /proc/cmdline; then
   sync
   # Create mountpoints
   ebegin "Create mountpoints"
-  mkdir -p /media/root-rw /run/rootfsbase $sysroot/media/root-rw $sysroot/run/rootfsbase
+  mkdir -p $rootRW $rootfsbase $sysroot$rootRW $sysroot$rootfsbase
   eend $?
 
   ebegin "Download rootfs"
-  wget -q "$root" -O /tmp/rootfs.squashfs
+  wget -q "$root" -O /tmp/$rootfssquash
   eend $?
 
   # Mount squashfs into loop device
   ebegin "Mount rootfs as squashfs device"
-  retry 5 losetup /dev/loop0 /tmp/rootfs.squashfs
+  retry 5 losetup /dev/loop0 /tmp/$rootfssquash
   eend $?
   sync
   rd_break post-netboot
@@ -398,7 +406,7 @@ if grep -q cdroot /proc/cmdline ;then
   label=$(grep -o CDLABEL.* /proc/cmdline | cut -f 1 -d ' ' | cut -f 2 -d '=' )
   # Create mountpoints
   ebegin "Create mountpoints"
-  mkdir -p /media/root-ro /media/root-rw /run/rootfsbase $sysroot/media/root-ro $sysroot/media/root-rw $sysroot/run/rootfsbase
+  mkdir -p $liveroot $rootRW $rootfsbase $sysroot$liveroot $sysroot$rootRW $sysroot$rootfsbase
   eend $?
   # Between udev starting, we loading the modules and the cdrom appearing sometimes there is a delay, so lets wait a bit here
   ebegin "Waiting for Live Media to be available"
@@ -406,12 +414,12 @@ if grep -q cdroot /proc/cmdline ;then
   eend
   # Mount read-only livecd
   ebegin "Mount Live Media RO"
-  retry 10 mount /dev/disk/by-label/$label /media/root-ro
+  retry 10 mount /dev/disk/by-label/$label $liveroot
   eend $?
   sync
   # Mount squashfs into loop device
   ebegin "Mount rootfs as squashfs device"
-  retry 5 losetup /dev/loop0 /media/root-ro/rootfs.squashfs
+  retry 5 losetup /dev/loop0 $liveroot/$rootfssquash
   eend $?
   sync
   rd_break post-livecd
@@ -422,18 +430,18 @@ if grep -q cdroot /proc/cmdline || grep -q netboot /proc/cmdline;then
     rd_break pre-mounts
     # Mount loop device into the rootfsbase
     ebegin "Mount loop device into rootfsbase"
-    retry 5 mount /dev/loop0 /run/rootfsbase
+    retry 5 mount /dev/loop0 $rootfsbase
     eend $?
     sync
     # Mount writable overlay tmpfs
     ebegin "Mount base overlay"
-    mount -t tmpfs -o "mode=0755,rw,size=25%" root-tmpfs /media/root-rw
+    mount -t tmpfs -o "mode=0755,rw,size=25%" root-tmpfs $rootRW
     eend $?
     sync
     # Create additional mountpoints and do the overlay mount
-    mkdir -p /media/root-rw/work /media/root-rw/root
+    mkdir -p $rootRW/work $rootRW/root
     ebegin "Mount rootfs overlay into sysroot"
-    mount -t overlay -o lowerdir=/run/rootfsbase,upperdir=/media/root-rw/root,workdir=/media/root-rw/work overlayfs $sysroot
+    mount -t overlay -o lowerdir=$rootfsbase,upperdir=$rootRW/root,workdir=$rootRW/work overlayfs $sysroot
     eend $?
     sync
     rd_break pre-immucore
@@ -447,9 +455,9 @@ if grep -q cdroot /proc/cmdline || grep -q netboot /proc/cmdline;then
     cat "$ROOT"/proc/mounts 2>/dev/null | while read DEV DIR TYPE OPTS ; do
       # shellcheck disable=SC2166
       if [ "$DIR" != "/" -a "$DIR" != "$sysroot" -a -d "$DIR" ]; then
-        ebegin "Moving $DIR to $sysroot/$DIR"
-        mkdir -p $sysroot/$DIR
-        mount -o move $DIR $sysroot/$DIR
+        ebegin "Moving $DIR to $sysroot$DIR"
+        mkdir -p $sysroot$DIR
+        mount -o move $DIR $sysroot$DIR
         eend $?
       fi
     done
