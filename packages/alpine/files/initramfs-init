@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSION=3.8.1-kairos3
+VERSION=3.8.1-kairos4
 INIT=/sbin/init
 sysroot="$ROOT"/sysroot
 # This is where we mount the livecd
@@ -209,9 +209,9 @@ retry() {
   done
 }
 
-# uses the first "eth" interface with state 'up'.
+# uses the first network interface with state 'up'.
 ip_choose_if() {
-	for x in "$ROOT"/sys/class/net/eth*; do
+	for x in "$ROOT"/sys/class/net/*; do
 		if grep -iq up $x/operstate 2>/dev/null;then
 			[ -e "$x" ] && echo ${x##*/} && return
 		fi
