@@ -16,15 +16,28 @@ if [ "$FORCE" != "true" ]; then
     fi
 
     if [ "$CURRENT_VERSION" == "$UPDATE_VERSION" ]; then
-      echo Update to date
+      echo Up to date
       echo "Current version: ${CURRENT_VERSION}"
       echo "Update version: ${UPDATE_VERSION}"
       exit 0
     fi
 fi
 
-mount --rbind "${HOST_DIR}"/dev /dev
-mount --rbind "${HOST_DIR}"/run /run
-kairos-agent upgrade --source dir:/
-nsenter -i -m -t 1 -- reboot
-exit 1
+mount --rbind $HOST_DIR/dev /dev
+mount --rbind $HOST_DIR/run /run
+
+recovery_mode=false
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        --recovery) recovery_mode=true;;
+    esac
+    shift
+done
+if [ "$recovery_mode" = true ]; then
+    kairos-agent upgrade --recovery --source dir:/
+    exit 0 # no need to reboot when upgrading recovery
+else
+    kairos-agent upgrade --source dir:/
+    nsenter -i -m -t 1 -- reboot
+    exit 1
+fi
