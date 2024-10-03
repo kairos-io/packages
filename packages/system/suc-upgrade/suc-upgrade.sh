@@ -22,8 +22,9 @@ while [[ "$#" -gt 0 ]]; do
 done
 if [ "$recovery_mode" = true ]; then
     kairos-agent upgrade --recovery --source dir:/
+    exit 0 # no need to reboot when upgrading recovery
 else
     kairos-agent upgrade --source dir:/
+    nsenter -i -m -t 1 -- reboot
+    exit 1
 fi
-nsenter -i -m -t 1 -- reboot
-exit 1
