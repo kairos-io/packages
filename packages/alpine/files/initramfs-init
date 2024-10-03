@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSION=3.8.2-kairos4
+VERSION=3.8.2-kairos5
 INIT=/sbin/init
 sysroot="$ROOT"/sysroot
 # This is where we mount the livecd
@@ -211,9 +211,8 @@ retry() {
 
 # uses the first network interface with state 'up'.
 ip_choose_if() {
-	for x in "$ROOT"/sys/class/net/*; do
+	for x in "$ROOT"/sys/class/net/eth*; do
     # skip lo device
-    if [ "${x##*/}" == "lo" ];then continue; fi
 		if grep -iq up $x/operstate 2>/dev/null;then
 			[ -e "$x" ] && echo ${x##*/} && return
 		fi
@@ -222,9 +221,8 @@ ip_choose_if() {
 }
 
 device_up() {
-	for x in "$ROOT"/sys/class/net/*; do
+	for x in "$ROOT"/sys/class/net/eth*; do
 	  # skip lo device
-    if [ "${x##*/}" == "lo" ];then continue; fi
 		if grep -iq up $x/operstate 2>/dev/null;then
 		  [ -e "$x" ] && echo "Found up device: ${x##*/}" && return
 		fi
