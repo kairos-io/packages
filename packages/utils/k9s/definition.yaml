@@ -1,7 +1,6 @@
 name: "k9s"
 category: "utils"
-version: "0.32.5"
-tag: "0.31.7"
+version: "0.32.5+1"
 platform: Linux
 labels:
   github.repo: "k9s"
