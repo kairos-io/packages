@@ -22,6 +22,7 @@ stages:
       commands:
         - |
           . /etc/os-release
+          [ -f "/etc/kairos-release" ] && . /etc/kairos-release 
           echo >> /etc/issue
           echo "You are booting from recovery mode. Run 'kairos-agent reset' to reset the system to $VERSION" >> /etc/issue
           echo " or 'kairos-agent upgrade' to upgrade the active partition" >> /etc/issue
