@@ -67,8 +67,6 @@ stages:
            source "(${bootfile_loc})${bootfile}"
         fi
         EOF
-    # Overrides the active cmdline by adding "rd.emergency=reboot", "rd.shell=0" and "panic=5"
-    # so that any failure in booting initramfs or kernel loading results in a reboot.
     # It loads then the boot assessment environment and overrides default boot target if
     # a boot failure is detected.
     # A boot is considered failed when both sentinel are present ( upgrade triggered, tentative ).
@@ -83,7 +81,6 @@ stages:
         group: 0
         permsisions: 0600
         content: |
-            set extra_active_cmdline="rd.emergency=reboot rd.shell=0 panic=5 systemd.crash_reboot systemd.crash_shell=0"
             set boot_assessment="/boot_assessment"
             search --no-floppy --file --set=boot_assessment_blk "${boot_assessment}"
             if [ "${boot_assessment_blk}" ]; then
