@@ -22,6 +22,7 @@ depends() {
 
     # shellcheck disable=SC2144
     # add network-legacy module if it exists
+    # shellcheck disable=SC2154
     if [ -d "${dracutbasedir}"/modules.d/??network-legacy ]; then
         network_handler="network-legacy"
     fi

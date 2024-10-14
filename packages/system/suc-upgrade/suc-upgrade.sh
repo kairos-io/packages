@@ -4,14 +4,18 @@ HOST_DIR="${HOST_DIR:-/host}"
 
 if [ "$FORCE" != "true" ]; then
     if [ -f "/etc/kairos-release" ]; then
+      # shellcheck disable=SC1091
       UPDATE_VERSION=$(source /etc/kairos-release && echo "${KAIROS_VERSION}")
     else
+      # shellcheck disable=SC1091
       UPDATE_VERSION=$(source /etc/os-release && echo "${KAIROS_VERSION}")
     fi
 
     if [ -f "/etc/kairos-release" ]; then
+      # shellcheck disable=SC1091
       CURRENT_VERSION=$(source "${HOST_DIR}"/etc/kairos-release && echo "${KAIROS_VERSION}")
     else
+      # shellcheck disable=SC1091
       CURRENT_VERSION=$(source "${HOST_DIR}"/etc/os-release && echo "${KAIROS_VERSION}")
     fi
 
@@ -23,8 +27,8 @@ if [ "$FORCE" != "true" ]; then
     fi
 fi
 
-mount --rbind $HOST_DIR/dev /dev
-mount --rbind $HOST_DIR/run /run
+mount --rbind "$HOST_DIR"/dev /dev
+mount --rbind "$HOST_DIR"/run /run
 
 recovery_mode=false
 while [[ "$#" -gt 0 ]]; do
