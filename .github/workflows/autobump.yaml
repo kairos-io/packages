@@ -3,7 +3,7 @@ name: Autobump
 on:
   workflow_dispatch:
   schedule:
-    - cron:  '0 20 * * *'
+    - cron: '0 20 * * *'
 jobs:
   bump:
     runs-on: ubuntu-latest
@@ -62,5 +62,5 @@ jobs:
           git reset --hard upstream/${RESET_BRANCH}
           git push -fv -u origin $WORK_BRANCH
           export TREE_DIR=$PWD/packages
-          
+
           luet autobump-github
