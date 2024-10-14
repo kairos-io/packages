@@ -1,10 +1,10 @@
 name: "Default network configuration"
 stages:
   rootfs.before:
-    - name: "Enable systemd-network config files for DHCP" # Needed if systemd-networkd runs in the initramfs!
+    - name: "Enable systemd-network config files for DHCP"  # Needed if systemd-networkd runs in the initramfs!
       if: '[ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ]'
       directories:
-        - path: "/etc/systemd/network/" # doesnt exist on initramfs
+        - path: "/etc/systemd/network/"  # doesnt exist on initramfs
           permissions: 0775
           owner: 0
           group: 0
@@ -32,7 +32,7 @@ stages:
             [DHCP]
             ClientIdentifier=mac
       commands:
-        - networkctl reload # make sure it reloads our config files
+        - networkctl reload  # make sure it reloads our config files
   initramfs:
     - name: "Enable systemd-network config files for DHCP"
       if: '[ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ]'
@@ -60,7 +60,7 @@ stages:
             [DHCP]
             ClientIdentifier=mac
       commands:
-        - networkctl reload # make sure it reloads our config files
+        - networkctl reload  # make sure it reloads our config files
     - name: "Disable NetworkManager and wicked"
       if: '[ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ]'
       systemctl:
@@ -82,12 +82,12 @@ stages:
     - name: "Reload systemd-networkd config"
       if: '[ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ]'
       commands:
-        - networkctl reload # make sure it reloads our config files
+        - networkctl reload  # make sure it reloads our config files
   fs:
     - name: "Reload systemd-networkd config"
       if: '[ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ]'
       commands:
-        - networkctl reload # make sure it reloads our config files
+        - networkctl reload  # make sure it reloads our config files
 #     dns:
 #      path: /etc/resolv.conf
 #      nameservers:
