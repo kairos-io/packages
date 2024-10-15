@@ -50,7 +50,7 @@ jobs:
         git fetch --prune --unshallow
         mkdir build
     - name: Download meta 🔧
-      uses: luet-lab/luet-github-action@master
+      uses: luet-lab/luet-github-action@v0.2.2
       with:
         FINAL_REPO: quay.io/kairos/packages
         REPOSITORY_TYPE: docker
@@ -58,7 +58,7 @@ jobs:
         downloadFromList: true
         downloadMeta: true
     - name: Build packages 🔧
-      uses: luet-lab/luet-github-action@master
+      uses: luet-lab/luet-github-action@v0.2.2
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
       with:
         build: true
@@ -73,7 +73,7 @@ jobs:
         pushCache: true
         values: values/amd64.yaml
     - name: Create repo 🔧
-      uses: luet-lab/luet-github-action@master
+      uses: luet-lab/luet-github-action@v0.2.2
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
       with:
         FINAL_REPO: quay.io/kairos/packages
@@ -84,3 +84,6 @@ jobs:
         createRepo: true
         pushCache: true
         revisionSHA: true
+    - name: Summary info
+      run: |
+        echo "Repo created at quay.io/kairos/packages:${{ steps.create_repo.outputs.LUET_PUSHED_REPO }}-repository.yaml" >> $GITHUB_STEP_SUMMARY
