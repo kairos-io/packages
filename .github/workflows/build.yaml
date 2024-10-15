@@ -74,6 +74,7 @@ jobs:
         values: values/amd64.yaml
     - name: Create repo 🔧
       uses: luet-lab/luet-github-action@v0.2.2
+      id: create_repo
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
       with:
         FINAL_REPO: quay.io/kairos/packages
