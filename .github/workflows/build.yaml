@@ -1,82 +1,23 @@
 name: Build
-concurrency:
-  group: "master-build"
-  #cancel-in-progress: true
+
 
 on:
-  push:
-    branches: [ main ]
+  pull_request:
 jobs:
-
   build:
     runs-on: fast
     env:
       ARCH: amd64
     steps:
-    - name: Release space from worker
-      run: |
-          echo "Listing top largest packages"
-          pkgs=$(dpkg-query -Wf '${Installed-Size}\t${Package}\t${Status}\n' | awk '$NF == "installed"{print $1 "\t" $2}' | sort -nr)
-          head -n 30 <<< "${pkgs}"
-          echo
-          df -h
-          echo
-          sudo apt-get remove -y '^llvm-.*|^libllvm.*' || true
-          sudo apt-get remove --auto-remove android-sdk-platform-tools || true
-          sudo apt-get purge --auto-remove android-sdk-platform-tools || true
-          sudo rm -rf /usr/local/lib/android
-          sudo apt-get remove -y '^dotnet-.*|^aspnetcore-.*' || true
-          sudo rm -rf /usr/share/dotnet
-          sudo apt-get remove -y '^mono-.*' || true
-          sudo apt-get remove -y '^ghc-.*' || true
-          sudo apt-get remove -y '.*jdk.*|.*jre.*' || true
-          sudo apt-get remove -y 'php.*' || true
-          sudo apt-get remove -y hhvm powershell firefox monodoc-manual msbuild || true
-          sudo apt-get remove -y '^google-.*' || true
-          sudo apt-get remove -y azure-cli || true
-          sudo apt-get remove -y '^mongo.*-.*|^postgresql-.*|^mysql-.*|^mssql-.*' || true
-          sudo apt-get remove -y '^gfortran-.*' || true
-          sudo apt-get autoremove -y
-          sudo apt-get clean
-          echo
-          echo "Listing top largest packages"
-          pkgs=$(dpkg-query -Wf '${Installed-Size}\t${Package}\t${Status}\n' | awk '$NF == "installed"{print $1 "\t" $2}' | sort -nr)
-          head -n 30 <<< "${pkgs}"
-          echo
-          sudo rm -rfv build || true
-          df -h
     - uses: actions/checkout@v4
     - run: |
         git fetch --prune --unshallow
         mkdir build
-    - name: Download meta 🔧
-      uses: luet-lab/luet-github-action@master
-      with:
-        FINAL_REPO: quay.io/kairos/packages
-        REPOSITORY_TYPE: docker
-        downloadAllMeta: true
-        downloadFromList: true
-        downloadMeta: true
-    - name: Build packages 🔧
-      uses: luet-lab/luet-github-action@master
-      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-      with:
-        build: true
-        fromIndex: true
-        onlyMissing: true
-        FINAL_REPO: quay.io/kairos/packages
-        DOCKER_USERNAME: ${{ secrets.QUAY_USERNAME }}
-        DOCKER_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
-        DOCKER_ENDPOINT: quay.io
-        REPOSITORY_TYPE: docker
-        pushFinalImages: true
-        pushCache: true
-        values: values/amd64.yaml
     - name: Create repo 🔧
-      uses: luet-lab/luet-github-action@master
-      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+      id: create_repo
+      uses: itxaka/luet-github-action@master
       with:
-        FINAL_REPO: quay.io/kairos/packages
+        FINAL_REPO: ttl.sh
         DOCKER_USERNAME: ${{ secrets.QUAY_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
         DOCKER_ENDPOINT: quay.io
@@ -84,3 +25,7 @@ jobs:
         createRepo: true
         pushCache: true
         revisionSHA: true
+    - name: Summary info
+      run: |
+        run: |
+          echo "Repo created at quay.io/kairos/packages:${{ steps.create_repo.outputs.LUET_PUSHED_REPO }}-repository.yaml" >> $GITHUB_STEP_SUMMARY
