@@ -46,12 +46,12 @@ stages:
             [Unit]
             Description=cOS system configuration
             Before=getty.target
-            
+
             [Service]
             Type=oneshot
             RemainAfterExit=yes
             ExecStart=/usr/bin/kairos-agent run-stage boot
-            
+
             [Install]
             WantedBy=multi-user.target
         - path: /etc/systemd/system/cos-setup-fs.service
@@ -65,12 +65,12 @@ stages:
             After=local-fs.target
             Wants=local-fs.target
             Before=sysinit.target
-            
+
             [Service]
             Type=oneshot
             RemainAfterExit=yes
             ExecStart=/usr/bin/kairos-agent run-stage fs
-            
+
             [Install]
             WantedBy=sysinit.target
         - path: /etc/systemd/system/cos-setup-network.service
@@ -81,12 +81,12 @@ stages:
             [Unit]
             Description=cOS setup after network
             After=network-online.target
-            
+
             [Service]
             Type=oneshot
             RemainAfterExit=yes
             ExecStart=/usr/bin/kairos-agent run-stage network
-            
+
             [Install]
             WantedBy=multi-user.target
         - path: /etc/systemd/system/cos-setup-reconcile.service
@@ -96,7 +96,7 @@ stages:
           content: |
             [Unit]
             Description=cOS setup reconciler
-            
+
             [Service]
             Nice=19
             IOSchedulingClass=2
@@ -106,7 +106,7 @@ stages:
             TimeoutStopSec=180
             KillMode=process
             KillSignal=SIGINT
-            
+
             [Install]
             WantedBy=multi-user.target
         - path: /etc/systemd/system/cos-setup-reconcile.timer
@@ -116,12 +116,12 @@ stages:
           content: |
             [Unit]
             Description=cOS setup reconciler
-            
+
             [Timer]
             OnBootSec=5min
             OnUnitActiveSec=60min
             Unit=cos-setup-reconcile.service
-            
+
             [Install]
             WantedBy=multi-user.target
     - name: "Enable systemd services"

@@ -1,0 +1,13 @@
+name: Lint
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+permissions: read-all
+jobs:
+  call-workflow:
+    uses: kairos-io/linting-composite-action/.github/workflows/reusable-linting.yaml@8dd82218a024735daac578d2588522a5b4bb2614  # v0.0.9
+    with:
+      yamldirs: ".github/workflows/ packages/static/kairos-overlay-files/files"
+      is-go: false

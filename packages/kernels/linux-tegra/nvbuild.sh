@@ -37,6 +37,7 @@ set -e
 SCRIPT_DIR="$(dirname $(readlink -f "${0}"))"
 SCRIPT_NAME="$(basename "${0}")"
 
+# shellcheck disable=SC1091
 . "${SCRIPT_DIR}/nvcommon_build.sh"
 
 function usage {

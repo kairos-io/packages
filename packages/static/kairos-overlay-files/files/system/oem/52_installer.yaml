@@ -52,7 +52,7 @@ stages:
         [ -f "/sbin/openrc" ]
       commands:
         - rc-service kairos-webui start
-    - if: | 
+    - if: |
         ([ -f /run/cos/live_mode ] || [ -f /run/cos/uki_install_mode ]) && \
         ( [ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] )
       commands:
