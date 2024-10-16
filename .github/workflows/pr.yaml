@@ -57,7 +57,6 @@ jobs:
         values: values/arm64.yaml
         buildx: true
         platform: linux/arm64
-
   build:
     runs-on: fast
     env:
