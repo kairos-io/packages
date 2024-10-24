@@ -8,24 +8,24 @@ env:
 
 prelude:
 - apt-get update && apt-get install -y git libclang-dev libssl-dev libtss2-dev libzmq3-dev pkg-config cargo make
-- PACKAGE_VERSION=v${PACKAGE_VERSION%\+*} && git clone --depth=1 --branch ${PACKAGE_VERSION} https://github.com/${GITHUB_ORG}/${GITHUB_REPO}
+- PACKAGE_VERSION=v${PACKAGE_VERSION%\-*} && git clone --depth=1 --branch ${PACKAGE_VERSION} https://github.com/${GITHUB_ORG}/${GITHUB_REPO}
 
 steps:
 # build
 - cd ${GITHUB_REPO} && RELEASE=1 TARGETDIR=/build make all
 # create target dirs for package
-- mkdir -p /package/usr/local/bin/
+- mkdir -p /package/usr/bin/
 - mkdir -p /package/etc/keylime/
 - mkdir -p /package/etc/systemd/system/
 - mkdir -p /package/usr/libexec/keylime/
 # Copy binaries
-- cp /build/release/keylime_agent /package/usr/local/bin/
-- cp /build/release/keylime_ima_emulator /package/usr/local/bin/
+- cp /build/release/keylime_agent /package/usr/bin/
+- cp /build/release/keylime_ima_emulator /package/usr/bin/
 # copy default config
 - cp ${GITHUB_REPO}/keylime-agent.conf /package/etc/keylime/
 # copy systemd services
-- cp ${GITHUB_REPO}/dist/systemd/system/keylime_agent.service /package/etc/systemd/system/
-- cp ${GITHUB_REPO}/dist/systemd/system/var-lib-keylime-secure.mount /package/etc/systemd/system/
+- cp keylime-agent.service /package/etc/systemd/system/
+- cp var-lib-keylime-secure.mount /package/etc/systemd/system/
 # Some kind of needed shim for a bug
 # Remove when https://github.com/keylime/rust-keylime/issues/325 is fixed
 - cp ${GITHUB_REPO}/keylime-agent/tests/actions/shim.py /package/usr/libexec/keylime/

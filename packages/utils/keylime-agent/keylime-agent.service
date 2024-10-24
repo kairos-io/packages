@@ -1,0 +1,20 @@
+[Unit]
+Description=The Keylime compute agent
+StartLimitInterval=10s
+StartLimitIntervalSec=10
+StartLimitBurst=5
+Requires=var-lib-keylime-secure.mount
+After=var-lib-keylime-secure.mount
+After=network-online.target
+Wants=network-online.target
+ConditionPathExistsGlob=/dev/(tpm|tpmrm)[0-9]*
+
+[Service]
+ExecStart=/usr/bin/keylime_agent
+TimeoutSec=60s
+Restart=on-failure
+RestartSec=120s
+Environment="RUST_LOG=keylime_agent=info"
+
+[Install]
+WantedBy=default.target
