@@ -6,7 +6,7 @@ Before=keylime-agent.service
 What=tmpfs
 Where=/var/lib/keylime/secure
 Type=tmpfs
-Options=mode=0700,size=1m,uid=tss,gid=tss
+Options=mode=0700,size=1m,uid=keylime,gid=tss
 
 [Install]
 WantedBy=multi-user.target
