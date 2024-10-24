@@ -1,0 +1,6 @@
+name: "keylime-agent"
+category: "utils"
+version: "0.2.6"
+labels:
+  github.repo: "rust-keylime"
+  github.owner: "keylime"
