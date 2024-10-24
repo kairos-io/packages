@@ -7,7 +7,8 @@ Requires=var-lib-keylime-secure.mount
 After=var-lib-keylime-secure.mount
 After=network-online.target
 Wants=network-online.target
-ConditionPathExistsGlob=/dev/(tpm|tpmrm)[0-9]*
+ConditionPathExistsGlob=/dev/tpm[0-9]*
+ConditionPathExistsGlob=/dev/tpmrm[0-9]*
 
 [Service]
 ExecStart=/usr/bin/keylime_agent
