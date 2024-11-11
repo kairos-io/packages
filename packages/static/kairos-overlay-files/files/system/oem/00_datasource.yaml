@@ -2,7 +2,10 @@ name: "Datasource handling"
 stages:
   rootfs.before:
     - &datasource
-      if: '[ ! -f /oem/userdata ]'
+      if: |
+        (grep -q "install-mode" /proc/cmdline || grep -q "nodepair.enable" /proc/cmdline ) && \
+        ([ -f /run/cos/live_mode ] || [ -f /run/cos/uki_install_mode ]) && \
+        ( [ ! -f /oem/userdata ] )
       name: "Pull data from provider"
       datasource:
         providers: ["cdrom", "gcp", "openstack", "aws", "azure", "hetzner", "packet", "vultr", "digitalocean", "metaldata", "vmware", "config-drive"]
