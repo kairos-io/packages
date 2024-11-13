@@ -68,8 +68,8 @@ packages:
   - name: toolchain-go
     category: fips
     variant: "alpine"
-    version: "1.23.1"
-    tag: "1.23.1"
+    version: "1.23.3"
+    tag: "1.23.3"
     hidden: true
   - name: toolchain-go-ubuntu
     category: fips
@@ -79,7 +79,7 @@ packages:
     hidden: true
   - name: toolchain-go-ubuntu
     category: fips
-    variant: "bullseye"
-    version: "1.23.1"
-    tag: "1.23.1"
+    variant: "bookworm"
+    version: "1.23.3"
+    tag: "1.23.3"
     hidden: true
