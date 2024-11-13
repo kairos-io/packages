@@ -13,7 +13,7 @@ env:
 steps:
 - |
   PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && \
-  cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/  && git checkout v"${PACKAGE_VERSION}" -b build && go build -ldflags="-w -s -X main.version=v$PACKAGE_VERSION" && mv {{.Values.name}} /usr/bin/
+  cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/  && git checkout v"${PACKAGE_VERSION}" -b build && go build -ldflags="-w -s -X main.version=v$PACKAGE_VERSION" -o {{.Values.name}} && mv {{.Values.name}} /usr/bin/
 
       
 - upx -1 /usr/bin/{{.Values.name}}
