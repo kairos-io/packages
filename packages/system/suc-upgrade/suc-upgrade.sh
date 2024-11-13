@@ -1,6 +1,9 @@
 #!/bin/bash
 set -x -e
 HOST_DIR="${HOST_DIR:-/host}"
+SUC_VERSION="0.0.0"
+
+echo "SUC_VERSION: $SUC_VERSION"
 
 if [ "$FORCE" != "true" ]; then
     if [ -f "/etc/kairos-release" ]; then
@@ -11,7 +14,7 @@ if [ "$FORCE" != "true" ]; then
       UPDATE_VERSION=$(source /etc/os-release && echo "${KAIROS_VERSION}")
     fi
 
-    if [ -f "/etc/kairos-release" ]; then
+    if [ -f "${HOST_DIR}/etc/kairos-release" ]; then
       # shellcheck disable=SC1091
       CURRENT_VERSION=$(source "${HOST_DIR}"/etc/kairos-release && echo "${KAIROS_VERSION}")
     else
