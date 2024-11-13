@@ -1,0 +1,10 @@
+name: auroraboot
+category: utils
+version: "0.3.1"
+labels:
+  github.repo: "AuroraBoot"
+  github.owner: "kairos-io"
+uri:
+  - https://github.com/kairos-io/AuroraBoot
+license: "Apache-2"
+description: "The Kairos bootstrapper"
