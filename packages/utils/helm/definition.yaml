@@ -1,6 +1,6 @@
 name: "helm"
 category: "utils"
-version: "3.16.2"
+version: "3.16.3"
 description: "The Kubernetes Package Manager"
 license: "Apache-2.0"
 labels:
