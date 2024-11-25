@@ -30,4 +30,4 @@ stages:
       if: '([ -e "/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ]) && [ -e "/run/cos/uki_boot_mode" ]'
       systemctl:
         enable:
-          - name: "systemd-bless-boot"
+          - "systemd-bless-boot"
