@@ -40,7 +40,7 @@ packages:
     description: " Lightweight Kubernetes "
   - name: k3s-systemd
     category: k8s
-    version: "1.31.2"
+    version: "1.31.3-rc1"
     k3s_version: "1"
     labels:
       github.owner: "k3s-io"
