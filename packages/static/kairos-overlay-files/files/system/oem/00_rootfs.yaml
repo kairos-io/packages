@@ -140,8 +140,18 @@ stages:
       name: "Restore /etc/machine-id for systemd systems"
       commands:
         - cat /usr/local/etc/machine-id > /etc/machine-id
+    # If we didn't restore it already, ensure /etc/machine-id is generated
+    - if: '[ -e "/sbin/systemctl" ] || [ -e "/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ]'
+      name: "Ensure /etc/machine-id for systemd systems"
+      commands:
+        # https://www.freedesktop.org/software/systemd/man/latest/systemd-machine-id-commit.service.html
+        # https://www.freedesktop.org/software/systemd/man/latest/systemd-machine-id-setup.html
+        # Mask the commit service to avoid systemd messing with machine-id.
+        - ln -s /dev/null /etc/systemd/system/systemd-machine-id-commit.service
+        - systemd-machine-id-setup
+
     - if: '[ ! -f "/run/cos/recovery_mode" ] && [ -f "/sbin/openrc" ]'
-      name: "Restore /etc/machine-id for openrc systems"
+      name: "Ensure /etc/machine-id for openrc systems"
       commands:
         - dbus-uuidgen --ensure  # This makes sure that the machine-id exists and its valid
         - cat /var/lib/dbus/machine-id > /etc/machine-id
