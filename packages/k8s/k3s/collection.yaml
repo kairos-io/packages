@@ -1,7 +1,7 @@
 packages:
   - name: k3s-openrc
     category: k8s
-    version: "1.31.4-rc1"
+    version: "1.31.3"
     k3s_version: "1"
     labels:
       github.owner: "k3s-io"
