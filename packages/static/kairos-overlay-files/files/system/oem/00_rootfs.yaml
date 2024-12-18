@@ -106,6 +106,13 @@ stages:
           /var/run/cilium
           /var/snap
         PERSISTENT_STATE_BIND: "true"
+    - if: '[ -e "/sbin/systemctl" ] || [ -e "/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ]'
+      # Mask the commit service to avoid systemd messing with machine-id.
+      # https://www.freedesktop.org/software/systemd/man/latest/systemd-machine-id-commit.service.html
+      name: "Mask the commit service to avoid systemd messing with machine-id"
+      systemctl:
+        mask:
+          - systemd-machine-id-commit.service
   rootfs.after:
     - if: '[ -r /run/cos/custom-layout.env ] && [ ! -f "/run/cos/recovery_mode" ] && [ ! -f /run/cos/live_mode ]'
       name: "add custom bind and ephemeral mounts to /run/cos/cos-layout.env"
@@ -140,8 +147,15 @@ stages:
       name: "Restore /etc/machine-id for systemd systems"
       commands:
         - cat /usr/local/etc/machine-id > /etc/machine-id
+    # If we didn't restore it already, ensure /etc/machine-id is generated
+    - if: '[ -e "/sbin/systemctl" ] || [ -e "/bin/systemctl" ] || [ -e "/usr/sbin/systemctl" ] || [ -e "/usr/bin/systemctl" ]'
+      name: "Ensure /etc/machine-id for systemd systems"
+      commands:
+        # https://www.freedesktop.org/software/systemd/man/latest/systemd-machine-id-setup.html
+        - systemd-machine-id-setup
+
     - if: '[ ! -f "/run/cos/recovery_mode" ] && [ -f "/sbin/openrc" ]'
-      name: "Restore /etc/machine-id for openrc systems"
+      name: "Ensure /etc/machine-id for openrc systems"
       commands:
         - dbus-uuidgen --ensure  # This makes sure that the machine-id exists and its valid
         - cat /var/lib/dbus/machine-id > /etc/machine-id
