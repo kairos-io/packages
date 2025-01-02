@@ -54,7 +54,7 @@ jobs:
         FINAL_REPO: quay.io/kairos/packages
         REPOSITORY_TYPE: docker
         downloadAllMeta: true
-        downloadFromList: true
+        downloadFromList: false
         downloadMeta: true
     - name: Build packages 🔧
       uses: luet-lab/luet-github-action@v0.2.2
