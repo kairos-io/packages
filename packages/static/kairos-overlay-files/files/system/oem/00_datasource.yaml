@@ -2,7 +2,7 @@ name: "Datasource handling"
 stages:
   rootfs.before:
     - &datasource
-      if: '[ ! -f /oem/userdata ] && [ ! -f /run/cos/uki_boot_mode ]'
+      if: '[ ! -f /oem/userdata ] && ([ ! -f /run/cos/uki_boot_mode ] || grep -q "kairos.pull_datasources" /proc/cmdline )'
       name: "Pull data from provider"
       datasource:
         providers: ["cdrom", "gcp", "openstack", "aws", "azure", "hetzner", "packet", "vultr", "digitalocean", "metaldata", "vmware", "config-drive"]
