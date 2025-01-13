@@ -56,6 +56,6 @@ Contribute
 
 ## Packages
 
-This repository contains package definitions built with [luet](https://luet.io) and available as standard OCI images for consumption with Dockerfiles.
+This repository contains package definitions built with [luet](https://luet.io) and available as standard OCI images for consumption with Dockerfiles under https://quay.io/repository/kairos/packages and https://quay.io/repository/kairos/packages-arm64
 
 A list of the packages can be access via web at: https://packages.kairos.io/
