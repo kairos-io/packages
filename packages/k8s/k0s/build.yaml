@@ -1,0 +1,42 @@
+requires:
+- name: "toolchain-go-ubuntu"
+  category: "development"
+  version: ">=0"
+env:
+  # Remove any possible "+N" from the end of the version. We only bump that to
+  # avoid overwritting existing images when we want the package to be rebuilt.
+  - K0S_VERSION=v{{ regexReplaceAll "\\+\\d+$" .Values.version "" }}+k0s.{{.Values.k0s_version}}
+  {{$arch:=(default "amd64" .Values.arch)}}
+  {{ if eq $arch "arm" }}
+  - ARCH=arm64
+  {{ else }}
+  - ARCH={{ $arch }}
+  {{ end }}
+steps:
+  - c
+  # Let the installer script install service files for openrc or systemd:
+  # https://github.com/k3s-io/k3s/blob/36645e7311e9bdbbf2adb79ecd8bd68556bc86f6/install.sh#L114-L122
+  {{ if eq .Values.name "k0s-openrc" }}
+  - touch /sbin/openrc-run && chmod +x /sbin/openrc-run
+  {{ else }}
+  - touch /bin/systemctl && chmod +x /bin/systemctl
+  - mkdir -p /etc/systemd/system/
+  {{ end }}
+  - bash installer.sh
+  - bash installer.sh agent
+  - rm -rf installer.sh
+  - chmod +x /usr/local/bin/k0s
+  - upx -1 /usr/local/bin/k0s
+
+includes:
+- ^/usr/local/bin/k0s
+{{ if eq .Values.name "k0s-openrc" }}
+- ^/etc/init.d/$
+- ^/etc/init.d/k0s*
+- ^/etc/k0s/$
+- ^/etc/k0s/k0s$
+{{ else }}
+- ^/etc/systemd$
+- ^/etc/systemd/system$
+- ^/etc/systemd/system/k0s*.service$
+{{ end }}
