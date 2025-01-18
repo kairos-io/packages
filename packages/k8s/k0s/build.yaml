@@ -11,7 +11,7 @@ env:
   - ARCH={{ $arch }}
   {{ end }}
 steps:
-  - c
+  - curl -sfL https://get.k0s.io > installer.sh
   {{ if eq .Values.name "k0s-openrc" }}
   - touch /sbin/openrc-run && chmod +x /sbin/openrc-run
   {{ else }}
