@@ -17,10 +17,12 @@ steps:
   {{ else }}
   - touch /bin/systemctl && chmod +x /bin/systemctl
   - mkdir -p /etc/systemd/system/
+  # force systemd service check by k0s installer
+  - mkdir -p /run/systemd/system
   {{ end }}
   - bash installer.sh
-  - bash installer.sh agent
   - rm -rf installer.sh
+  - k0s install controller --single --debug --verbose
   - chmod +x /usr/local/bin/k0s
   - upx -1 /usr/local/bin/k0s
 
