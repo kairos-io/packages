@@ -29,7 +29,7 @@ jobs:
         FINAL_REPO: quay.io/kairos/packages-arm64
         REPOSITORY_TYPE: docker
         downloadAllMeta: true
-        downloadFromList: true
+        downloadFromList: false
         downloadMeta: true
         # renovate: datasource=github-releases depName=mudler/luet
         luetVersion: 0.36.0
