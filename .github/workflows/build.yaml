@@ -56,6 +56,8 @@ jobs:
         downloadAllMeta: true
         downloadFromList: false
         downloadMeta: true
+        # renovate: datasource=github-releases depName=mudler/luet
+        luetVersion: 0.36.0
     - name: Build packages 🔧
       uses: luet-lab/luet-github-action@v0.2.2
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
@@ -71,6 +73,8 @@ jobs:
         pushFinalImages: true
         pushCache: true
         values: values/amd64.yaml
+        # renovate: datasource=github-releases depName=mudler/luet
+        luetVersion: 0.36.0
     - name: Create repo 🔧
       uses: luet-lab/luet-github-action@v0.2.2
       id: create_repo
@@ -84,6 +88,8 @@ jobs:
         createRepo: true
         pushCache: true
         revisionSHA: true
+        # renovate: datasource=github-releases depName=mudler/luet
+        luetVersion: 0.36.0
     - name: Summary info
       run: |
         echo "Repo created at quay.io/kairos/packages:${{ steps.create_repo.outputs.LUET_PUSHED_REPO }}-repository.yaml" >> $GITHUB_STEP_SUMMARY

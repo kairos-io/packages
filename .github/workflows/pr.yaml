@@ -57,6 +57,8 @@ jobs:
         values: values/arm64.yaml
         buildx: true
         platform: linux/arm64
+        # renovate: datasource=github-releases depName=mudler/luet
+        luetVersion: 0.36.0
 
   build:
     runs-on: fast
@@ -75,6 +77,8 @@ jobs:
           downloadAllMeta: false
           downloadFromList: true
           downloadMeta: true
+          # renovate: datasource=github-releases depName=mudler/luet
+          luetVersion: 0.36.0
       - name: Build packages 🔧
         uses: luet-lab/luet-github-action@v0.2.2
         with:
@@ -87,3 +91,5 @@ jobs:
           pushFinalImages: false
           pushCache: false
           values: values/amd64.yaml
+          # renovate: datasource=github-releases depName=mudler/luet
+          luetVersion: 0.36.0
