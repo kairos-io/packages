@@ -2,7 +2,7 @@ packages:
   - name: k0s-openrc
     category: k8s
     version: "1.31.3"
-    k3s_version: "0"
+    k0s_version: "0"
     labels:
       github.owner: "k0sproject"
       github.repo: "k0s"
@@ -15,7 +15,7 @@ packages:
   - name: k0s-openrc
     category: k8s
     version: "1.30.7"
-    k3s_version: "0"
+    k0s_version: "0"
     labels:
       github.owner: "k0sproject"
       github.repo: "k0s"
@@ -28,7 +28,7 @@ packages:
   - name: k0s-openrc
     category: k8s
     version: "1.29.11"
-    k3s_version: "0"
+    k0s_version: "0"
     labels:
       github.owner: "k0sproject"
       github.repo: "k0s"
@@ -41,7 +41,7 @@ packages:
   - name: k0s-systemd
     category: k8s
     version: "1.31.3"
-    k3s_version: "0"
+    k0s_version: "0"
     labels:
       github.owner: "k0sproject"
       github.repo: "k0s"
@@ -54,7 +54,7 @@ packages:
   - name: k0s-systemd
     category: k8s
     version: "1.30.7"
-    k3s_version: "0"
+    k0s_version: "0"
     labels:
       github.owner: "k0sproject"
       github.repo: "k0s"
@@ -67,7 +67,7 @@ packages:
   - name: k0s-systemd
     category: k8s
     version: "1.29.11"
-    k3s_version: "0"
+    k0s_version: "0"
     labels:
       github.owner: "k0sproject"
       github.repo: "k0s"
