@@ -4,18 +4,12 @@ requires:
   version: ">=0"
 env:
   - K0S_VERSION=v{{ regexReplaceAll "\\+\\d+$" .Values.version "" }}+k0s.{{.Values.k0s_version}}
-  {{$arch:=(default "amd64" .Values.arch)}}
-  {{ if eq $arch "arm" }}
-  - ARCH=arm64
-  {{ else }}
-  - ARCH={{ $arch }}
-  {{ end }}
 steps:
   - curl -sfL https://get.k0s.sh > installer.sh
   {{ if eq .Values.name "k0s-openrc" }}
   - touch /sbin/openrc-run && chmod +x /sbin/openrc-run
   {{ else }}
-  - touch /bin/systemctl && chmod +x /bin/systemctl
+  -  apt-get update && apt-get install -y systemctl
   - mkdir -p /etc/systemd/system/
   # force systemd service check by k0s installer
   - mkdir -p /run/systemd/system
