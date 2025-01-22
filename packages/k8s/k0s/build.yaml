@@ -10,6 +10,7 @@ env:
   - K0S_VERSION=v{{ regexReplaceAll "\\+\\d+$" .Values.version "" }}+k0s.{{.Values.k0s_version}}
 steps:
   {{ if eq .Values.name "k0s-openrc" }}
+  - apk update
   - apk add openrc curl upx
   {{ else }}
   - apt-get update && apt-get install -y systemctl
