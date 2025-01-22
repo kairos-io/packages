@@ -2,7 +2,7 @@
 image: "alpine"
 {{ else }}
 requires:
-- name: "toolchain-go-ubuntu"
+- name: "toolchain-ubuntu"
   category: "development"
   version: ">=0"
 {{ end }}
@@ -21,11 +21,8 @@ steps:
   - curl -sfL https://get.k0s.sh > installer.sh
   - sh installer.sh
   - rm -rf installer.sh
-  - k0s install controller --single --debug --verbose
   - chmod +x /usr/local/bin/k0s
-  - upx -1 /usr/local/bin/k0s
   - mv /usr/local/bin/k0s /usr/bin/k0s
-  - ls -las /usr/bin/k0s
 
 includes:
 - ^/usr/bin/k0s

@@ -1,7 +1,7 @@
 packages:
   - name: k0s-openrc
     category: k8s
-    version: "1.31.3"
+    version: "1.31.3-1"
     k0s_version: "0"
     labels:
       github.owner: "k0sproject"
@@ -14,7 +14,7 @@ packages:
     description: " The Zero Friction Kubernetes "
   - name: k0s-openrc
     category: k8s
-    version: "1.30.7"
+    version: "1.30.7-1"
     k0s_version: "0"
     labels:
       github.owner: "k0sproject"
@@ -27,7 +27,7 @@ packages:
     description: " The Zero Friction Kubernetes "
   - name: k0s-openrc
     category: k8s
-    version: "1.29.11"
+    version: "1.29.11-1"
     k0s_version: "0"
     labels:
       github.owner: "k0sproject"
@@ -40,7 +40,7 @@ packages:
     description: " The Zero Friction Kubernetes "
   - name: k0s-systemd
     category: k8s
-    version: "1.31.3"
+    version: "1.31.3-1"
     k0s_version: "0"
     labels:
       github.owner: "k0sproject"
@@ -53,7 +53,7 @@ packages:
     description: " The Zero Friction Kubernetes "
   - name: k0s-systemd
     category: k8s
-    version: "1.30.7"
+    version: "1.30.7-1"
     k0s_version: "0"
     labels:
       github.owner: "k0sproject"
@@ -66,7 +66,7 @@ packages:
     description: " The Zero Friction Kubernetes "
   - name: k0s-systemd
     category: k8s
-    version: "1.29.11"
+    version: "1.29.11-1"
     k0s_version: "0"
     labels:
       github.owner: "k0sproject"
