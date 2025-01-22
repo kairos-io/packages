@@ -20,9 +20,10 @@ steps:
   - k0s install controller --single --debug --verbose
   - chmod +x /usr/local/bin/k0s
   - upx -1 /usr/local/bin/k0s
+  - mv /usr/local/bin/k0s /usr/bin/k0s
 
 includes:
-- ^/usr/local/bin/k0s
+- ^/usr/bin/k0s
 {{ if eq .Values.name "k0s-openrc" }}
 - ^/etc/init.d/$
 - ^/etc/init.d/k0s*
