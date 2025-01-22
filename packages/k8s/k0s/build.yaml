@@ -1,10 +1,10 @@
-requires:
 {{ if eq .Values.name "k0s-openrc" }}
+image: "alpine"
+{{ else }}
+requires:
 - name: "toolchain-go-ubuntu"
   category: "development"
   version: ">=0"
-{{ else }}
-image: "alpine"
 {{ end }}
 env:
   - K0S_VERSION=v{{ regexReplaceAll "\\+\\d+$" .Values.version "" }}+k0s.{{.Values.k0s_version}}
@@ -19,12 +19,13 @@ steps:
   - mkdir -p /run/systemd/system
   {{ end }}
   - curl -sfL https://get.k0s.sh > installer.sh
-  - bash installer.sh
+  - sh installer.sh
   - rm -rf installer.sh
   - k0s install controller --single --debug --verbose
   - chmod +x /usr/local/bin/k0s
   - upx -1 /usr/local/bin/k0s
   - mv /usr/local/bin/k0s /usr/bin/k0s
+  - ls -las /usr/bin/k0s
 
 includes:
 - ^/usr/bin/k0s
