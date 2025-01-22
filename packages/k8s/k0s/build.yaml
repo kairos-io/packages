@@ -1,0 +1,41 @@
+{{ if eq .Values.name "k0s-openrc" }}
+image: "alpine"
+{{ else }}
+requires:
+- name: "toolchain-go-ubuntu"
+  category: "development"
+  version: ">=0"
+{{ end }}
+env:
+  - K0S_VERSION=v{{ regexReplaceAll "\\+\\d+$" .Values.version "" }}+k0s.{{.Values.k0s_version}}
+steps:
+  {{ if eq .Values.name "k0s-openrc" }}
+  - apk update
+  - apk add openrc curl upx
+  {{ else }}
+  - apt-get update && apt-get install -y systemctl
+  - mkdir -p /etc/systemd/system/
+  # required by https://github.com/kardianos/service/blob/becf2eb62b83ed01f5e782cb8da7bb739ded2bb5/service_systemd_linux.go#L23
+  - mkdir -p /run/systemd/system
+  {{ end }}
+  - curl -sfL https://get.k0s.sh > installer.sh
+  - sh installer.sh
+  - rm -rf installer.sh
+  - k0s install controller --single --debug --verbose
+  - chmod +x /usr/local/bin/k0s
+  - upx -1 /usr/local/bin/k0s
+  - mv /usr/local/bin/k0s /usr/bin/k0s
+  - ls -las /usr/bin/k0s
+
+includes:
+- ^/usr/bin/k0s
+{{ if eq .Values.name "k0s-openrc" }}
+- ^/etc/init.d/$
+- ^/etc/init.d/k0s*
+- ^/etc/k0s/$
+- ^/etc/k0s/k0s$
+{{ else }}
+- ^/etc/systemd$
+- ^/etc/systemd/system$
+- ^/etc/systemd/system/k0s*.service$
+{{ end }}
