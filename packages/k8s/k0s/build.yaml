@@ -9,7 +9,6 @@ image: "alpine"
 env:
   - K0S_VERSION=v{{ regexReplaceAll "\\+\\d+$" .Values.version "" }}+k0s.{{.Values.k0s_version}}
 steps:
-  - curl -sfL https://get.k0s.sh > installer.sh
   {{ if eq .Values.name "k0s-openrc" }}
   - apk add openrc curl upx
   {{ else }}
@@ -18,6 +17,7 @@ steps:
   # required by https://github.com/kardianos/service/blob/becf2eb62b83ed01f5e782cb8da7bb739ded2bb5/service_systemd_linux.go#L23
   - mkdir -p /run/systemd/system
   {{ end }}
+  - curl -sfL https://get.k0s.sh > installer.sh
   - bash installer.sh
   - rm -rf installer.sh
   - k0s install controller --single --debug --verbose
