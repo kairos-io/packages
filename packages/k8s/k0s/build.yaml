@@ -11,7 +11,7 @@ env:
 steps:
   - curl -sfL https://get.k0s.sh > installer.sh
   {{ if eq .Values.name "k0s-openrc" }}
-  - apk add openrc
+  - apk add openrc curl upx
   {{ else }}
   - apt-get update && apt-get install -y systemctl
   - mkdir -p /etc/systemd/system/
