@@ -1,16 +1,19 @@
 requires:
+{{ if eq .Values.name "k0s-openrc" }}
 - name: "toolchain-go-ubuntu"
   category: "development"
   version: ">=0"
+{{ else }}
+image: "alpine"
+{{ end }}
 env:
   - K0S_VERSION=v{{ regexReplaceAll "\\+\\d+$" .Values.version "" }}+k0s.{{.Values.k0s_version}}
 steps:
   - curl -sfL https://get.k0s.sh > installer.sh
   {{ if eq .Values.name "k0s-openrc" }}
-  # required by https://github.com/kardianos/service/blob/becf2eb62b83ed01f5e782cb8da7bb739ded2bb5/service_openrc_linux.go#L17
-  - touch /sbin/openrc-init && chmod +x /sbin/openrc-init
+  - apk add openrc
   {{ else }}
-  -  apt-get update && apt-get install -y systemctl
+  - apt-get update && apt-get install -y systemctl
   - mkdir -p /etc/systemd/system/
   # required by https://github.com/kardianos/service/blob/becf2eb62b83ed01f5e782cb8da7bb739ded2bb5/service_systemd_linux.go#L23
   - mkdir -p /run/systemd/system
