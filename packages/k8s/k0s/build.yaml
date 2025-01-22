@@ -7,11 +7,12 @@ env:
 steps:
   - curl -sfL https://get.k0s.sh > installer.sh
   {{ if eq .Values.name "k0s-openrc" }}
-  - touch /sbin/openrc-run && chmod +x /sbin/openrc-run
+  # required by https://github.com/kardianos/service/blob/becf2eb62b83ed01f5e782cb8da7bb739ded2bb5/service_openrc_linux.go#L17
+  - touch /sbin/openrc-init && chmod +x /sbin/openrc-init
   {{ else }}
   -  apt-get update && apt-get install -y systemctl
   - mkdir -p /etc/systemd/system/
-  # force systemd service check by k0s installer
+  # required by https://github.com/kardianos/service/blob/becf2eb62b83ed01f5e782cb8da7bb739ded2bb5/service_systemd_linux.go#L23
   - mkdir -p /run/systemd/system
   {{ end }}
   - bash installer.sh
