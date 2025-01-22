@@ -49,7 +49,7 @@ jobs:
         git fetch --prune --unshallow
         mkdir build
     - name: Download meta 🔧
-      uses: luet-lab/luet-github-action@v0.2.2
+      uses: luet-lab/luet-github-action@v0.3.0
       with:
         FINAL_REPO: quay.io/kairos/packages
         REPOSITORY_TYPE: docker
@@ -59,7 +59,7 @@ jobs:
         # renovate: datasource=github-releases depName=mudler/luet
         luetVersion: 0.36.0
     - name: Build packages 🔧
-      uses: luet-lab/luet-github-action@v0.2.2
+      uses: luet-lab/luet-github-action@v0.3.0
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
       with:
         build: true
@@ -76,7 +76,7 @@ jobs:
         # renovate: datasource=github-releases depName=mudler/luet
         luetVersion: 0.36.0
     - name: Create repo 🔧
-      uses: luet-lab/luet-github-action@v0.2.2
+      uses: luet-lab/luet-github-action@v0.3.0
       id: create_repo
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
       with:
