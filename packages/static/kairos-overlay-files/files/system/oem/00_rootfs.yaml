@@ -19,6 +19,7 @@ stages:
           /etc/cni
           /etc/init.d
           /etc/iscsi
+          /etc/k0s
           /etc/kubernetes
           /etc/modprobe.d
           /etc/pwx
@@ -44,6 +45,7 @@ stages:
           /var/lib/dbus
           /var/lib/etcd
           /var/lib/extensions
+          /var/lib/k0s
           /var/lib/kubelet
           /var/lib/longhorn
           /var/lib/osd
@@ -73,6 +75,7 @@ stages:
           /etc/cni
           /etc/init.d
           /etc/iscsi
+          /etc/k0s
           /etc/kubernetes
           /etc/modprobe.d
           /etc/pwx
@@ -94,6 +97,7 @@ stages:
           /var/lib/cni
           /var/lib/containerd
           /var/lib/calico
+          /var/lib/k0s
           /var/lib/kubelet
           /var/lib/longhorn
           /var/lib/osd
