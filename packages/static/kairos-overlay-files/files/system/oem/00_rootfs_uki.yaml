@@ -18,6 +18,7 @@ stages:
         PERSISTENT_STATE_PATHS: >-
           /etc/cni
           /etc/iscsi
+          /etc/k0s
           /etc/kubernetes
           /etc/modprobe.d
           /etc/rancher
@@ -40,6 +41,7 @@ stages:
           /var/lib/dbus
           /var/lib/etcd
           /var/lib/extensions
+          /var/lib/k0s
           /var/lib/kubelet
           /var/lib/longhorn
           /var/lib/rancher
