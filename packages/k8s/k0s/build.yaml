@@ -36,5 +36,6 @@ includes:
 {{ else }}
 - ^/etc/systemd$
 - ^/etc/systemd/system$
-- ^/etc/systemd/system/k0s*.service$
+- ^/etc/systemd/system/k0scontroller.service$
+- ^/etc/systemd/system/k0sworker.service$
 {{ end }}
