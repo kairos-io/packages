@@ -23,6 +23,8 @@ steps:
   - rm -rf installer.sh
   - chmod +x /usr/local/bin/k0s
   - mv /usr/local/bin/k0s /usr/bin/k0s
+  - /usr/bin/k0s install controller
+  - /usr/bin/k0s install worker
 
 includes:
 - ^/usr/bin/k0s
