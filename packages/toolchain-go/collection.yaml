@@ -47,8 +47,8 @@ packages:
   - name: toolchain-go-ubuntu
     variant: "bookworm"
     category: development
-    version: "1.20.2"
-    tag: "1.20.2"
+    version: "1.23.5"
+    tag: "1.23.5"
     hidden: true
     labels:
       autobump.revdeps: "false"

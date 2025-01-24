@@ -30,11 +30,11 @@ includes:
 - ^/usr/bin/k0s
 {{ if eq .Values.name "k0s-openrc" }}
 - ^/etc/init.d/$
-- ^/etc/init.d/k0s*
+- ^/etc/init.d/k0s.*
 - ^/etc/k0s/$
 - ^/etc/k0s/k0s$
 {{ else }}
 - ^/etc/systemd$
 - ^/etc/systemd/system$
-- ^/etc/systemd/system/k0s*.service$
+- ^/etc/systemd/system/k0s.*\.service$
 {{ end }}
