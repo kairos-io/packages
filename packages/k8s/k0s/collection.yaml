@@ -1,7 +1,7 @@
 packages:
   - name: k0s-openrc
     category: k8s
-    version: "1.31.3+3"
+    version: "FAKE7"
     k0s_version: "0"
     labels:
       github.owner: "k0sproject"
