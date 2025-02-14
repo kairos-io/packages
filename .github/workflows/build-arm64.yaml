@@ -33,6 +33,7 @@ jobs:
         downloadMeta: true
         # renovate: datasource=github-releases depName=mudler/luet
         luetVersion: 0.36.0
+        luetArch: arm64
     - name: Build packages 🔧
       uses: luet-lab/luet-github-action@v0.3.0
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
