@@ -32,8 +32,8 @@ packages:
   - name: toolchain-go
     category: development
     variant: "alpine"
-    version: "1.20.2"
-    tag: "1.20.2"
+    version: "1.24.0"
+    tag: "1.24 0"
     hidden: true
     labels:
       autobump.revdeps: "false"
@@ -47,8 +47,8 @@ packages:
   - name: toolchain-go-ubuntu
     variant: "bookworm"
     category: development
-    version: "1.23.5"
-    tag: "1.23.5"
+    version: "1.24.0"
+    tag: "1.24.0"
     hidden: true
     labels:
       autobump.revdeps: "false"
