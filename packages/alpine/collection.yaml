@@ -1,7 +1,7 @@
 packages:
   - name: "alpine"
     category: "initrd"
-    version: "3.8.2-3"
+    version: "3.8.2-4"
     description: "Provides custom initrd scripts for alpine"
 # This syncs with the alpine version at https://gitlab.alpinelinux.org/alpine/mkinitfs/-/blob/master/initramfs-init.in?ref_type=heads
 # any changes to the initramfs-init.in file should be looked at and backported if necessary
