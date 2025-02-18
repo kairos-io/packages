@@ -284,6 +284,8 @@ rd_break() {
 	"$ROOT"/media/usb \
 	"$ROOT"/tmp \
 	"$ROOT"/etc \
+	"$ROOT"/var/lock \
+	"$ROOT"/run/lock \
 	"$ROOT"/run/cryptsetup
 
 # Spread out busybox symlinks and make them available without full path
