@@ -30,21 +30,13 @@ jobs:
           go run main.go $PKG_ALL_CHANGED_FILES
 
   build-arm64:
-    runs-on: ARM64
-    env:
-      ARCH: amd64
+    runs-on: ubuntu-24.04-arm
     steps:
     - uses: actions/checkout@v4
-    - run: |
-        git fetch --prune --unshallow
-        mkdir build
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v3.4.0
-    - name: Set up Docker Buildx
-      id: buildx
-      uses: docker/setup-buildx-action@v3.8.0
+      with:
+        fetch-depth: 0
     - name: Build packages 🔧
-      uses: luet-lab/luet-github-action@v0.3.0
+      uses: luet-lab/luet-github-action@v0.3.1
       with:
         build: true
         fromIndex: true
@@ -59,28 +51,15 @@ jobs:
         platform: linux/arm64
         # renovate: datasource=github-releases depName=mudler/luet
         luetVersion: 0.36.0
-
+        luetArch: arm64
   build:
     runs-on: fast
-    env:
-      ARCH: amd64
     steps:
       - uses: actions/checkout@v4
-      - run: |
-          git fetch --prune --unshallow
-          mkdir build
-      - name: Download meta 🔧
-        uses: luet-lab/luet-github-action@v0.3.0
         with:
-          FINAL_REPO: quay.io/kairos/packages
-          REPOSITORY_TYPE: docker
-          downloadAllMeta: false
-          downloadFromList: true
-          downloadMeta: true
-          # renovate: datasource=github-releases depName=mudler/luet
-          luetVersion: 0.36.0
+          fetch-depth: 0
       - name: Build packages 🔧
-        uses: luet-lab/luet-github-action@v0.3.0
+        uses: luet-lab/luet-github-action@v0.3.1
         with:
           build: true
           fromIndex: true
