@@ -40,6 +40,8 @@ jobs:
         mkdir build
     - name: Set up Go
       uses: actions/setup-go@v5
+      with:
+        go-version: '>=1.23'
     - name: Set up Docker Buildx
       id: buildx
       uses: docker/setup-buildx-action@v3.8.0
