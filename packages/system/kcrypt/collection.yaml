@@ -21,25 +21,3 @@ packages:
       - https://github.com/kairos-io/kcrypt
     license: "Apache License v2"
     description: "Cloud native guardian for persistent data in the edge"
-  - name: kcrypt
-    category: system
-    version: "0.10.5"
-    labels:
-      github.repo: "kcrypt"
-      autobump.revdeps: "true"
-      github.owner: "kairos-io"
-    uri:
-      - https://github.com/kairos-io/kcrypt
-    license: "Apache License v2"
-    description: "Cloud native guardian for persistent data in the edge"
-  - name: kcrypt
-    category: fips
-    version: "0.10.5"
-    labels:
-      github.repo: "kcrypt"
-      autobump.revdeps: "true"
-      github.owner: "kairos-io"
-    uri:
-      - https://github.com/kairos-io/kcrypt
-    license: "Apache License v2"
-    description: "Cloud native guardian for persistent data in the edge"
