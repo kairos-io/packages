@@ -15,7 +15,7 @@ jobs:
         fetch-depth: 0
     - run: mkdir build
     - name: Download meta 🔧
-      uses: luet-lab/luet-github-action@v0.3.0
+      uses: luet-lab/luet-github-action@v0.3.1
       with:
         FINAL_REPO: quay.io/kairos/packages
         REPOSITORY_TYPE: docker
