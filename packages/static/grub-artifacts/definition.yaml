@@ -1,5 +1,5 @@
 name: "grub-artifacts"
 category: "static"
-version: "0.3"
+version: "0.4.0"
 distribution: opensuse
 image: opensuse/tumbleweed
