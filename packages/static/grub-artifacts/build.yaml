@@ -1,26 +1,27 @@
-
 image: {{.Values.image}}
 
-{{if eq .Values.distribution "opensuse"}}
-  {{ if .Values.arch }}
-    {{ if eq .Values.arch "arm64" }}
+{{ if .Values.arch }}
+  {{ if eq .Values.arch "arm64" }}
 prelude:
 - zypper in -y grub2-arm64-efi grub2
-    {{ else if eq .Values.arch "arm" }}
-
-    {{ else }}
+  {{ else }}
 prelude:
 - zypper in -y grub2-i386-pc grub2-x86_64-efi grub2
-    {{ end }}
-  {{end}}
+  {{ end }}
 {{end}}
 
 steps:
 - mkdir /grub-artifacts
-{{if eq .Values.distribution "opensuse"}}
+- mkdir -p /grub-artifacts/EFI/BOOT
 - cp -rf /usr/share/grub2/* /grub-artifacts
-{{else}}
-- cp -rfL /usr/lib/grub/* /grub-artifacts
+{{ if .Values.arch }}
+  {{ if eq .Values.arch "arm64" }}
+- cp /usr/share/grub2/arm64-efi/grub.efi /grub-artifacts/EFI/BOOT/grub.efi
+- cp /usr/share/grub2/arm64-efi/grub.efi /grub-artifacts/EFI/BOOT/BOOTAA64.EFI
+  {{ else }}
+- cp /usr/share/grub2/x86_64-efi/grub.efi /grub-artifacts/EFI/BOOT/grub.efi
+- cp /usr/share/grub2/x86_64-efi/grub.efi /grub-artifacts/EFI/BOOT/BOOTX64.EFI
+  {{ end }}
 {{end}}
 
 package_dir: /grub-artifacts
