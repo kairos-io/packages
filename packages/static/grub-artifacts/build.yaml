@@ -11,9 +11,9 @@ prelude:
 {{end}}
 
 steps:
-- mkdir /grub-artifacts
+- mkdir /grub-artifacts/grub2
 - mkdir -p /grub-artifacts/EFI/BOOT
-- cp -rf /usr/share/grub2/* /grub-artifacts
+- cp -rf /usr/share/grub2/* /grub-artifacts/grub2
 {{ if .Values.arch }}
   {{ if eq .Values.arch "arm64" }}
 - cp /usr/share/grub2/arm64-efi/grub.efi /grub-artifacts/EFI/BOOT/grub.efi
