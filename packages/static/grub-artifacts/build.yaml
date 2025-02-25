@@ -11,7 +11,7 @@ prelude:
 {{end}}
 
 steps:
-- mkdir /grub-artifacts/grub2
+- mkdir -p /grub-artifacts/grub2
 - mkdir -p /grub-artifacts/EFI/BOOT
 - cp -rf /usr/share/grub2/* /grub-artifacts/grub2
 {{ if .Values.arch }}
