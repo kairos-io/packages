@@ -1,0 +1,4 @@
+packages:
+  - name: "rpi5"
+    category: "firmware"
+    version: "1.0.0"
