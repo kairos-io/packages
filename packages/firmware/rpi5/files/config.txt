@@ -1,0 +1,87 @@
+# Options you can adjust for all Raspberry Pi Revisions
+# https://www.raspberrypi.com/documentation/computers/config_txt.html
+# Some settings may impact device functionality. See link above for details
+
+# To use this on Fedora you need to use firmware provided device tree, not kernel
+# For this functionality follow the following guide:
+# https://fedoraproject.org/w/index.php?title=Architectures/ARM/Raspberry_Pi/HATs
+
+# Details on overlays and additional parameters are documented in
+# /boot/efi/overlays/README
+
+# Default Fedora configs for all Raspberry Pi Revisions
+
+# Put the RPi into 64 bit mode
+arm_64bit=1
+
+# We use U-Boot
+kernel=rpi-u-boot.bin
+
+# Run as fast as the firmware allows
+arm_boost=1
+
+# Enable UART
+# Only enable UART if you're going to use it as it has speed implications
+# Serial console is ttyS0 on RPi3 and ttyAMA0 on all other variants
+# u-boot will auto detect serial and pass corrent options to kernel if enabled
+# Speed details: https://www.raspberrypi.org/forums/viewtopic.php?f=28&t=141195
+enable_uart=0
+
+# Enable audio (loads snd_bcm2835)
+dtparam=audio=on
+
+# Automatically load overlays for detected cameras
+camera_auto_detect=1
+
+# Automatically load overlays for detected DSI displays
+display_auto_detect=1
+
+# Enable DRM VC4 V3D driver
+dtoverlay=vc4-kms-v3d
+max_framebuffers=2
+
+# Don't have the firmware create an initial video= setting in cmdline.txt.
+# Use the kernel's default instead.
+disable_fw_kms_setup=1
+
+# Stop the RPi turning on HDMI monitors on reboot
+hdmi_ignore_cec_init=1
+
+# Raspberry Pi 3 series
+[pi3]
+dtoverlay=upstream
+
+# Raspberry Pi 4 series
+[pi4]
+dtoverlay=upstream-pi4
+
+# Allow 256Mb of CMA by default on RPi4+
+dtoverlay=cma,cma-256
+# 4K display support - RPi4+ only, only one port possible
+# hdmi_enable_4kp60=1
+
+# Raspberry Pi CM4
+[cm4]
+# Enable host mode on the 2711 built-in XHCI USB controller.
+# This line should be removed if the legacy DWC2 controller is required
+# (e.g. for USB device mode) or if USB support is not required.
+otg_mode=1
+
+# Raspberry Pi 5
+[pi5]
+# Allow 256Mb of CMA by default on RPi4+
+dtoverlay=cma,cma-256
+# 4K display support - RPi4+ only, only one port possible
+# hdmi_enable_4kp60=1
+
+[all]
+
+# HAT and DT overlays. Documentation at Raspberry Pi here:
+# https://www.raspberrypi.org/documentation/configuration/device-tree.md
+# Each dtoverlay line is an individual HAT/overlay, multiple lines allowed
+# dtoverlay=rpi-sense
+
+#dtparam=i2c_arm=on
+#dtparam=i2s=on
+#dtparam=spi=on
+
