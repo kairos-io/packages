@@ -1,0 +1,43 @@
+From 49423505898eef1baefa2823408dad8321571353 Mon Sep 17 00:00:00 2001
+From: Peter Robinson <pbrobinson@gmail.com>
+Date: Sun, 29 Dec 2024 14:43:33 +0000
+Subject: [PATCH] rpi: Add identifiers for the new RPi 5 series
+
+The Raspberry Pi foundation have released the Raspberry
+Pi 500, CM5 an CM5 lite devices so add the assoicated
+revision identifers so we can detect them.
+
+Signed-off-by: Peter Robinson <pbrobinson@gmail.com>
+---
+ board/raspberrypi/rpi/rpi.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/board/raspberrypi/rpi/rpi.c b/board/raspberrypi/rpi/rpi.c
+index 18be244aa79..1e43c631898 100644
+--- a/board/raspberrypi/rpi/rpi.c
++++ b/board/raspberrypi/rpi/rpi.c
+@@ -193,6 +193,21 @@ static const struct rpi_model rpi_models_new_scheme[] = {
+ 		DTB_DIR "bcm2712-rpi-5-b.dtb",
+ 		true,
+ 	},
++	[0x18] = {
++		"Compute Module 5",
++		DTB_DIR "bcm2712-rpi-cm5-cm5io.dtb",
++		true,
++	},
++	[0x19] = {
++		"500",
++		DTB_DIR "bcm2712-rpi-500.dtb",
++		true,
++	},
++	[0x1A] = {
++		"Compute Module 5 Lite",
++		DTB_DIR "bcm2712-rpi-cm5l-cm5io.dtb",
++		true,
++	},
+ };
+
+ static const struct rpi_model rpi_models_old_scheme[] = {
+--
+2.47.1
+
