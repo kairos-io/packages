@@ -1,0 +1,18 @@
+image: opensuse/tumbleweed
+package_dir: "/output"
+
+prelude:
+- zypper ref
+
+steps:
+- mkdir -p /output/EFI/BOOT
+- cp config/grub_live_efi.cfg /output/EFI/BOOT/grub.cfg
+{{ if .Values.arch }}
+  {{ if eq .Values.arch "arm64" }}
+- zypper in -y grub2-arm64-efi grub2
+- cp /usr/share/grub2/arm64-efi/grub.efi /output/EFI/BOOT/bootaa64.efi
+  {{else}}
+- zypper in -y grub2-i386-pc grub2-x86_64-efi grub2
+- cp /usr/share/grub2/x86_64-efi/grub.efi /output/EFI/BOOT/bootx64.efi
+  {{end}}
+{{end}}
