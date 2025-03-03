@@ -1,7 +1,7 @@
 packages:
   - name: k0s-openrc
     category: k8s
-    version: "1.32.1"
+    version: "1.32.2"
     k0s_version: "0"
     labels:
       github.owner: "k0sproject"
