@@ -1,0 +1,8 @@
+name: "rpi"
+category: "firmware"
+version: "1.20250127"
+labels:
+  github.repo: "firmware"
+  github.owner: "raspberrypi"
+
+

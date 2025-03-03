@@ -1,0 +1,18 @@
+requires:
+  - name: "toolchain-go-ubuntu"
+    category: "development"
+    version: ">=0"
+
+package_dir: /output
+
+env:
+  - GITHUB_ORG={{ ( index .Values.labels "github.owner" ) }}
+  - GITHUB_REPO={{ ( index .Values.labels "github.repo" ) }}
+
+# Make sure you use depth 1 and branch to avoid downloading the whole repo as its huge!
+steps:
+  - mkdir build/${GITHUB_ORG}/ -p
+  - mkdir /output -p
+  - git clone --depth 1 --branch ${PACKAGE_VERSION} https://github.com/${GITHUB_ORG}/${GITHUB_REPO}.git build/${GITHUB_ORG}
+  - cp -R build/${GITHUB_ORG}/boot/* /output
+  - cp config.txt /output
