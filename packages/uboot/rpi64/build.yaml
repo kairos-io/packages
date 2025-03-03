@@ -28,6 +28,7 @@ prelude:
 {{ end }}
 
 steps:
+  - cd build/${GITHUB_ORG} && patch -p1 < ../add-identifiers-for-new-rpi5-series.patch
   - cd build/${GITHUB_ORG} && make rpi_arm64_defconfig
   - cd build/${GITHUB_ORG} && make -j$(nproc) all
   - cp build/${GITHUB_ORG}/u-boot.bin /output
