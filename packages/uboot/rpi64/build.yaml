@@ -1,0 +1,36 @@
+requires:
+  - name: "toolchain-go-ubuntu"
+    category: "development"
+    version: ">=0"
+
+package_dir: /output
+
+env:
+  - GITHUB_ORG={{ ( index .Values.labels "github.owner" ) }}
+  - GITHUB_REPO={{ ( index .Values.labels "github.repo" ) }}
+{{ if .Values.arch }}
+  {{ if eq .Values.arch "amd64" }}
+  - CROSS_COMPILE=aarch64-linux-gnu-
+  {{ end }}
+{{ end }}
+
+prelude:
+  - mkdir build/${GITHUB_ORG}/ -p
+  - mkdir /output -p
+  - git clone --depth 1 --branch v${PACKAGE_VERSION} https://github.com/${GITHUB_ORG}/${GITHUB_REPO}.git build/${GITHUB_ORG}
+  - apt-get update -y && apt-get install -y build-essential libncurses5-dev libssl-dev libelf-dev flex bison libgnutls28-dev
+{{ if .Values.arch }}
+  {{ if eq .Values.arch "amd64" }}
+  - apt-get -y install gcc-aarch64-linux-gnu
+  {{ else if eq .Values.arch "arm64" }}
+  - apt-get -y install gcc
+  {{ end }}
+{{ end }}
+
+steps:
+  - cp add-identifiers-for-new-rpi5-series.patch build/${GITHUB_ORG}
+  - cd build/${GITHUB_ORG} && patch -p1 < add-identifiers-for-new-rpi5-series.patch
+  - cd build/${GITHUB_ORG} && make rpi_arm64_defconfig
+  - cd build/${GITHUB_ORG} && make -j$(nproc) all
+  - cp build/${GITHUB_ORG}/u-boot.bin /output
+  - cp ubootconfig.txt /output
