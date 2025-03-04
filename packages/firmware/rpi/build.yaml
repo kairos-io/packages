@@ -13,6 +13,8 @@ env:
 steps:
   - mkdir build/${GITHUB_ORG}/ -p
   - mkdir /output -p
-  - git clone --depth 1 --branch ${PACKAGE_VERSION} https://github.com/${GITHUB_ORG}/${GITHUB_REPO}.git build/${GITHUB_ORG}
+  - git clone --depth 1 --branch ${PACKAGE_VERSION%\+*} https://github.com/${GITHUB_ORG}/${GITHUB_REPO}.git build/${GITHUB_ORG}
   - cp -R build/${GITHUB_ORG}/boot/* /output
+  # remove uneeded kernel files
+  - rm build/${GITHUB_ORG}/boot/kernel*
   - cp config.txt /output
