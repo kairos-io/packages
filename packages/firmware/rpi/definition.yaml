@@ -4,3 +4,4 @@ version: "1.20250305-3"
 labels:
   github.repo: "firmware"
   github.owner: "raspberrypi"
+  autobump.skip_if_contains: '["rc"]'
