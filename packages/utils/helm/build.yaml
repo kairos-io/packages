@@ -3,7 +3,6 @@ requires:
   category: "development"
   version: ">=0"
 env:
-- PATH=$PATH:/usr/local/go/bin
 - CGO_ENABLED=0
 prelude:
 - |

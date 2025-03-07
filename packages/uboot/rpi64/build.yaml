@@ -1,5 +1,5 @@
 requires:
-  - name: "toolchain-go-ubuntu"
+  - name: "toolchain-go"
     category: "development"
     version: ">=0"
 
@@ -17,13 +17,11 @@ env:
 prelude:
   - mkdir build/${GITHUB_ORG}/ -p
   - mkdir /output -p
-  - git clone --depth 1 --branch v${PACKAGE_VERSION} https://github.com/${GITHUB_ORG}/${GITHUB_REPO}.git build/${GITHUB_ORG}
+  - git clone --depth 1 --branch v${PACKAGE_VERSION%\-*} https://github.com/${GITHUB_ORG}/${GITHUB_REPO}.git build/${GITHUB_ORG}
   - apt-get update -y && apt-get install -y build-essential libncurses5-dev libssl-dev libelf-dev flex bison libgnutls28-dev
 {{ if .Values.arch }}
   {{ if eq .Values.arch "amd64" }}
   - apt-get -y install gcc-aarch64-linux-gnu
-  {{ else if eq .Values.arch "arm64" }}
-  - apt-get -y install gcc
   {{ end }}
 {{ end }}
 

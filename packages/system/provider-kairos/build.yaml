@@ -1,5 +1,5 @@
 requires:
-- name: "toolchain-go-ubuntu"
+- name: "toolchain-go"
   category: "development"
   version: ">=0"
 env:
@@ -7,7 +7,6 @@ env:
   - PACKAGE_VERSION={{ .Values.version }}
   - LDFLAGS="-s -w -X 'github.com/kairos-io/provider-kairos/v2/internal/cli.VERSION={{ .Values.version }}'"
 prelude:
-- apt-get update && apt-get install -y git
 - git clone https://github.com/kairos-io/provider-kairos
 - |
     PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && \

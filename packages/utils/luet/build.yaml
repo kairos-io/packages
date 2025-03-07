@@ -1,9 +1,8 @@
 requires:
-  - name: "toolchain-go-ubuntu"
+  - name: "toolchain-go"
     category: "development"
     version: ">=0"
 prelude:
-  - apt-get update && apt-get install -y gcc libssl-dev
   - mkdir -p go/src/github.com/${GITHUB_ORG}/
   - cd go/src/github.com/${GITHUB_ORG}/ && git clone https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
 env:
