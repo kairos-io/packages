@@ -1,16 +1,16 @@
 {{if or (eq .Values.category "fips") (eq .Values.category "fips-static")}}
 requires:
-  - name: "toolchain-go-ubuntu"
+  - name: "toolchain-go"
     category: "fips"
     version: ">=0"
 {{else}}
 requires:
-  - name: "toolchain-go-ubuntu"
+  - name: "toolchain-go"
     category: "development"
     version: ">=0"
 {{end}}
 prelude:
-  - apt-get update && apt-get install -y npm gcc
+  - apt-get update && apt-get install -y npm
   - mkdir /go/src/github.com/${GITHUB_ORG}/ -p
   - PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && cd /go/src/github.com/${GITHUB_ORG}/ && git clone --branch v${PACKAGE_VERSION} https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
   - cd /go/src/github.com/${GITHUB_ORG}/{{ .Values.name }} && go mod tidy

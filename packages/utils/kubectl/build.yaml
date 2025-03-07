@@ -1,6 +1,6 @@
 requires:
 - category: "development"
-  name: "toolchain-go-ubuntu"
+  name: "toolchain-go"
   version: ">=0"
 
 package_dir: /kubectl

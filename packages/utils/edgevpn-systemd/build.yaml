@@ -1,7 +1,4 @@
-requires:
-- category: "development"
-  name: "toolchain-go"
-  version: ">=0"
+image: "alpine"
 
 package_dir: /integration
 steps:

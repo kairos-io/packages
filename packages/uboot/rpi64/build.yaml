@@ -1,5 +1,5 @@
 requires:
-  - name: "toolchain-go-ubuntu"
+  - name: "toolchain-go"
     category: "development"
     version: ">=0"
 
@@ -22,8 +22,6 @@ prelude:
 {{ if .Values.arch }}
   {{ if eq .Values.arch "amd64" }}
   - apt-get -y install gcc-aarch64-linux-gnu
-  {{ else if eq .Values.arch "arm64" }}
-  - apt-get -y install gcc
   {{ end }}
 {{ end }}
 

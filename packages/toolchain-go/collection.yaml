@@ -1,22 +1,6 @@
 packages:
   - name: toolchain-go
     category: development
-    variant: "alpine"
-    version: "1.24.1"
-    hidden: true
-    labels:
-      autobump.revdeps: "false"
-      autobump.strategy: "custom"
-      autobump.string_replace: '{ "prefix": "" }'
-      autobump.prefix: "prefix"
-      autobump.hook: |
-        curl -s -L "https://go.dev/dl/?mode=json" |jq -r '.[0].version'| sed 's/go//g'
-      autobump.version_hook: |
-        curl -s -L "https://go.dev/dl/?mode=json" |jq -r '.[0].version'| sed 's/go//g'
-      package.version: "1.24.1"
-  - name: toolchain-go-ubuntu
-    variant: "bookworm"
-    category: development
     version: "1.24.1"
     hidden: true
     labels:
@@ -30,25 +14,8 @@ packages:
         curl -s -L "https://go.dev/dl/?mode=json" |jq -r '.[0].version'| sed 's/go//g'
       package.version: "1.24.1"
   - name: toolchain-go
-    category: development
-    variant: "alpine"
-    version: "1.24.0"
-    tag: "1.24 0"
-    hidden: true
-    labels:
-      autobump.revdeps: "false"
-      autobump.strategy: "custom"
-      autobump.string_replace: '{ "prefix": "" }'
-      autobump.prefix: "prefix"
-      autobump.hook: |
-        curl -s -L "https://go.dev/dl/?mode=json" |jq -r '.[0].version'| sed 's/go//g'
-      autobump.version_hook: |
-        curl -s -L "https://go.dev/dl/?mode=json" |jq -r '.[0].version'| sed 's/go//g'
-  - name: toolchain-go-ubuntu
-    variant: "bookworm"
-    category: development
-    version: "1.24.0"
-    tag: "1.24.0"
+    category: fips
+    version: "1.24.1"
     hidden: true
     labels:
       autobump.revdeps: "false"
@@ -61,25 +28,5 @@ packages:
         curl -s -L "https://go.dev/dl/?mode=json" |jq -r '.[0].version'| sed 's/go//g'
   - name: toolchain-go
     category: fips
-    variant: "alpine"
     version: "1.19.10"
-    tag: "1.19.10"
-    hidden: true
-  - name: toolchain-go
-    category: fips
-    variant: "alpine"
-    version: "1.24.0"
-    tag: "1.24.0"
-    hidden: true
-  - name: toolchain-go-ubuntu
-    category: fips
-    variant: "bullseye"
-    version: "1.19.10+1"
-    tag: "1.19.10"
-    hidden: true
-  - name: toolchain-go-ubuntu
-    category: fips
-    variant: "bookworm"
-    version: "1.24.0"
-    tag: "1.24.0"
     hidden: true

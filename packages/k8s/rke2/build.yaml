@@ -1,6 +1,6 @@
 {{ if eq .Values.arch "amd64" }}
 requires:
-- name: "toolchain-ubuntu"
+- name: "toolchain-go"
   category: "development"
   version: ">=0"
 

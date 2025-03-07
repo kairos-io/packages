@@ -1,23 +1,18 @@
-{{ $version := semver .Values.version  }}
-{{ if .Values.variant }}
-image: "golang:{{ $version.Major }}.{{$version.Minor}}.{{$version.Patch }}-{{.Values.variant}}"
-{{ else }}
-image: "golang:{{ $version.Major }}.{{$version.Minor}}.{{$version.Patch }}"
-{{ end }}
+# We use the image with the older glibc as possible in case we
+# need to use this to build GO binaries for older distros
+image: "ubuntu:20.04"
+# ldd (Ubuntu GLIBC 2.31-0ubuntu9.16) 2.31
 
-prelude:
-{{ if eq .Values.variant "alpine" }}
-- apk update
-- apk add curl make git bash
+steps:
+- apt-get update && apt-get install -y curl xz-utils upx gcc git libssl-dev
+{{ if .Values.arch }}
+  {{ if eq .Values.arch "arm64" }}
+- curl -L https://go.dev/dl/go{{ .Values.version }}.linux-amd64.tar.gz -o /tmp/go.tar.gz
+  {{ else }}
+- curl -L https://go.dev/dl/go{{ .Values.version }}.linux-arm64.tar.gz -o /tmp/go.tar.gz
+  {{ end }}
 {{ end }}
-{{ if eq .Values.variant "bookworm" }}
-- apt-get update && apt-get install -y curl xz-utils
-- curl -LO https://github.com/upx/upx/releases/download/v4.2.2/upx-4.2.2-{{ .Values.arch }}_linux.tar.xz
-- tar -xvf upx-4.2.2-{{ .Values.arch }}_linux.tar.xz
-- mv upx-4.2.2-{{ .Values.arch }}_linux/upx /usr/bin/
-- rm -rf upx-4.2.2-{{ .Values.arch }}_linux
-- chmod +x /usr/bin/upx
-{{ end }}
-{{ if eq .Values.variant "bullseye" }}
-- apt-get update && apt-get install -y curl xz-utils upx
-{{ end }}
+- tar -C /usr/local -xzf /tmp/go.tar.gz
+- rm -f /tmp/go.tar.gz
+- echo "export PATH=$PATH:/usr/local/go/bin" >> /etc/profile
+- ln -s /usr/local/go/bin/go /usr/bin/go
