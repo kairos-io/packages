@@ -1,10 +1,10 @@
 packages:
   - name: "odroid-c2"
     category: "firmware"
-    version: "20170419-5.247"
+    version: "20170419-5.247-1"
   - name: "u-boot-rpi64"
     category: "firmware"
-    version: "2025.01-3.1"
+    version: "2025.01-3.1-1"
     labels:
       autobump.strategy: "custom"
       autobump.string_replace: '{ "prefix": "" }'
