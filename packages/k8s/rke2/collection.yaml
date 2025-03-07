@@ -2,28 +2,28 @@ packages:
   - name: rke2
     arch: amd64
     category: k8s
-    version: 1.23.8
+    version: 1.23.8-1
     rke2_http_source: "https://get.rke2.io"
     rke2_install_dir : "/opt/rke2"
     rke2_release : "rke2r1"
   - name: rke2
     arch: amd64
     category: k8s
-    version: 1.22.11
+    version: 1.22.11-1
     rke2_http_source: "https://get.rke2.io"
     rke2_install_dir : "/opt/rke2"
     rke2_release : "rke2r1"
   - name: rke2
     arch: amd64
     category: k8s
-    version: 1.22.9
+    version: 1.22.9-1
     rke2_http_source: "https://get.rke2.io"
     rke2_install_dir : "/opt/rke2"
     rke2_release : "rke2r2"
   - name: rke2
     arch: amd64
     category: k8s
-    version: 1.21.12
+    version: 1.21.12-1
     rke2_http_source: "https://get.rke2.io"
     rke2_install_dir : "/opt/rke2"
     rke2_release : "rke2r2"
