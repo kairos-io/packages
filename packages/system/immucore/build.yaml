@@ -25,7 +25,7 @@ env:
 {{end}}
 steps:
   - |
-    PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
+    PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && \
     cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && \
     git checkout v"${PACKAGE_VERSION}" -b build && \
     go mod tidy -compat=1.19 && \

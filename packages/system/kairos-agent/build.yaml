@@ -10,9 +10,10 @@ requires:
     version: ">=0"
 {{end}}
 prelude:
-  - apt-get update && apt-get install -y npm
+  - curl -fsSL https://deb.nodesource.com/setup_22.x | bash - # Install Node.js 22.x via nodesource to get the stable supported version
+  - apt-get update && apt-get install -y nodejs
   - mkdir /go/src/github.com/${GITHUB_ORG}/ -p
-  - PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && cd /go/src/github.com/${GITHUB_ORG}/ && git clone --branch v${PACKAGE_VERSION} https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
+  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && cd /go/src/github.com/${GITHUB_ORG}/ && git clone --branch v${PACKAGE_VERSION} https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
   - cd /go/src/github.com/${GITHUB_ORG}/{{ .Values.name }} && go mod tidy
 env:
   - DEBIAN_FRONTEND=noninteractive
@@ -29,7 +30,7 @@ steps:
   # Deps for webui
   - cd /go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/internal/webui/public && npm install
   - |
-    PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
+    PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && \
     cd /go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && \
     go build -ldflags="${LDFLAGS}" -o /usr/bin/{{ .Values.name }}
   - upx -1 /usr/bin/{{.Values.name}}
