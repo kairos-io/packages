@@ -7,9 +7,9 @@ steps:
 - apt-get update && apt-get install -y curl xz-utils upx gcc git libssl-dev
 {{ if .Values.arch }}
   {{ if eq .Values.arch "arm64" }}
-- curl -L https://go.dev/dl/go{{ .Values.version }}.linux-amd64.tar.gz -o /tmp/go.tar.gz
-  {{ else }}
 - curl -L https://go.dev/dl/go{{ .Values.version }}.linux-arm64.tar.gz -o /tmp/go.tar.gz
+  {{ else }}
+- curl -L https://go.dev/dl/go{{ .Values.version }}.linux-amd64.tar.gz -o /tmp/go.tar.gz
   {{ end }}
 {{ end }}
 - tar -C /usr/local -xzf /tmp/go.tar.gz
