@@ -15,6 +15,7 @@ prelude:
   - PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && cd /go/src/github.com/${GITHUB_ORG}/ && git clone --branch v${PACKAGE_VERSION} https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
   - cd /go/src/github.com/${GITHUB_ORG}/{{ .Values.name }} && go mod tidy
 env:
+  - DEBIAN_FRONTEND=noninteractive
   - GITHUB_ORG={{ ( index .Values.labels "github.owner" ) }}
   - HUGO_VERSION=0.113.0
   - LDFLAGS="-s -w -X github.com/kairos-io/kairos-agent/v2/internal/common.VERSION=v${PACKAGE_VERSION} {{with .Values.ldflags}}{{.}}{{end}}"
