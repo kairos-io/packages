@@ -1,0 +1,12 @@
+image: registry.opensuse.org/opensuse/leap:15.4
+
+prelude:
+- zypper in -y wget cpio
+
+steps:
+- mkdir -p /data/boot
+- wget https://download.opensuse.org/repositories/devel:/ARM:/Factory:/Contrib:/OdroidC2/standard/aarch64/odroidc2-firmware-{{.Values.version}}.aarch64.rpm
+- rpm2cpio odroidc2-firmware-{{.Values.version}}.aarch64.rpm | cpio -idmv
+- mv boot/* /data/boot
+package_dir: "/data/boot"
+
