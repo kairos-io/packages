@@ -1,0 +1,14 @@
+requires:
+  - name: "toolchain"
+    category: "development"
+    version: ">=0"
+
+package_dir: /package
+
+prelude:
+- wget http://http.us.debian.org/debian/pool/main/u/u-boot/u-boot-rockchip_2025.01-2_arm64.deb -O u-boot.deb
+steps:
+- mkdir -p /tmp/uboot
+- mkdir -p /package
+- dpkg -x u-boot.deb /tmp/uboot
+- cp /tmp/uboot/usr/lib/u-boot/pinebook-pro-rk3399/* /package
