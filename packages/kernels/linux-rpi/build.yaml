@@ -3,7 +3,7 @@ package_dir: /out
 image: ubuntu:24.04
 
 prelude:
-  - git clone --branch {{ .Values.version }} --depth 1 https://github.com/raspberrypi/linux.git linux
+  - git clone --branch ${PACKAGE_VERSION%\-*} --depth 1 https://github.com/raspberrypi/linux.git linux
 
 steps:
   - mkdir -p make /build

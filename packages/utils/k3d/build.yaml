@@ -8,7 +8,7 @@ prelude:
 {{ if eq $arch "arm" }}
 {{$arch:="arm64"}}
 {{end}}
-- wget https://github.com/k3d-io/k3d/releases/download/v{{.Values.version}}/k3d-linux-{{$arch}}
+- wget https://github.com/k3d-io/k3d/releases/download/v${PACKAGE_VERSION%\-*}/k3d-linux-{{$arch}}
 steps:
 - |
   mv {{.Values.name}}-linux-{{$arch}} /usr/bin/{{.Values.name}}
