@@ -1,11 +1,11 @@
 {{if or (eq .Values.category "fips") (eq .Values.category "fips-static")}}
 requires:
-  - name: "toolchain-go"
+  - name: "toolchain"
     category: "fips"
     version: ">=0"
 {{else}}
 requires:
-  - name: "toolchain-go"
+  - name: "toolchain"
     category: "development"
     version: ">=0"
 {{end}}

@@ -2,7 +2,7 @@
 {{ if .Values.arch }}
   {{ if eq .Values.arch "amd64" }}
 requires:
-- name: "toolchain-go"
+- name: "toolchain"
   category: "development"
   version: ">=0"
 prelude:

@@ -1,5 +1,5 @@
 requires:
-  - name: "toolchain-go"
+  - name: "toolchain"
     category: "development"
     version: ">=0"
 
@@ -18,12 +18,6 @@ prelude:
   - mkdir build/${GITHUB_ORG}/ -p
   - mkdir /output -p
   - git clone --depth 1 --branch v${PACKAGE_VERSION%\-*} https://github.com/${GITHUB_ORG}/${GITHUB_REPO}.git build/${GITHUB_ORG}
-  - apt-get update -y && apt-get install -y build-essential libncurses5-dev libssl-dev libelf-dev flex bison libgnutls28-dev
-{{ if .Values.arch }}
-  {{ if eq .Values.arch "amd64" }}
-  - apt-get -y install gcc-aarch64-linux-gnu
-  {{ end }}
-{{ end }}
 
 steps:
   - cp add-identifiers-for-new-rpi5-series.patch build/${GITHUB_ORG}

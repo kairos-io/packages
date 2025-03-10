@@ -3,7 +3,6 @@ package_dir: /out
 image: ubuntu:24.04
 
 prelude:
-  - apt-get update -y && apt-get install -y gcc gcc-aarch64-linux-gnu git make flex bc bison libssl-dev xz-utils kmod
   - git clone --branch {{ .Values.version }} --depth 1 https://github.com/raspberrypi/linux.git linux
 
 steps:

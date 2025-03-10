@@ -1,8 +1,5 @@
 image: registry.opensuse.org/opensuse/leap:15.4
 
-prelude:
-- zypper in -y wget cpio
-
 steps:
 - mkdir -p /data/{boot,usr}
 - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && wget https://download.opensuse.org/ports/aarch64/tumbleweed/repo/oss/aarch64/u-boot-rpiarm64-$PACKAGE_VERSION.aarch64.rpm

@@ -2,7 +2,7 @@
 {{ if eq .Values.arch "arm" }}
 {{ else }}
 requires:
-- name: "toolchain-go"
+- name: "toolchain"
   category: "development"
   version: ">=0"
 prelude:
