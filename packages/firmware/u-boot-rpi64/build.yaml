@@ -1,4 +1,8 @@
-image: registry.opensuse.org/opensuse/leap:15.4
+requires:
+  - name: "toolchain"
+    category: "development"
+    version: ">=0"
+
 
 steps:
 - mkdir -p /data/{boot,usr}
