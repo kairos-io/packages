@@ -1,14 +1,13 @@
 requires:
-- name: "toolchain-go-ubuntu"
+- name: "toolchain"
   category: "development"
   version: ">=0"
 env:
-- PATH=$PATH:/usr/local/go/bin
 - CGO_ENABLED=0
 - PACKAGE_VERSION={{ .Values.version }}
 prelude:
 - |
-   PACKAGE_VERSION=v${PACKAGE_VERSION%\+*} && \
+   PACKAGE_VERSION=v${PACKAGE_VERSION%\-*} && \
    git clone --depth=1 --branch ${PACKAGE_VERSION} https://github.com/derailed/k9s
 steps:
 - |

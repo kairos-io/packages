@@ -1,18 +1,15 @@
 {{if or (eq .Values.category "fips") (eq .Values.category "fips-static")}}
 requires:
-  - name: "toolchain-go-ubuntu"
+  - name: "toolchain"
     category: "fips"
     version: ">=0"
 {{else}}
 requires:
-  - name: "toolchain-go-ubuntu"
+  - name: "toolchain"
     category: "development"
     version: ">=0"
 {{end}}
 prelude:
-{{if or (eq .Values.category "fips") (eq .Values.category "fips-static")}}
-  - apt-get update && apt-get install -y gcc
-{{end}}
   - mkdir go/src/github.com/${GITHUB_ORG}/ -p
   - cd go/src/github.com/${GITHUB_ORG}/ && git clone https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
 env:
@@ -28,7 +25,7 @@ env:
 {{end}}
 steps:
   - |
-    PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
+    PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && \
     cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && git checkout v"${PACKAGE_VERSION}" -b build && go build -ldflags="${LDFLAGS}" && mv {{.Values.name}} /usr/bin/
 {{if or (eq .Values.category "fips") (eq .Values.category "fips-static")}}
   {{ if .Values.arch }}

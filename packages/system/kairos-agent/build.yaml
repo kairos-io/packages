@@ -1,20 +1,20 @@
 {{if or (eq .Values.category "fips") (eq .Values.category "fips-static")}}
 requires:
-  - name: "toolchain-go-ubuntu"
+  - name: "toolchain"
     category: "fips"
     version: ">=0"
 {{else}}
 requires:
-  - name: "toolchain-go-ubuntu"
+  - name: "toolchain"
     category: "development"
     version: ">=0"
 {{end}}
 prelude:
-  - apt-get update && apt-get install -y npm gcc
   - mkdir /go/src/github.com/${GITHUB_ORG}/ -p
-  - PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && cd /go/src/github.com/${GITHUB_ORG}/ && git clone --branch v${PACKAGE_VERSION} https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
+  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && cd /go/src/github.com/${GITHUB_ORG}/ && git clone --branch v${PACKAGE_VERSION} https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
   - cd /go/src/github.com/${GITHUB_ORG}/{{ .Values.name }} && go mod tidy
 env:
+  - DEBIAN_FRONTEND=noninteractive
   - GITHUB_ORG={{ ( index .Values.labels "github.owner" ) }}
   - HUGO_VERSION=0.113.0
   - LDFLAGS="-s -w -X github.com/kairos-io/kairos-agent/v2/internal/common.VERSION=v${PACKAGE_VERSION} {{with .Values.ldflags}}{{.}}{{end}}"
@@ -28,7 +28,7 @@ steps:
   # Deps for webui
   - cd /go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/internal/webui/public && npm install
   - |
-    PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
+    PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && \
     cd /go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && \
     go build -ldflags="${LDFLAGS}" -o /usr/bin/{{ .Values.name }}
   - upx -1 /usr/bin/{{.Values.name}}

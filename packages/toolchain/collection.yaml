@@ -1,0 +1,32 @@
+packages:
+  - name: toolchain
+    category: development
+    version: "1.24.1"
+    hidden: true
+    labels:
+      autobump.revdeps: "false"
+      autobump.strategy: "custom"
+      autobump.string_replace: '{ "prefix": "" }'
+      autobump.prefix: "prefix"
+      autobump.hook: |
+        curl -s -L "https://go.dev/dl/?mode=json" |jq -r '.[0].version'| sed 's/go//g'
+      autobump.version_hook: |
+        curl -s -L "https://go.dev/dl/?mode=json" |jq -r '.[0].version'| sed 's/go//g'
+      package.version: "1.24.1"
+  - name: toolchain
+    category: fips
+    version: "1.24.1"
+    hidden: true
+    labels:
+      autobump.revdeps: "false"
+      autobump.strategy: "custom"
+      autobump.string_replace: '{ "prefix": "" }'
+      autobump.prefix: "prefix"
+      autobump.hook: |
+        curl -s -L "https://go.dev/dl/?mode=json" |jq -r '.[0].version'| sed 's/go//g'
+      autobump.version_hook: |
+        curl -s -L "https://go.dev/dl/?mode=json" |jq -r '.[0].version'| sed 's/go//g'
+  - name: toolchain
+    category: fips
+    version: "1.19.10"
+    hidden: true

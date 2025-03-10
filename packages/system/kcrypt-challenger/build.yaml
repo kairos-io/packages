@@ -1,16 +1,15 @@
 {{if or (eq .Values.category "fips") (eq .Values.category "fips-static")}}
 requires:
-  - name: "toolchain-go-ubuntu"
+  - name: "toolchain"
     category: "fips"
     version: ">=0"
 {{else}}
 requires:
-  - name: "toolchain-go-ubuntu"
+  - name: "toolchain"
     category: "development"
     version: ">=0"
 {{end}}
 prelude:
-  - apt-get update && apt-get install -y gcc libssl-dev
   - mkdir go/src/github.com/${GITHUB_ORG}/ -p
   - cd go/src/github.com/${GITHUB_ORG}/ && git clone https://github.com/${GITHUB_ORG}/{{ .Values.name }}.git
 env:
@@ -29,7 +28,7 @@ env:
 
 steps:
   - |
-    PACKAGE_VERSION=${PACKAGE_VERSION%\+*} && \
+    PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && \
     mkdir -p /system/discovery && \
     cd go/src/github.com/${GITHUB_ORG}/{{ .Values.name }}/ && go build -ldflags="${LDFLAGS}" -o {{ .Values.binary_name }}  ./cmd/discovery/main.go && mv {{ .Values.binary_name }} /system/discovery
 {{if or (eq .Values.category "fips") (eq .Values.category "fips-static")}}

@@ -1,0 +1,22 @@
+# We use the image with the older glibc as possible in case we
+# need to use this to build GO binaries for older distros
+image: "ubuntu:20.04"
+# ldd (Ubuntu GLIBC 2.31-0ubuntu9.16) 2.31
+
+env:
+  - DEBIAN_FRONTEND=noninteractive
+steps:
+- apt-get update && apt-get install -y curl xz-utils upx gcc git libssl-dev make build-essential libncurses5-dev libssl-dev libelf-dev flex bison libgnutls28-dev wget cpio xz-utils kmod gcc-aarch64-linux-gnu wget rpm2cpio
+{{ if .Values.arch }}
+  {{ if eq .Values.arch "arm64" }}
+- curl -L https://go.dev/dl/go{{ .Values.version }}.linux-arm64.tar.gz -o /tmp/go.tar.gz
+  {{ else }}
+- curl -L https://go.dev/dl/go{{ .Values.version }}.linux-amd64.tar.gz -o /tmp/go.tar.gz
+  {{ end }}
+{{ end }}
+- tar -C /usr/local -xzf /tmp/go.tar.gz
+- rm -f /tmp/go.tar.gz
+- echo "export PATH=$PATH:/usr/local/go/bin" >> /etc/profile
+- ln -s /usr/local/go/bin/go /usr/bin/go
+- curl -fsSL https://deb.nodesource.com/setup_22.x | bash - # Install Node.js 22.x via nodesource to get the stable supported version
+- apt-get update && apt-get install -y nodejs
