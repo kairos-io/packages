@@ -3,6 +3,8 @@
 image: "ubuntu:20.04"
 # ldd (Ubuntu GLIBC 2.31-0ubuntu9.16) 2.31
 
+env:
+  - DEBIAN_FRONTEND=noninteractive
 steps:
 - apt-get update && apt-get install -y curl xz-utils upx gcc git libssl-dev make build-essential libncurses5-dev libssl-dev libelf-dev flex bison libgnutls28-dev wget cpio xz-utils kmod gcc-aarch64-linux-gnu wget rpm2cpio
 {{ if .Values.arch }}
