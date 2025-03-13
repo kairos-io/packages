@@ -21,3 +21,14 @@ packages:
       - https://github.com/kairos-io/immucore
     license: "Apache License v2"
     description: "The Kairos immutability management interface"
+  - name: "immucore"
+    category: "system"
+    version: "0.4.3"
+    labels:
+      github.repo: "immucore"
+      autobump.revdeps: "true"
+      github.owner: "kairos-io"
+    uri:
+      - https://github.com/kairos-io/immucore
+    license: "Apache License v2"
+    description: "The Kairos immutability management interface"
