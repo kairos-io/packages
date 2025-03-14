@@ -1,0 +1,25 @@
+packages:
+  - name: k3s-openrc
+    category: k8s
+    version: "1.32.2"
+    k3s_version: "1"
+  - name: k3s-openrc
+    category: k8s
+    version: "1.31.4+1"
+    k3s_version: "1"
+  - name: k3s-openrc
+    category: k8s
+    version: "1.30.8+1"
+    k3s_version: "1"
+  - name: k3s-systemd
+    category: k8s
+    version: "1.32.2"
+    k3s_version: "1"
+  - name: k3s-systemd
+    category: k8s
+    version: "1.31.4+1"
+    k3s_version: "1"
+  - name: k3s-systemd
+    category: k8s
+    version: "1.30.8+1"
+    k3s_version: "1"
