@@ -1,5 +1,6 @@
+{{$arch:=(default "amd64" .Values.arch)}}
 requires:
-  - name: "toolchain-go-ubuntu"
+  - name: "toolchain"
     category: "development"
     version: ">=0"
 env:
@@ -11,22 +12,17 @@ env:
   # Remove any possible "+N" from the end of the version. We only bump that to
   # avoid overwritting existing images when we want the package to be rebuilt.
   - INSTALL_K3S_VERSION=v{{ regexReplaceAll "\\+\\d+$" .Values.version "" }}+k3s{{.Values.k3s_version}}
-  {{$arch:=(default "amd64" .Values.arch)}}
-  {{ if eq $arch "arm" }}
-  - ARCH=arm64
-  {{ else }}
   - ARCH={{ $arch }}
-  {{ end }}
 steps:
   - curl -sfL https://get.k3s.io > installer.sh
   # Let the installer script install service files for openrc or systemd:
   # https://github.com/k3s-io/k3s/blob/36645e7311e9bdbbf2adb79ecd8bd68556bc86f6/install.sh#L114-L122
-  {{ if eq .Values.name "k3s-openrc" }}
+{{ if eq .Values.name "k3s-openrc" }}
   - touch /sbin/openrc-run && chmod +x /sbin/openrc-run
-  {{ else }}
+{{ else }}
   - touch /bin/systemctl && chmod +x /bin/systemctl
   - mkdir -p /etc/systemd/system/
-  {{ end }}
+{{ end }}
   - bash installer.sh
   - bash installer.sh agent
   - rm -rf installer.sh
@@ -35,13 +31,13 @@ steps:
 
 includes:
   - ^/usr/bin/k3s
-  {{ if eq .Values.name "k3s-openrc" }}
-- ^/etc/init.d/$
-- ^/etc/init.d/k3s.*
-- ^/etc/rancher/$
-- ^/etc/rancher/k3s$
-  {{ else }}
-- ^/etc/systemd$
-- ^/etc/systemd/system$
-- ^/etc/systemd/system/k3s.*service$
-  {{ end }}
+{{ if eq .Values.name "k3s-openrc" }}
+  - ^/etc/init.d/$
+  - ^/etc/init.d/k3s.*
+  - ^/etc/rancher/$
+  - ^/etc/rancher/k3s$
+{{ else }}
+  - ^/etc/systemd$
+  - ^/etc/systemd/system$
+  - ^/etc/systemd/system/k3s.*service$
+{{ end }}
