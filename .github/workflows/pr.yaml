@@ -14,9 +14,16 @@ jobs:
           fetch-depth: 0
       - name: Get changed files
         id: changed-files
-        uses: tj-actions/changed-files@v46
-        with:
-          files: packages/**
+        run: |
+          # Get the list of files that were changed between the base branch and the current commit
+          CHANGED_FILES=$(git diff --name-only origin/$GITHUB_BASE_REF...HEAD | grep "^packages/**")
+
+          if echo "$CHANGED_FILES"; then
+            echo "any_changed=true" >> $GITHUB_OUTPUT
+            echo "all_changed_files=$CHANGED_FILES" >> $GITHUB_OUTPUT
+          else
+            echo "any_changed=false" >> $GITHUB_OUTPUT
+          fi
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
