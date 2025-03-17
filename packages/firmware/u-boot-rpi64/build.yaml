@@ -6,8 +6,8 @@ requires:
 
 steps:
 - mkdir -p /data/{boot,usr}
-- PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && wget https://download.opensuse.org/ports/aarch64/tumbleweed/repo/oss/aarch64/u-boot-rpiarm64-$PACKAGE_VERSION.aarch64.rpm
-- PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && rpm2cpio u-boot-rpiarm64-$PACKAGE_VERSION.aarch64.rpm | cpio -idmv
+- PACKAGE_VERSION=${PACKAGE_VERSION%-[1-9]} && wget https://download.opensuse.org/ports/aarch64/tumbleweed/repo/oss/aarch64/u-boot-rpiarm64-$PACKAGE_VERSION.aarch64.rpm
+- PACKAGE_VERSION=${PACKAGE_VERSION%-[1-9]} && rpm2cpio u-boot-rpiarm64-$PACKAGE_VERSION.aarch64.rpm | cpio -idmv
 - mv usr/share/doc /data
 - mv usr/share/licenses /data
 - mv usr/* /data
