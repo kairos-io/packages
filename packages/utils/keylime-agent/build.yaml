@@ -7,8 +7,9 @@ env:
 - GITHUB_REPO={{ ( index .Values.labels "github.repo" ) }}
 
 prelude:
-- apt-get update && apt-get install -y git libclang-dev libssl-dev libtss2-dev libzmq3-dev pkg-config cargo make
+- apt-get update && apt-get install -y git gcc libclang-dev libssl-dev libtss2-dev libzmq3-dev pkg-config rustup make
 - PACKAGE_VERSION=v${PACKAGE_VERSION%\-*} && git clone --depth=1 --branch ${PACKAGE_VERSION} https://github.com/${GITHUB_ORG}/${GITHUB_REPO}
+- rustup default stable
 
 steps:
 # build
