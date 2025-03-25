@@ -3,6 +3,7 @@ concurrency:
   group: "master-build"
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
