@@ -47,6 +47,7 @@ stages:
           /var/lib/rancher
           /var/lib/snapd
           /var/lib/wicked
+          /var/lib/kairos
           /var/log
           /var/snap
     - if: '[ -e "/run/cos/uki_boot_mode" ] && ([ -e "/run/cos/recovery_mode" ] || [ -e "/run/cos/autoreset_mode" ])'
