@@ -54,6 +54,7 @@ stages:
           /var/lib/snapd
           /var/lib/tailscale
           /var/lib/wicked
+          /var/lib/kairos
           /var/log
           /var/run/cilium
           /var/snap
@@ -106,6 +107,7 @@ stages:
           /var/lib/snapd
           /var/lib/tailscale
           /var/lib/wicked
+          /var/lib/kairos
           /var/log
           /var/run/cilium
           /var/snap
