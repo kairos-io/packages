@@ -13,7 +13,7 @@ packages:
   - name: kcrypt-challenger
     binary_name: kcrypt-discovery-challenger
     category: fips
-    version: "0.10.0-1"
+    version: "0.11.1"
     labels:
       github.repo: "kcrypt-challenger"
       github.owner: "kairos-io"
