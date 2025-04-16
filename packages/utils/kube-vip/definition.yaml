@@ -1,6 +1,6 @@
 name: kube-vip
 category: utils
-version: "0.8.10"
+version: "0.9.0"
 labels:
   github.repo: "kube-vip"
   github.owner: "kube-vip"
