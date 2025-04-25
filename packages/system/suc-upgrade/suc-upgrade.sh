@@ -8,18 +8,18 @@ echo "SUC_VERSION: $SUC_VERSION"
 if [ "$FORCE" != "true" ]; then
     if [ -f "/etc/kairos-release" ]; then
       # shellcheck disable=SC1091
-      UPDATE_VERSION=$(source /etc/kairos-release && echo "${KAIROS_VERSION}")
+      UPDATE_VERSION=$(source /etc/kairos-release && echo "KAIROS_VERSION=${KAIROS_VERSION};KAIROS_SOFTWARE_VERSION=${KAIROS_SOFTWARE_VERSION}")
     else
       # shellcheck disable=SC1091
-      UPDATE_VERSION=$(source /etc/os-release && echo "${KAIROS_VERSION}")
+      UPDATE_VERSION=$(source /etc/os-release && echo "KAIROS_VERSION=${KAIROS_VERSION};KAIROS_SOFTWARE_VERSION=${KAIROS_SOFTWARE_VERSION}"")
     fi
 
     if [ -f "${HOST_DIR}/etc/kairos-release" ]; then
       # shellcheck disable=SC1091
-      CURRENT_VERSION=$(source "${HOST_DIR}"/etc/kairos-release && echo "${KAIROS_VERSION}")
+      CURRENT_VERSION=$(source "${HOST_DIR}"/etc/kairos-release && echo "KAIROS_VERSION=${KAIROS_VERSION};KAIROS_SOFTWARE_VERSION=${KAIROS_SOFTWARE_VERSION}"")
     else
       # shellcheck disable=SC1091
-      CURRENT_VERSION=$(source "${HOST_DIR}"/etc/os-release && echo "${KAIROS_VERSION}")
+      CURRENT_VERSION=$(source "${HOST_DIR}"/etc/os-release && echo "KAIROS_VERSION=${KAIROS_VERSION};KAIROS_SOFTWARE_VERSION=${KAIROS_SOFTWARE_VERSION}"")
     fi
 
     if [ "$CURRENT_VERSION" == "$UPDATE_VERSION" ]; then
