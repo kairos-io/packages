@@ -22,9 +22,7 @@ get_update_version() {
             echo "$KAIROS_VERSION"
         else
             # if we have a provider, we return the version with the provider + the version
-            # Clean software version in case it has a leading v as we dont have that in the artifacts
-            KAIROS_SOFTWARE_VERSION="${KAIROS_SOFTWARE_VERSION#v}"
-            # Also replace any + with a - as we dont have that in the artifacts, not possible for oci artifacts
+            # Replace any + with a - as we dont have that in the artifacts, not possible for oci artifacts
             KAIROS_SOFTWARE_VERSION="${KAIROS_SOFTWARE_VERSION//+/\-}"
             echo "${KAIROS_VERSION}-${KAIROS_SOFTWARE_VERSION_PREFIX}${KAIROS_SOFTWARE_VERSION}"
         fi
