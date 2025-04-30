@@ -5,21 +5,45 @@ SUC_VERSION="0.0.0"
 
 echo "SUC_VERSION: $SUC_VERSION"
 
+version_ge() {
+    # Compare two semantic versions
+    [ "$(printf '%s\n' "$1" "$2" | sort -V | head -n 1)" = "$2" ]
+}
+
+# Get the update version from the release file
+get_update_version() {
+    local release_file="$1"
+    # shellcheck disable=SC1090
+    source "${release_file}"
+    # If we are on 3.4.0 or higher
+    if version_ge "$KAIROS_VERSION" "3.4.0"; then
+        # if we dont have any provider, we just return the version
+        if [ -z "$KAIROS_SOFTWARE_VERSION_PREFIX" ]; then
+            echo "$KAIROS_VERSION"
+        else
+            # if we have a provider, we return the version with the provider + the version
+            echo "${KAIROS_VERSION}-${KAIROS_SOFTWARE_VERSION_PREFIX}${KAIROS_SOFTWARE_VERSION}"
+        fi
+    else
+        # if we are on a version lower than 3.4.0, we just return the version as before
+        echo "$KAIROS_VERSION"
+    fi
+}
+
 if [ "$FORCE" != "true" ]; then
     if [ -f "/etc/kairos-release" ]; then
-      # shellcheck disable=SC1091
-      UPDATE_VERSION=$(source /etc/kairos-release && echo "${KAIROS_VERSION}")
+      UPDATE_VERSION=$(get_update_version "/etc/kairos-release")
     else
       # shellcheck disable=SC1091
-      UPDATE_VERSION=$(source /etc/os-release && echo "${KAIROS_VERSION}")
+      UPDATE_VERSION=$(get_update_version "/etc/os-release")
     fi
 
     if [ -f "${HOST_DIR}/etc/kairos-release" ]; then
       # shellcheck disable=SC1091
-      CURRENT_VERSION=$(source "${HOST_DIR}"/etc/kairos-release && echo "${KAIROS_VERSION}")
+      CURRENT_VERSION=$(get_update_version "${HOST_DIR}/etc/kairos-release")
     else
       # shellcheck disable=SC1091
-      CURRENT_VERSION=$(source "${HOST_DIR}"/etc/os-release && echo "${KAIROS_VERSION}")
+      CURRENT_VERSION=$(get_update_version "${HOST_DIR}/etc/os-release")
     fi
 
     if [ "$CURRENT_VERSION" == "$UPDATE_VERSION" ]; then
