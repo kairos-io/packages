@@ -1,6 +1,6 @@
 name: kubectl
 category: container
-version: "1.31.0-1"
+version: "<?xml ersion='1.0' encoding='UTF-8'?><Error><Code>InternalError</Code><Message>We encountered an internal error. Please try again.</Message><Details>AMDb4CoGBhftaTukStJAGjxeTQq1vuJdhSaU5mkMvMPDT5XpDeBlggjDcAjzhzvt8LCKuJSkGsoFM+dLWOfzcSA1AX6DQY4qsqaRrZ398J5K5Ca8qqMvPEmQn1lCnmvgx2KwnyFlxA4p</Details></Error>"
 arch: "amd64"
 labels:
   github.repo: "kubectl"
@@ -10,7 +10,7 @@ labels:
   autobump.prefix: "prefix"
   autobump.hook: "curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt | sed 's/v//'"
   autobump.version_hook: "curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt | sed 's/v//'"
-  package.version: "1.31.0"
+  package.version: "<?xml ersion='1.0' encoding='UTF-8'?><Error><Code>InternalError</Code><Message>We encountered an internal error. Please try again.</Message><Details>AMDb4Cr2TCY4S0YErBuHg/9LX26lRKxePTc/BiiLIugpyIKcIl520TDE0bPl6/wCAAXP1+onb077r1jG2kgnd34BZcvoplVuDgu85fbxFwBtoE3ILdYEM5WGRFZyAb12SqGYlUumiJnu</Details></Error>"
 uri:
   - https://github.com/kubernetes/kubernetes
   - https://kubernetes.io
