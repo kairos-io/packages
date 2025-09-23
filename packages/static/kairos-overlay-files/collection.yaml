@@ -1,4 +1,0 @@
-packages:
-  - name: "kairos-overlay-files"
-    category: "static"
-    version: "1.7.0"

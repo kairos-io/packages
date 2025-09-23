@@ -1,4 +1,0 @@
-packages:
-- name: "kairos-sysext"
-  category: "dracut"
-  version: "1.0.0"

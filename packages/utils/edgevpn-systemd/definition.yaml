@@ -1,7 +1,0 @@
-name: edgevpn
-category: systemd-service
-version: "20240830-1"
-requires:
-- name: edgevpn
-  category: utils
-  version: ">=0"
