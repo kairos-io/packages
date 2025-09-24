@@ -17,11 +17,9 @@ steps:
   - mkdir -p /package/boot
   - mkdir -p /package/lib/modules/${PACKAGE_VERSION}/
 {{ if eq .Values.name "linux-tiny" }}
-  - cd linux-${PACKAGE_VERSION} && make tinyconfig
-# Merge our additional config options to support a decent kernel even if tiny
-  - cd linux-${PACKAGE_VERSION} && ./scripts/kconfig/merge_config.sh .config ../tinyconfig.config
+  - cp tinyconfig.config linux-${PACKAGE_VERSION}/.config
 {{ else }}
-  - cd linux-${PACKAGE_VERSION} && make defconfig
+  - cp fedora.config linux-${PACKAGE_VERSION}/.config
 {{ end }}
   - cd linux-${PACKAGE_VERSION} && make kernelversion
 {{ if .Values.arch }}
