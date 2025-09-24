@@ -3,8 +3,9 @@ package_dir: "/package"
 prelude:
   - dnf update -y && dnf install -y gcc make bison flex openssl openssl-devel elfutils-libelf-devel bc kmod xxd wget xz dwarves python3 cpio perl gettext diffutils bash coreutils tar which bzip2 findutils m4 perl-interpreter perl-Carp perl-devel perl-generators make diffutils gawk binutils redhat-rpm-config hmaccalc gcc-c++ python3-devel zstd gcc-c++-aarch64-linux-gnu binutils-aarch64-linux-gnu gcc-aarch64-linux-gnu
   - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && wget https://cdn.kernel.org/pub/linux/kernel/v${PACKAGE_VERSION%%.*}.x/linux-${PACKAGE_VERSION}.tar.xz
-  - tar xf linux-${PACKAGE_VERSION}.tar.xz
+  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && tar xf linux-${PACKAGE_VERSION}.tar.xz
 env:
+  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*}
 {{ if .Values.arch }}
   {{ if eq .Values.arch "arm64" }}
   - ARCH=arm64
