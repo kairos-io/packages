@@ -18,6 +18,8 @@ steps:
   - mkdir -p /package/lib/modules/${PACKAGE_VERSION}/
 {{ if eq .Values.name "linux-tiny" }}
   - cd linux-${PACKAGE_VERSION} && make tinyconfig
+# Merge our additional config options to support a decent kernel even if tiny
+  - cd linux-${PACKAGE_VERSION} && ./scripts/kconfig/merge_config.sh .config ../tinyconfig.config
 {{ else }}
   - cd linux-${PACKAGE_VERSION} && make defconfig
 {{ end }}

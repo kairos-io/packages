@@ -1,7 +1,7 @@
 packages:
   - name: "linux"
     category: "kernels"
-    version: "6.16.7"
+    version: "6.16.7-1"
     labels:
       autobump.revdeps: "false"
       autobump.string_replace: '{ "prefix": "" }'
