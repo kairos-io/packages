@@ -1,3 +1,0 @@
-image: alpine
-steps:
-- cp -rfv files/* /

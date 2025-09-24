@@ -1,7 +1,0 @@
-image: alpine
-package_dir: "/package"
-steps:
-- mkdir -p /package/etc/dracut.conf.d
-- mkdir -p /package/usr/lib/dracut/modules.d/
-- cp files/90-kairos-network.conf /package/etc/dracut.conf.d/90-kairos-network.conf
-- cp -r files/90kairos-network /package/usr/lib/dracut/modules.d/90kairos-network
