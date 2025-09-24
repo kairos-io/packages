@@ -2,8 +2,8 @@ image: "fedora:42"
 package_dir: "/package"
 prelude:
   - dnf update -y && dnf install -y gcc make bison flex openssl openssl-devel elfutils-libelf-devel bc kmod xxd wget xz dwarves python3 cpio perl gettext diffutils bash coreutils tar which bzip2 findutils m4 perl-interpreter perl-Carp perl-devel perl-generators make diffutils gawk binutils redhat-rpm-config hmaccalc gcc-c++ python3-devel zstd gcc-c++-aarch64-linux-gnu binutils-aarch64-linux-gnu gcc-aarch64-linux-gnu
-  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && wget https://cdn.kernel.org/pub/linux/kernel/v${PACKAGE_VERSION%%.*}.x/linux-${PACKAGE_VERSION}.tar.xz
-  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && tar xf linux-${PACKAGE_VERSION}.tar.xz
+  - wget https://cdn.kernel.org/pub/linux/kernel/v${PACKAGE_VERSION%%.*}.x/linux-${PACKAGE_VERSION}.tar.xz
+  - tar xf linux-${PACKAGE_VERSION}.tar.xz
 env:
 {{ if .Values.arch }}
   {{ if eq .Values.arch "arm64" }}
@@ -15,29 +15,30 @@ env:
 {{end}}
 steps:
   - mkdir -p /package/boot
-  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && mkdir -p /package/lib/modules/${PACKAGE_VERSION}/
+  - mkdir -p /package/lib/modules/${PACKAGE_VERSION}/
 {{ if eq .Values.name "linux-tiny" }}
   - cd linux-${PACKAGE_VERSION} && make tinyconfig
 # Merge our additional config options to support a decent kernel even if tiny
   - cd linux-${PACKAGE_VERSION} && ./scripts/kconfig/merge_config.sh .config ../tinyconfig.config
 {{ else }}
-  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && cd linux-${PACKAGE_VERSION} && make defconfig
+  - cd linux-${PACKAGE_VERSION} && make defconfig
 {{ end }}
-  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && cd linux-${PACKAGE_VERSION} && make kernelversion
+  - cd linux-${PACKAGE_VERSION} && make kernelversion
 {{ if .Values.arch }}
   {{ if eq .Values.arch "arm64" }}
-  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && cd linux-${PACKAGE_VERSION} && make -j$(nproc) Image
+  - cd linux-${PACKAGE_VERSION} && make -j$(nproc) Image
   {{ else }}
-  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && cd linux-${PACKAGE_VERSION} && make -j$(nproc) bzImage
+  - cd linux-${PACKAGE_VERSION} && make -j$(nproc) bzImage
   {{ end }}
 {{ end }}
-  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && cd linux-${PACKAGE_VERSION} && make -j$(nproc) modules
-  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && cd linux-${PACKAGE_VERSION} && ZSTD_CLEVEL=19 INSTALL_MOD_PATH="/package" INSTALL_MOD_STRIP=1 make modules_install
+  - cd linux-${PACKAGE_VERSION} && make -j$(nproc) modules
+  - cd linux-${PACKAGE_VERSION} && ZSTD_CLEVEL=19 INSTALL_MOD_PATH="/package" INSTALL_MOD_STRIP=1 make modules_install
 {{ if .Values.arch }}
   {{ if eq .Values.arch "arm64" }}
-  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && cp linux-${PACKAGE_VERSION}/arch/arm64/boot/Image /package/boot/vmlinuz
+  - cp linux-${PACKAGE_VERSION}/arch/arm64/boot/Image /package/boot/vmlinuz
   {{else}}
-  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && cp linux-${PACKAGE_VERSION}/arch/x86_64/boot/bzImage /package/boot/vmlinuz
+  - cp linux-${PACKAGE_VERSION}/arch/x86_64/boot/bzImage /package/boot/vmlinuz
   {{ end }}
 {{ end }}
+  - ls -ltra /package
 
