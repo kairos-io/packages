@@ -5,7 +5,6 @@ prelude:
   - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && wget https://cdn.kernel.org/pub/linux/kernel/v${PACKAGE_VERSION%%.*}.x/linux-${PACKAGE_VERSION}.tar.xz
   - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && tar xf linux-${PACKAGE_VERSION}.tar.xz
 env:
-  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*}
 {{ if .Values.arch }}
   {{ if eq .Values.arch "arm64" }}
   - ARCH=arm64
@@ -16,29 +15,29 @@ env:
 {{end}}
 steps:
   - mkdir -p /package/boot
-  - mkdir -p /package/lib/modules/${PACKAGE_VERSION}/
+  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && mkdir -p /package/lib/modules/${PACKAGE_VERSION}/
 {{ if eq .Values.name "linux-tiny" }}
   - cd linux-${PACKAGE_VERSION} && make tinyconfig
 # Merge our additional config options to support a decent kernel even if tiny
   - cd linux-${PACKAGE_VERSION} && ./scripts/kconfig/merge_config.sh .config ../tinyconfig.config
 {{ else }}
-  - cd linux-${PACKAGE_VERSION} && make defconfig
+  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && cd linux-${PACKAGE_VERSION} && make defconfig
 {{ end }}
-  - cd linux-${PACKAGE_VERSION} && make kernelversion
+  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && cd linux-${PACKAGE_VERSION} && make kernelversion
 {{ if .Values.arch }}
   {{ if eq .Values.arch "arm64" }}
-  - cd linux-${PACKAGE_VERSION} && make -j$(nproc) Image
+  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && cd linux-${PACKAGE_VERSION} && make -j$(nproc) Image
   {{ else }}
-  - cd linux-${PACKAGE_VERSION} && make -j$(nproc) bzImage
+  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && cd linux-${PACKAGE_VERSION} && make -j$(nproc) bzImage
   {{ end }}
 {{ end }}
-  - cd linux-${PACKAGE_VERSION} && make -j$(nproc) modules
-  - cd linux-${PACKAGE_VERSION} && ZSTD_CLEVEL=19 INSTALL_MOD_PATH="/package" INSTALL_MOD_STRIP=1 make modules_install
+  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && cd linux-${PACKAGE_VERSION} && make -j$(nproc) modules
+  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && cd linux-${PACKAGE_VERSION} && ZSTD_CLEVEL=19 INSTALL_MOD_PATH="/package" INSTALL_MOD_STRIP=1 make modules_install
 {{ if .Values.arch }}
   {{ if eq .Values.arch "arm64" }}
-  - cp linux-${PACKAGE_VERSION}/arch/arm64/boot/Image /package/boot/vmlinuz
+  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && cp linux-${PACKAGE_VERSION}/arch/arm64/boot/Image /package/boot/vmlinuz
   {{else}}
-  - cp linux-${PACKAGE_VERSION}/arch/x86_64/boot/bzImage /package/boot/vmlinuz
+  - PACKAGE_VERSION=${PACKAGE_VERSION%\-*} && cp linux-${PACKAGE_VERSION}/arch/x86_64/boot/bzImage /package/boot/vmlinuz
   {{ end }}
 {{ end }}
 
