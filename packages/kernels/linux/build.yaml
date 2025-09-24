@@ -3,7 +3,6 @@ package_dir: "/package"
 prelude:
   - dnf update -y && dnf install -y gcc make bison flex openssl openssl-devel elfutils-libelf-devel bc kmod xxd wget xz dwarves python3 cpio perl gettext diffutils bash coreutils tar which bzip2 findutils m4 perl-interpreter perl-Carp perl-devel perl-generators make diffutils gawk binutils redhat-rpm-config hmaccalc gcc-c++ python3-devel zstd gcc-c++-aarch64-linux-gnu binutils-aarch64-linux-gnu gcc-aarch64-linux-gnu
   - wget https://cdn.kernel.org/pub/linux/kernel/v${PACKAGE_VERSION%%.*}.x/linux-${PACKAGE_VERSION}.tar.xz
-  - ls -lh
   - tar xf linux-${PACKAGE_VERSION}.tar.xz
 env:
 {{ if .Values.arch }}
@@ -17,7 +16,11 @@ env:
 steps:
   - mkdir -p /package/boot
   - mkdir -p /package/lib/modules/${PACKAGE_VERSION}/
-  - cd linux-${PACKAGE_VERSION} && make olddefconfig
+{{ if eq .Values.name "linux-tiny" }}
+  - cd linux-${PACKAGE_VERSION} && make tinyconfig
+{{ else }}
+  - cd linux-${PACKAGE_VERSION} && make defconfig
+{{ end }}
   - cd linux-${PACKAGE_VERSION} && make kernelversion
 {{ if .Values.arch }}
   {{ if eq .Values.arch "arm64" }}
@@ -30,9 +33,9 @@ steps:
   - cd linux-${PACKAGE_VERSION} && ZSTD_CLEVEL=19 INSTALL_MOD_PATH="/package" INSTALL_MOD_STRIP=1 make modules_install
 {{ if .Values.arch }}
   {{ if eq .Values.arch "arm64" }}
-  - cp linux-${PACKAGE_VERSION}/arch/arm64/boot/Image /package/boot/vmlinuz-${PACKAGE_VERSION}
+  - cp linux-${PACKAGE_VERSION}/arch/arm64/boot/Image /package/boot/vmlinuz
   {{else}}
-  - cp linux-${PACKAGE_VERSION}/arch/x86_64/boot/bzImage /package/boot/vmlinuz-${PACKAGE_VERSION}
+  - cp linux-${PACKAGE_VERSION}/arch/x86_64/boot/bzImage /package/boot/vmlinuz
   {{ end }}
 {{ end }}
 
