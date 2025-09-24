@@ -1,0 +1,17 @@
+diff --git a/src/boot/boot.c b/src/boot/boot.c
+index fc658e49d6..fd93ea9b9c 100644
+--- a/src/boot/boot.c
++++ b/src/boot/boot.c
+@@ -1275,7 +1275,11 @@ static void boot_entry_add_type1(
+                 } else if (streq8(key, "sort-key")) {
+                         free(entry->sort_key);
+                         entry->sort_key = xstr8_to_16(value);
+-
++                } else if (streq8(key, "profile")) {
++                        uint64_t u;
++                        if (parse_number8(value, &u, NULL) && u <= UINT_MAX)
++                                entry->profile = (unsigned)u;
++                        
+                 } else if (streq8(key, "version")) {
+                         free(entry->version);
+                         entry->version = xstr8_to_16(value);
