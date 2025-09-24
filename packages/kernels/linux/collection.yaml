@@ -14,7 +14,7 @@ packages:
       package.version: "6.5.7"
   - name: "linux-tiny"
     category: "kernels"
-    version: "6.16.7"
+    version: "6.16.8"
     labels:
       autobump.revdeps: "false"
       autobump.string_replace: '{ "prefix": "" }'
@@ -24,4 +24,4 @@ packages:
         curl -Ls https://kernel.org/releases.json | jq -cr '.latest_stable.version'
       autobump.version_hook: |
         curl -Ls https://kernel.org/releases.json | jq -cr '.latest_stable.version'
-      package.version: "6.5.7"
+      package.version: "6.16.8"
