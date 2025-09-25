@@ -17,9 +17,15 @@ steps:
   - mkdir -p /package/boot
   - mkdir -p /package/lib/modules/${PACKAGE_VERSION}/
 {{ if eq .Values.name "linux-tiny" }}
-  - cd linux-${PACKAGE_VERSION} && make tinyconfig
+  - cp tinyconfig.config linux-${PACKAGE_VERSION}/.config
 {{ else }}
-  - cd linux-${PACKAGE_VERSION} && make defconfig
+  {{ if .Values.arch }}
+    {{ if eq .Values.arch "arm64" }}
+  - cp fedora-aarch64.config linux-${PACKAGE_VERSION}/.config
+    {{ else }}
+  - cp fedora-x64.config linux-${PACKAGE_VERSION}/.config
+    {{end}}
+  {{end}}
 {{ end }}
   - cd linux-${PACKAGE_VERSION} && make kernelversion
 {{ if .Values.arch }}
@@ -38,4 +44,5 @@ steps:
   - cp linux-${PACKAGE_VERSION}/arch/x86_64/boot/bzImage /package/boot/vmlinuz
   {{ end }}
 {{ end }}
+  - ls -ltra /package
 
