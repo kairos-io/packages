@@ -18,7 +18,7 @@ jobs:
         with:
           files: packages/**
       - name: Set up Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version-file: tools/bump-validator/go.mod
       - name: Validate changed packages bump version
