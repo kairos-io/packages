@@ -19,7 +19,13 @@ steps:
 {{ if eq .Values.name "linux-tiny" }}
   - cp tinyconfig.config linux-${PACKAGE_VERSION}/.config
 {{ else }}
-  - cp fedora.config linux-${PACKAGE_VERSION}/.config
+  {{ if .Values.arch }}
+    {{ if eq .Values.arch "arm64" }}
+  - cp fedora-aarch64.config linux-${PACKAGE_VERSION}/.config
+    {{ else }}
+  - cp fedora-x64.config linux-${PACKAGE_VERSION}/.config
+    {{end}}
+  {{end}}
 {{ end }}
   - cd linux-${PACKAGE_VERSION} && make kernelversion
 {{ if .Values.arch }}
