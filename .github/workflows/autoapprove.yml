@@ -13,7 +13,7 @@ jobs:
     if: ${{ github.actor == 'ci-robbot' }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Approve a PR if not already approved
         run: |
