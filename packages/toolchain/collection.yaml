@@ -15,7 +15,7 @@ packages:
       package.version: "1.25.1"
   - name: toolchain
     category: fips
-    version: "1.25.1"
+    version: "1.25.2"
     hidden: true
     labels:
       autobump.revdeps: "false"
@@ -26,7 +26,7 @@ packages:
         curl -s -L "https://go.dev/dl/?mode=json" |jq -r '.[0].version'| sed 's/go//g'
       autobump.version_hook: |
         curl -s -L "https://go.dev/dl/?mode=json" |jq -r '.[0].version'| sed 's/go//g'
-      package.version: "1.25.1"
+      package.version: "1.25.2"
   - name: toolchain
     category: fips
     version: "1.19.10"
