@@ -1,6 +1,6 @@
 name: "u-boot-rpi64"
 category: "firmware"
-version: "2025.04-2.1"
+version: "2025.04-2.2"
 labels:
   autobump.strategy: "custom"
   autobump.string_replace: '{ "prefix": "" }'
@@ -12,5 +12,5 @@ labels:
   # We do assume that checksum is sha256
   autobump.checksum_hook: |
     curl -s -L https://download.opensuse.org/ports/aarch64/tumbleweed/repo/oss/$(curl -s -L https://download.opensuse.org/ports/aarch64/tumbleweed/repo/oss/repodata/repomd.xml | dasel -r xml 'repomd.data.[0].location.-href') | zstd -d - | dasel -r xml -w json | jq '.metadata.package[] | select(.name=="u-boot-rpiarm64") | select(.arch!="src").checksum."#text"' -r | tail -n1
-  package.version: "2025.04-2.1"
-  package.checksum: "a4371fe96da64efb867950947e3fdc8d73461cf81c322939a377690a3534e20046df8b10eb73d7a0eb2177756400d8b774497c405e277b805179f09ae5815980"
+  package.version: "2025.04-2.2"
+  package.checksum: "5ed1b04f0ee03ffbae90cd3bca9714c8c3845fa8d529dc3f3280e18d267f00c1757e5fd9ef079778cfc3439e7c3c632b97c287120d04c51693defdd637eab5b0"
