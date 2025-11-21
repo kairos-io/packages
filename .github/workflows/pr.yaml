@@ -9,7 +9,7 @@ jobs:
   validate:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Get changed files
@@ -32,7 +32,7 @@ jobs:
   build-arm64:
     runs-on: ubuntu-24.04-arm
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
       with:
         fetch-depth: 0
     - run: mkdir build
@@ -96,7 +96,7 @@ jobs:
           echo
           sudo rm -rfv build || true
           df -h
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - run: mkdir build
