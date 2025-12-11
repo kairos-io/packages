@@ -6,4 +6,4 @@ packages:
       github.repo: "systemd"
       autobump.revdeps: "true"
       github.owner: "systemd"
-      autobump.skip_if_contains: '["rc", "258"]'
+      autobump.skip_if_contains: '["rc", "258.*"]'
