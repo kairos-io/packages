@@ -13,12 +13,12 @@ steps:
   - mkdir -p /package/
     {{ if .Values.arch }}
       {{ if eq .Values.arch "arm64" }}
-  - cp systemd/build/src/boot/systemd-bootaa64.efi /package/
-  - cp systemd/build/src/boot/linuxaa64.efi.stub /package/
-  - cp systemd/build/src/boot/addonaa64.efi.stub /package/
+  - cp systemd/build/src/boot/efi/systemd-bootaa64.efi /package/
+  - cp systemd/build/src/boot/efi/linuxaa64.efi.stub /package/
+  - cp systemd/build/src/boot/efi/addonaa64.efi.stub /package/
       {{else}}
-  - cp systemd/build/src/boot/systemd-bootx64.efi /package/
-  - cp systemd/build/src/boot/linuxx64.efi.stub /package
-  - cp systemd/build/src/boot/addonx64.efi.stub /package/
+  - cp systemd/build/src/boot/efi/systemd-bootx64.efi /package/
+  - cp systemd/build/src/boot/efi/linuxx64.efi.stub /package
+  - cp systemd/build/src/boot/efi/addonx64.efi.stub /package/
       {{end}}
     {{end}}
