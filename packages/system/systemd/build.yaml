@@ -1,6 +1,6 @@
 package_dir: /package
 
-image: fedora:42
+image: fedora:43
 
 prelude:
   - dnf install -y gcc git ninja-build meson diffutils gperf libcap-devel libmount-devel python3-jinja2 rsync libarchive-devel python3-pyelftools patch
@@ -11,14 +11,5 @@ steps:
   - cd systemd && meson setup build -Dmode=release -Dbootloader=enabled -Defi=true -Dukify=disabled -Dblkid=disabled -Dopenssl=disabled -Dsbat-distro="Kairos" -Dsbat-distro-url="kairos.io" -Dsbat-distro-summary="Kairos" -Dsbat-distro-version="kairos-${PACKAGE_VERSION}" -Ddns-servers='' -Dsysvinit-path= -Dsysvrcnd-path= -Dtpm=true -Dinstall-tests=false -Dnss-resolve=disabled -Dlogind=false -Dcoredump=false -Dhomed=disabled -Dfirstboot=false -Dhostnamed=false -Dhibernate=false -Dinitrd=false -Dimportd=disabled -Dkernel-install=false -Dlocaled=false -Dmachined=false -Dnetworkd=false -Dnss-myhostname=false -Dnss-mymachines=disabled -Dnss-systemd=false -Doomd=false -Dportabled=false -Dhwdb=false -Dpstore=false -Dquotacheck=false -Drandomseed=false -Drepart=disabled -Dresolve=false -Drfkill=false -Dsysext=false -Danalyze=false -Dsysupdate=disabled -Dsysusers=false -Dstoragetm=false -Dtimedated=false -Dtimesyncd=false -Dtmpfiles=false -Duserdb=false -Dvconsole=false -Dxdg-autostart=false -Didn=false -Dpolkit=disabled -Dkmod=disabled -Ddbus=disabled -Dglib=disabled -Dbacklight=false -Dldconfig=false -Dgshadow=false -Dwheel-group=false -Dadm-group=false -Dxkbcommon=disabled -Dzstd=disabled -Dlz4=disabled -Dutmp=false -Dlink-udev-shared=false -Dlink-systemctl-shared=false -Dlink-networkd-shared=false -Dlink-timesyncd-shared=false -Dlink-journalctl-shared=false -Dlink-boot-shared=false -Dlink-portabled-shared=false -Denvironment-d=false -Dqrencode=disabled -Dpwquality=disabled -Dlibcurl=disabled -Dfdisk=disabled -Dlibidn2=disabled -Dlibiptc=disabled -Ddns-over-tls=false -Didn=false -Dgnutls=disabled -Dp11kit=disabled -Dlibidn=disabled -Dlibidn2=disabled -Dgcrypt=disabled -Dxz=disabled -Dzlib=disabled -Dbzip2=disabled
   - cd systemd && ninja -C build
   - mkdir -p /package/
-    {{ if .Values.arch }}
-      {{ if eq .Values.arch "arm64" }}
-  - cp systemd/build/src/boot/efi/systemd-bootaa64.efi /package/
-  - cp systemd/build/src/boot/efi/linuxaa64.efi.stub /package/
-  - cp systemd/build/src/boot/efi/addonaa64.efi.stub /package/
-      {{else}}
-  - cp systemd/build/src/boot/efi/systemd-bootx64.efi /package/
-  - cp systemd/build/src/boot/efi/linuxx64.efi.stub /package
-  - cp systemd/build/src/boot/efi/addonx64.efi.stub /package/
-      {{end}}
-    {{end}}
+  - find systemd/build/src/boot/ -name '*.efi' -exec cp {} /package/ \;
+  - find systemd/build/src/boot/ -name '*.efi.stub' -exec cp {} /package/ \;
