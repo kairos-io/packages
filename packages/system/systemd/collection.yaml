@@ -1,9 +1,9 @@
 packages:
   - name: "systemd-boot"
     category: "system"
-    version: "256.17"
+    version: "259"
     labels:
       github.repo: "systemd"
       autobump.revdeps: "true"
       github.owner: "systemd"
-      autobump.skip_if_contains: '["rc", "257.*", "258.*"]'
+      autobump.skip_if_contains: '["rc"]'
