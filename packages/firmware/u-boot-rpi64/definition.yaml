@@ -13,4 +13,4 @@ labels:
   autobump.checksum_hook: |
     curl -s -L https://download.opensuse.org/ports/aarch64/tumbleweed/repo/oss/$(curl -s -L https://download.opensuse.org/ports/aarch64/tumbleweed/repo/oss/repodata/repomd.xml | dasel -r xml 'repomd.data.[0].location.-href') | zstd -d - | dasel -r xml -w json | jq '.metadata.package[] | select(.name=="u-boot-rpiarm64") | select(.arch!="src").checksum."#text"' -r | tail -n1
   package.version: "2026.01-1.1"
-  package.checksum: "5617d4637c8e4a988b800ee28dc80bf46674d0e4cf0e60f440c0287fa2ad6b18fa8bd5eedf8c408f27d24b319e902ad9f0ca2f8f6b23130f052e34f5d397c530"
+  package.checksum: ""
