@@ -1,6 +1,6 @@
 name: "rpi"
 category: "firmware"
-version: "1.20260907"
+version: "1.20260915"
 labels:
   github.repo: "firmware"
   github.owner: "raspberrypi"
