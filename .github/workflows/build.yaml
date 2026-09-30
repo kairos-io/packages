@@ -9,11 +9,13 @@ on:
       - main
 jobs:
   build:
-    runs-on: fast
+    runs-on: ubuntu-26.04
     steps:
     - uses: actions/checkout@v7
       with:
         fetch-depth: 0
+    - name: Release space from worker
+      run: .github/scripts/free-disk-space.sh
     - run: mkdir build
     - name: Download meta 🔧
       uses: luet-lab/luet-github-action@v0.3.1
