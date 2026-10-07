@@ -1,6 +1,6 @@
 name: "rpi64"
 category: "uboot"
-version: "2025.10"
+version: "2025.10-1"
 labels:
   github.repo: "u-boot"
   github.owner: "u-boot"
