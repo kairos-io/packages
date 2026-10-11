@@ -4,6 +4,13 @@ concurrency:
 
 on:
   workflow_dispatch:
+  # Build and publish once a day whatever landed on main. Most merges here are
+  # queued by autoapprove.yml and renovate_auto.yml with GITHUB_TOKEN, and
+  # GitHub starts no workflow run for a GITHUB_TOKEN merge, so the push trigger
+  # below never fires for them. Autobump opens its pull requests at 20:00 UTC
+  # and they are merged within the hour, so 22:00 publishes the same night.
+  schedule:
+    - cron: '0 22 * * *'
   push:
     branches:
       - main
@@ -29,7 +36,7 @@ jobs:
         luetVersion: 0.36.0
     - name: Build packages 🔧
       uses: luet-lab/luet-github-action@v0.3.1
-      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+      if: ${{ github.ref == 'refs/heads/main' }}
       with:
         build: true
         fromIndex: true
@@ -47,7 +54,7 @@ jobs:
     - name: Create repo 🔧
       uses: luet-lab/luet-github-action@v0.3.1
       id: create_repo
-      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+      if: ${{ github.ref == 'refs/heads/main' }}
       with:
         FINAL_REPO: quay.io/kairos/packages
         DOCKER_USERNAME: ${{ secrets.QUAY_USERNAME }}
