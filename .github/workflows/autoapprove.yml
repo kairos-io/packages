@@ -10,7 +10,12 @@ permissions:
 jobs:
   auto-approve:
     runs-on: ubuntu-latest
-    if: ${{ github.actor == 'ci-robbot' }}
+    # Check the account that CREATED the pull request, not github.actor.
+    # github.actor is whoever performed the most recent action on it, so on a
+    # reopen or a push by the bot it names the bot on a pull request somebody
+    # else wrote, and this job would approve that pull request and queue it for
+    # auto-merge. renovate_auto.yml in this repository already uses this form.
+    if: ${{ github.event.pull_request.user.login == 'ci-robbot' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
