@@ -28,8 +28,39 @@ jobs:
           PR_URL: ${{github.event.pull_request.html_url}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - name: Enable auto-merge for Renovate PRs
+      # GITHUB_TOKEN can never queue auto-merge for a pull request that edits a
+      # workflow file. enablePullRequestAutoMerge refuses it with "refusing to
+      # allow a GitHub App to create or update workflow ... without `workflows`
+      # permission", and the `permissions:` block above has no `workflows:` key
+      # to grant: that is a GitHub App and personal-access-token scope, and
+      # `actions: write` is a different permission. The restriction is
+      # deliberate, it stops a token landing a workflow change without review,
+      # so the only thing wrong here is reporting the refusal as a failure.
+      #
+      # Decide from the changed files rather than matching the error text, so
+      # every other failure of `gh pr merge` stays red: a missing permission, a
+      # conflicted pull request, a closed one.
+      - name: Check whether the pull request changes a workflow
+        id: workflow-change
+        run: |
+          files=$(gh pr diff "$PR_URL" --name-only)
+          if printf '%s\n' "$files" | grep -q '^\.github/workflows/'; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Enable auto-merge
+        if: steps.workflow-change.outputs.changed == 'false'
         run: gh pr merge --auto --squash "$PR_URL"
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Say why auto-merge was not queued
+        if: steps.workflow-change.outputs.changed == 'true'
+        run: |
+          echo "::notice title=Auto-merge not queued::This pull request changes a file under .github/workflows/, which GITHUB_TOKEN is not allowed to merge. The pull request is approved, a maintainer has to merge it."
