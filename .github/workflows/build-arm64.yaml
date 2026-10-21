@@ -3,6 +3,12 @@ concurrency:
   group: "master-arm64-build"
 
 on:
+  workflow_dispatch:
+  # Same daily publish as build.yaml, on the same schedule so the amd64 and
+  # arm64 repository indexes are always created from the same commit. See the
+  # comment there for why the push trigger alone is not enough.
+  schedule:
+    - cron: '0 22 * * *'
   push:
     branches:
       - main
@@ -27,7 +33,7 @@ jobs:
         luetVersion: 0.36.0
     - name: Build packages 🔧
       uses: luet-lab/luet-github-action@v0.3.1
-      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+      if: ${{ github.ref == 'refs/heads/main' }}
       with:
         build: true
         fromIndex: true
@@ -48,7 +54,7 @@ jobs:
     - name: Create repo 🔧
       uses: luet-lab/luet-github-action@v0.3.1
       id: create_repo
-      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+      if: ${{ github.ref == 'refs/heads/main' }}
       with:
         FINAL_REPO: quay.io/kairos/packages-arm64
         DOCKER_USERNAME: ${{ secrets.QUAY_USERNAME }}
